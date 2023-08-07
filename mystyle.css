@@ -1,0 +1,193 @@
+.Animate-top {
+  position: relative;
+  animation: animatetop 0.4s;
+}
+
+.Bar-text-grey {
+  color: #757575 !important;
+  width: 100%;
+  display: block;
+  padding: 8px 16px;
+  text-align: left;
+  border: none;
+  white-space: normal;
+  float: none;
+  outline: 0;
+}
+
+.Bgimg {
+  background-image: url(img/GameDesign/Sugar-coatedCoin/Sugar-coatedCoin.png);
+  min-height: 100%;
+  background-position: center;
+  background-size: cover;
+}
+
+.Button {
+  border: none;
+  display: inline-block;
+  padding: 8px 16px;
+  vertical-align: middle;
+  overflow: hidden;
+  text-decoration: none;
+  color: inherit;
+  background-color: inherit;
+  text-align: center;
+  cursor: pointer;
+  white-space: nowrap;
+  user-select: none;
+  font-size: 36px !important;
+}
+
+.Center {
+  text-align: center;
+}
+
+.Clear {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.Content {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.Content-list {
+  font-size: 36px !important;
+  float: right !important;
+  color: #000 !important;
+  background-color: #fff !important;
+}
+
+.Display-middle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+}
+
+.Display-topright {
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.Footer {
+  color: #000 !important;
+  background-color: #f1f1f1 !important;
+  padding-top: 64px !important;
+  padding-bottom: 64px !important;
+  text-align: center !important;
+  font-size: 24px !important;
+  opacity: 0.60;
+  padding: 0.01em 16px;
+}
+
+.Opacity,
+.Hover-opacity:hover {
+  opacity: 0.60
+}
+
+.Opacity-off,
+.Hover-opacity-off:hover {
+  opacity: 1
+}
+
+.Sidebar {
+  height: 100%;
+  width: 200px;
+  background-color: #fff;
+  position: fixed !important;
+  z-index: 1;
+  overflow: auto;
+  color: #fff !important;
+  background-color: #000 !important;
+  font-size: 36px !important;
+}
+
+
+
+.w3-third {
+  float: left;
+
+}
+
+/*圖片淡入文字*/
+.container {
+  position: relative;
+}
+
+.image {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  width: 100%;
+  opacity: 0;
+  transition: .5s ease;
+  background-color: #272727;
+}
+
+.container:hover .overlay {
+  opacity: 0.7;
+}
+
+.padding10 {
+  padding: 10px;
+}
+
+.text {
+  color: white;
+  font-size: 18px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+
+/*cv頁特殊文字設定*/
+.text-gray {
+  color: #666666;
+}
+
+.text-white {
+  color: white;
+}
+
+.text22 {
+  font-size: 22px;
+}
+
+.text17 {
+  font-size: 17px;
+}
+
+.text15 {
+  font-size: 15px;
+}
+
+.text12 {
+  font-size: 12px;
+}
+
+.text-bold {
+  font-weight: bold;
+}
+
+.word-break{
+  word-break: break-all;
+}

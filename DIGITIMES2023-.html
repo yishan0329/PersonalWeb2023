@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>YISHAN</title>
+	<link rel="shortcut icon" href="img/favicon.ico">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="MYCSS.css">
+	<link rel="stylesheet" href="mystyle.css">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<style type="text/css">
+		body,
+		h1 {
+			font-family: 'Montserrat', sans-serif;
+			font-size: 36px;
+			font-weight: bold;
+		}
+
+		p {
+			font-family: 'Montserrat';
+			color: #666666;
+		}
+
+		/*圖片下邊界*/
+		.w3-row-padding img {
+			margin-bottom: 20px
+		}
+
+		/*圖片中間間隔*/
+		.w3-row-padding,
+		.w3-row-padding>.w3-half,
+		.w3-row-padding>.w3-third,
+		.w3-row-padding>.w3-twothird,
+		.w3-row-padding>.w3-threequarter,
+		.w3-row-padding>.w3-quarter,
+		.w3-row-padding>.w3-col {
+			padding: 12px;
+		}
+	</style>
+
+</head>
+
+<body>
+
+	<!-- Sidebar -->
+	<nav class="Sidebar Animate-top " style="display:none;padding-top:150px" id="mySidebar">
+		<a href="javascript:void(0)" onclick="Close()" class="Button Display-topright" style="padding:6px 24px">
+			<i class="fa fa-remove"></i>
+		</a>
+		<div class="Bar-block Center">
+			<a href="About&CV.html" class="Bar-text-grey Button">CV</a>
+			<a href="GameDesign.html" class="Bar-text-grey Button">Game Design</a>
+			<a href="Illustration.html" class="Bar-text-grey Button">Illustration</a>
+			<a href="Prints.html" class="Bar-text-grey Button">Print</a>
+			<a href="Vedio.html" class="Bar-text-grey Button">Vedio</a>
+			<a href="WebDesign.html" class="Bar-text-grey Button">Web Design</a>
+		</div>
+	</nav>
+
+	<!-- !PAGE CONTENT! -->
+	<div class="Content">
+
+		<!-- Header -->
+		<div style="opacity: 0.60">
+			<span class="Button Content-list" onclick="Open()"><i class="fa fa-bars"></i></span>
+			<div class="Clear"></div>
+			<header class="Center w3-margin-bottom">
+				<a href="index.html">
+					<h1 class="Button"><b>蔡宜珊</b></h1>
+				</a>
+				<p style="font-size:16px"><b>paintingrainbowray@gmail.com</b></p>
+			</header>
+
+		</div>
+
+
+		<!-- title -->
+		<div style=" padding:50px 50px 10px">
+			<!-- 中文 -->
+			<h1 class="Center" style="color:#666666">DIGITIMES INC.</h1>
+			<hr>
+			<!-- 大分類頁 -->
+			<div class="sorts">
+				<a href="#" onclick="openPage('ad', this, '#6C6C6C')" class="tablink sort_btn text-white text17">廣告</a>
+				<a href="#" onclick="openPage('kv', this, '#6C6C6C')" class="tablink sort_btn text-white text17"
+					id="defaultOpen">主視覺</a>
+				<a href="#" onclick="openPage('layout', this, '#6C6C6C')"
+					class="tablink sort_btn text-white text17">布置物</a>
+			</div>
+		</div>
+
+		<!-- Projects Grid ,ad ------------------------------------------------------------------------------->
+		<div class="w3-row-padding tabcontent" id="ad" style=" padding: 10px;">
+			<section class="sc_sponsor main_sc">
+				<div>
+					<!-- 子分類 -->
+					<div class="sort_cnt">
+						<div class="sorts" id="sponsorSort">
+							<div class="item">
+								<a id="all" data-cat="all" class="item_link sort_btn_s text-white text15">所有作品</a>
+							</div>
+							<div class="item">
+								<a id="Co_Sponsor" data-cat="CoSponsor"
+									class="item_link sort_btn_s text-white text15">平面廣告</a>
+							</div>
+							<div class="item">
+								<a id="Co_Oganizer" data-cat="CoOganizer"
+									class="item_link sort_btn_s text-white text15">edm</a>
+							</div>
+							<div class="item">
+								<a id="Main_Sponsor" data-cat="Main"
+									class="item_link sort_btn_s text-white text15">廣告</a>
+							</div>
+						</div>
+					</div>
+					<div class="sponsor_cnt">
+						<div class="sponsors" id="sponsorCnt">
+							<!-- 左行 -->
+							<div class="w3-quarter" style=" padding: 15px;">
+								<!-- 廣告 -->
+								<div class="spr_item" data-cat="Main">
+									<img src="img\digitimes\ad\ad\FB.jpg" style="width:100%" class="image">
+								</div>
+								<!-- 平面廣告 -->
+								<div class="spr_item" data-cat="CoSponsor">
+									<img src="img\digitimes\ad\print_ad\1121439_ST全十.jpg" style="width:100%"
+										class="image">
+									<img src="img\digitimes\ad\print_ad\馭雲論壇全十.jpg" style="width:100%" class="image">
+									<img src="img\digitimes\ad\print_ad\戴爾科技論壇_ol.jpg" style="width:100%">
+
+								</div>
+								<!-- edm -->
+								<div class="spr_item" data-cat="CoOganizer">
+									<img src="img\digitimes\ad\edm\1120630edm.jpg" style="width:100%" class="image">
+								</div>
+							</div>
+							<!-- 中1行 -->
+							<div class="w3-quarter" style=" padding: 15px;">
+								<!-- 廣告 -->
+								<div class="spr_item" data-cat="Main">
+									<img src="img\digitimes\ad\ad\1120584ADIR4_336-x-280.gif" style="width:100%">
+									<img src="img\digitimes\ad\ad\1120584ADIR4_336-x-90.gif" style="width:100%">
+								</div>
+								<!-- 平面廣告 -->
+								<div class="spr_item" data-cat="CoSponsor">
+									<img src="img\digitimes\ad\print_ad\智慧機械與智動化_全十.jpg" style="width:100%">
+									<img src="img\digitimes\ad\print_ad\amr全十.jpg" style="width:100%">
+									<img src="img\digitimes\ad\print_ad\1120571R2.jpg" style="width:100%">
+								</div>
+								<!-- edm -->
+								<div class="spr_item" data-cat="CoOganizer">
+									<img src="img\digitimes\ad\edm\1121017R1.jpg" style="width:100%">
+								</div>
+							</div>
+							<!-- 中2行 -->
+							<div class="w3-quarter" style=" padding: 15px;">
+								<!-- 廣告 -->
+								<div class="spr_item" data-cat="Main">
+									<img src="img\digitimes\ad\ad\1120570_336-280矩形大方塊.gif" style="width:100%">
+								</div>
+								<!-- 平面廣告 -->
+								<div class="spr_item" data-cat="CoSponsor">
+									<img src="img\digitimes\ad\print_ad\1120649R13_全十.jpg" style="width:100%">
+									<img src="img\digitimes\ad\print_ad\1120698R2_半十.jpg" style="width:100%">
+								</div>
+								<!-- edm -->
+								<div class="spr_item" data-cat="CoOganizer">
+									<img src="img\digitimes\ad\edm\0315西門子EDA2.jpg" style="width:100%">
+								</div>
+							</div>
+							<!-- 右行 -->
+							<div class="w3-quarter" style=" padding: 15px;">
+								<!-- 廣告 -->
+								<div class="spr_item" data-cat="Main">
+									<img src="img\digitimes\ad\ad\1120498_336-280.gif" style="width:100%">
+								</div>
+								<!-- 平面廣告 -->
+								<div class="spr_item" data-cat="CoSponsor">
+									<img src="img\digitimes\ad\print_ad\Manufacturing Technology Summit.jpg"
+										style="width:100%">
+									<img src="img\digitimes\ad\print_ad\全十.jpg" style="width:100%">
+								</div>
+								<!-- edm -->
+								<div class="spr_item" data-cat="CoOganizer">
+									<img src="img\digitimes\ad\edm\edm.jpg" style="width:100%">
+								</div>
+							</div>
+
+
+						</div>
+					</div>
+				</div>
+			</section>
+		</div>
+
+		<!-- Projects Grid ,kv ------------------------------------------------------------------------------->
+		<div class="w3-row-padding tabcontent" id="kv" style=" padding: 10px;">
+			<!-- 左行 -->
+			<div class="w3-third">
+				<img src="img\digitimes\kv\ASC_kv.jpg" style="width:100%" class="image">
+				<img src="img\digitimes\kv\1120776-1.jpg" style="width:100%">
+				<img src="" style="width:100%">
+				<img src="" style="width:100%">
+				<img src="" style="width:100%">
+			</div>
+			<!-- 中行 -->
+			<div class="w3-third">
+				<img src="img\digitimes\kv\AWS-JIC_ol_修.png" style="width:100%" class="image">
+				<img src="img\digitimes\kv\1120667R2.jpg" style="width:100%" class="image">
+				<img src="" style="width:100%">
+				<img src="" style="width:100%">
+				<img src="" style="width:100%">
+				<img src="" style="width:100%">
+			</div>
+			<!-- 右行 -->
+			<div class="w3-third">
+				<img src="img\digitimes\kv\1121020R2.jpg" style="width:100%" class="image">
+				<img src="" style="width:100%">
+				<img src="" style="width:100%">
+			</div>
+		</div>
+
+
+		<!-- End Page Content -->
+	</div>
+
+	<!-- Footer -->
+	<footer class="Footer" style="margin-top:128px">
+		<a href="https://www.facebook.com/daphnetsaidaphnetsai"><i
+				class="fa fa-facebook-official Hover-opacity"></i></a>
+		<a href="https://www.instagram.com/tsai_yi_shan/"><i class="fa fa-instagram Hover-opacity"></i></a>
+		<p style="font-size: 15px;">Copyright © 2023 Design By <a href="index.html" target="_blank">TsaiYishan</a></p>
+	</footer>
+
+
+	<script>
+		// Open and close sidebar
+		function Open() {
+			document.getElementById("mySidebar").style.width = "100%";
+			document.getElementById("mySidebar").style.display = "block";
+		}
+
+		function Close() {
+			document.getElementById("mySidebar").style.display = "none";
+		}
+
+		//大分類
+		function openPage(pageName, elmnt, color) {
+			var i, tabcontent, tablinks;
+			tabcontent = document.getElementsByClassName("tabcontent");
+			for (i = 0; i < tabcontent.length; i++) {
+				tabcontent[i].style.display = "none";
+			}
+			tablinks = document.getElementsByClassName("tablink");
+			for (i = 0; i < tablinks.length; i++) {
+				tablinks[i].style.backgroundColor = "";
+				tablinks[i].style.color = "";
+			}
+			document.getElementById(pageName).style.display = "block";
+			elmnt.style.backgroundColor = color;
+			elmnt.style.color = "white";
+
+		}
+		// Get the element with id="defaultOpen" and click on it
+		document.getElementById("defaultOpen").click();
+
+	</script>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script type="text/javascript">
+		var logo = {
+			sort: function (items) {
+				$('#sponsorCnt').find('.spr_item').not(items).fadeOut(500);
+				items.fadeIn(500);
+			},
+			showAll: function (items) {
+				items.fadeIn(500);
+			},
+			doSort: function () {
+				$('#sponsorSort').on('click', '.item_link', function () {
+					$('#sponsorSort .item_link').removeClass('is_active');
+					$(this).addClass('is_active');
+					// console.log($(this).prop('id'));
+					var $sort = $(this);
+					if ($sort.is('#all')) {
+						logo.showAll($('.spr_item', '#sponsorCnt'));
+					} else {
+						var items = $('.spr_item[data-cat=' + $sort.data('cat') + ']', '#sponsorCnt');
+						logo.sort(items);
+					}
+				});
+			}
+		};
+		logo.doSort();
+		;
+	</script>
+
+
+
+</body>
+
+</html>
