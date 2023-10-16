@@ -21,6 +21,14 @@
   background-position: center;
   background-size: cover;
 }
+@media (max-width: 599px) {
+  .Bgimg {
+    background-image: url(img/GameDesign/Sugar-coatedCoin/Sugar-coatedCoin.png);
+    min-height: 50%;
+    background-position: center;
+    background-size: cover;
+  }
+}
 
 .Button {
   border: none;
@@ -76,7 +84,7 @@
 
 .Footer {
   color: #000 !important;
-  background-color: #f1f1f1 !important;
+  background-color: #dedede !important;
   padding-top: 64px !important;
   padding-bottom: 64px !important;
   text-align: center !important;
@@ -225,3 +233,33 @@
  }
 }
 
+/*兩側空間rwd*/
+.margin-right-left{
+  margin-right: 50px; margin-left: 50px;
+}
+@media (max-width: 800px) {
+  .margin-right-left{
+    margin-right: 0px; margin-left: 0px;
+  }
+}
+@media (min-width: 1200px) {
+  .margin-right-left{
+    margin-right: 50px; margin-left: 50px;
+  }
+}
+
+
+/*漂浮*/
+.floating-area {
+  font-size: 24px;
+  font-weight: bold;
+  position: relative;
+  transform: translateY(0.9rem);
+  opacity: 0;
+  transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
+}
+
+.floating-area.animate {
+  transform: translateY(0);
+  opacity: 1;
+}

@@ -1,77 +1,262 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-	<title>YISHAN</title>
+  <title>YISHAN</title>
   <link rel="shortcut icon" href="img/favicon.ico">
-  <meta property="og:image" content="http://www.moc2718.com/ntuanet/10926104YISHAN/img/video/fulldomee.jpg" /><!-- 網頁縮圖 -->
-  <meta property="og:description" content="蔡宜珊個人網站 錄像 版畫 網頁設計 遊戲設計"/><!-- 網頁描述 -->
+  <meta property="og:image" content="http://www.moc2718.com/ntuanet/10926104YISHAN/img/video/fulldomee.jpg" />
+  <!-- 網頁縮圖 -->
+  <meta property="og:description" content="蔡宜珊個人網站 錄像 版畫 網頁設計 遊戲設計" /><!-- 網頁描述 -->
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
-	<link rel="stylesheet" href="MYCSS.css">
+  <link rel="stylesheet" href="MYCSS.css">
   <link rel="stylesheet" href="mystyle.css">
-	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-	<style type="text/css">
-    h1 {font-family:Montserrat; font-size:25px ; color:#FFFFFF; font-weight:bold;}
-    p {font-family: Montserrat, cursive; font-size:16px; color:#FFCCCC; font-weight:bold;}
-    body, html {height: 100%}
-    html{box-sizing:border-box}*,*:before,*:after{box-sizing:inherit}
-	</style>
+  <style type="text/css">
+    h1 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 25px;
+      color: #FFFFFF;
+      font-weight: bold;
+    }
+
+    p {
+      font-family: 'Montserrat';
+      font-size: 16px;
+      color: #666666;
+      font-weight: bold;
+    }
+
+    body,
+    html {
+      height: 100%
+    }
+
+    html {
+      box-sizing: border-box
+    }
+
+    *,
+    *:before,
+    *:after {
+      box-sizing: inherit
+    }
+
+    /*圖片下邊界*/
+    .w3-row-padding img {
+      margin-bottom: 20px;
+    }
+
+    /*圖片中間間隔*/
+    .w3-row-padding,
+    .w3-row-padding>.w3-half,
+    .w3-row-padding>.w3-third,
+    .w3-row-padding>.w3-twothird,
+    .w3-row-padding>.w3-threequarter,
+    .w3-row-padding>.w3-quarter,
+    .w3-row-padding>.w3-col {
+      padding: 12px;
+    }
+
+    /*body {
+      background: url(img/GameDesign/Sugar-coatedCoin/Sugar-coatedCoin.png);
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      min-height: 100%;
+      background-position: center;
+      background-size: cover;
+    }*/
+  </style>
 
 </head>
 
 <body style="background-color:rgb(0, 0, 0);">
 
-<!-- Sidebar -->
-<nav class="Sidebar Animate-top " style="display:none;padding-top:150px" id="mySidebar">
-  <a href="javascript:void(0)" onclick="Close()" class="Button Display-topright" style="padding:6px 24px">
-    <i class="fa fa-remove"></i>
-  </a>
-  <div class="Bar-block Center">
-    <a href="About&CV.html" class="Bar-text-grey Button">CV</a>
-    <a href="GameDesign.html" class="Bar-text-grey Button">Game Design</a>
-    <a href="Illustration.html" class="Bar-text-grey Button">Illustration</a>
-    <a href="Prints.html" class="Bar-text-grey Button">Print</a>
-    <a href="Vedio.html" class="Bar-text-grey Button">Vedio</a>
-    <a href="WebDesign.html" class="Bar-text-grey Button">Web Design</a>
-    <!--<a href="2020.html" class="Bar-text-grey Button">2020</a>
-    <a href="2019.html" class="Bar-text-grey Button">2019-2020</a>
-    <a href="2018.html" class="Bar-text-grey Button">2016-2018</a>
-    <a href="Projects.html" class="Bar-text-grey Button">Projects</a>-->
-  </div>
-</nav>
 
-<!-- !PAGE CONTENT! -->
-<div class="Content Bgimg" > 
+  <!-- Sidebar -->
+  <nav class="Sidebar Animate-top " style="display:none;padding-top:150px" id="mySidebar">
+    <a href="javascript:void(0)" onclick="Close()" class="Button Display-topright" style="padding:6px 24px">
+      <i class="fa fa-remove"></i>
+    </a>
+    <div class="Bar-block Center">
+      <a href="GameDesign.html" class="Bar-text-grey Button">Game Design</a>
+      <a href="Illustration.html" class="Bar-text-grey Button">Illustration</a>
+      <a href="Prints.html" class="Bar-text-grey Button">Print</a>
+      <a href="Vedio.html" class="Bar-text-grey Button">Vedio</a>
+      <a href="WebDesign.html" class="Bar-text-grey Button">Web Design</a>
+    </div>
+  </nav>
 
-<!-- Buttom & heading -->
-	<div style="opacity: 0.60">
-	<span class="Button Content-list" onclick="Open()"><i class="fa fa-bars"></i></span> 
-	<div class="Clear"></div>
-  <div class="Display-middle" style="background-color:rgb(0, 0, 0);  padding: 25px;">
-    <h1 class="Animate-top Center">蔡宜珊</h1>
-    <hr/ color="#9e9e9e" style="margin:auto;width:40%">
-    <p class="Center" >paintingrainbowray@gmail.com</p>
-  </div>
-	</div>
+  <!-- !PAGE CONTENT! -->
+  <!-- Header  -->
 
-<!-- End Page Content -->
+  <!-- button-->
+  <div style="opacity: 0.60" class="Bgimg">
+  <span class="Button Content-list" onclick="Open()"><i class="fa fa-bars"></i></span>
+  <div class="Clear"></div>
+  <header class="Center w3-margin-bottom" style="position:relative">
+    <a href="index.html">
+      <h1 class="Button" style="color: #FFFFFF;"><b>蔡宜珊</b></h1>
+    </a>
+    <p style="font-size:16px"><b>paintingrainbowray@gmail.com</b></p>
+  </header>
 </div>
 
-<script>
-// Open and close sidebar
-		function Open() {
- 		 document.getElementById("mySidebar").style.width = "100%";
-  		 document.getElementById("mySidebar").style.display = "block";
-		}
 
-		function Close() {
- 		 document.getElementById("mySidebar").style.display = "none";
-		}
-</script>
+
+  <div class="floating-area" id="floatingArea">
+    <div style=" padding:50px">
+      <!-- About Grid -->
+      <div class="w3-row">
+        <div class="w3-half">
+          <img src="img/photo.jpg" class="w3-round image" alt="Table" style="width:100%; margin:auto; padding:50px;">
+        </div>
+        <div class="w3-half" style=" padding:20px">
+          <h1 class="Center text-gray">簡歷</h1>
+          <p class="text-gray text22"><b>獲獎經歷</b></p>
+          <a href="https://laborchcg.com.tw/23C33/" target="_blank">
+            <p class="text-gray text17">2023&emsp;創意梗圖競賽「彰化就業好所在」組第三名</p>
+          </a>
+          <p class="text-gray text17">2023&emsp;黑白繪畫大賽2023 電繪組 G組--公開組(年齡不限) 金獎</p>
+
+          <p class="text-gray text22"><b>展演經歷</b></p>
+          <p class="text-gray text17">2023&emsp;《Render Soul》，錄像，「宇宙‧無極—科技藝術特展」，臺中市屯區藝文中心，臺中</p>
+          <p class="text-gray text17">2022&emsp;《白盒子》，錄像，圓宇宙－沉浸式圓頂投影體驗展，府中15，新北</p>
+          <p class="text-gray text17">2022&emsp;《「New World」AR》、《welcome to a new world》，AR、錄像，部署之所，臺灣藝術大學 美術系館，新北</p>
+          <p class="text-gray text17">2021&emsp;《EPIDEMIC &》，錄像，線上展演</p>
+          <p class="text-gray text17">2021&emsp;《獸》，錄像，國立臺灣藝術大學多媒體動畫藝術學系第十七屆系展【開動】，台藝大教學研究大樓，新北</p>
+          <p class="text-gray text17">2020&emsp;《白盒子》，「Dome頂之夜」，空總臺灣當代文化實驗場 戰情大樓前廣場，臺北</p>
+          <p class="text-gray text17">2020&emsp;「第二層皮膚」個展，南北畫廊，臺北</p>
+          <p class="text-gray text17">2020&emsp;《幕前》《幕後》系列，「台北國際當代一年展」聯展，地下美術館，臺北</p>
+          <p class="text-gray text17">2019&emsp;《你在看我嗎?》，「找不到替代文字」系展，地下美術館，臺北</p>
+          <p class="text-gray text17">2019&emsp;《如何製作出好吃的緊急糧食》，「西北雨Saipakhoo」聯展，臺北當代文化實驗場，臺北</p>
+          <p class="text-gray text17">2019&emsp;《可以看我一下嗎？美術館給你的情書》，聯展，關美館，臺北</p>
+        </div>
+      </div>
+      <!-- CV Grid -->
+      <!-- 中文 -->
+      <br>
+      <p class="text-gray text22"><b>工作經驗</b></p>
+      <a href="DIGITIMES2023-.html">
+        <p class="text-gray text17">2023-&emsp;DIGITIMES 視覺設計</p>
+      </a>
+      <p class="text-gray text22"><b>學歷</b></p>
+      <p class="text-gray text17">2020-2023&emsp;國立臺灣藝術大學 多媒體動畫藝術學系（新媒體藝術碩士班），臺北</p>
+      <p class="text-gray text17">2016-2020&emsp;國立臺北藝術大學 美術學系（版畫組），臺北</p><br>
+
+      <p class="text-gray text22"><b>專案經歷</b></p>
+      <div class="w3-row">
+        <a href="https://www.behance.net/gallery/153014083/_" target="_blank">
+          <div class="w3-quarter">
+            <img src="img/GameDesign/文創工作室/海報.jpg" class="w3-round image padding10" alt="Table"
+              style="height:100%; margin:auto;">
+          </div>
+          <div class="w3-threequarter">
+            <p class="text-gray text17 text-bold">【文創工作室】爾福宮藝術工作室《屋乎挨栽》　專案規劃</p>
+            <p class="text-gray text12">2022/4~2022/11</p>
+            <p class="text-gray text15">
+              負責內容：擔任PM，做業主跟製作團隊的橋樑。<br>
+              1.與學校方接洽處理行政事宜。<br>
+              2.管理製作進度，合作開發專案產品。<br>
+              3.製作產品文宣、上架募資平台。</p>
+            <p class="text-gray text15">
+              專案主要內容：<br>
+              以臺灣街屋與廟宇為主題，建立街屋與廟宇之3D數位模型資料系統，並同時產出數件完整街屋與廟宇建築3D數位模型供不同種類創作可使用。共分為以下部分：<br>1.
+              產出「臺灣街屋」3D數位模型模組化資料系統。<br>2. 產出「臺灣廟宇」3D數位模型模組化資料系統。</p>
+            <p class="text-gray text15">成效：成功達成《屋乎挨栽》產品募資，且完成文創工作室成果展。</p>
+          </div>
+        </a>
+      </div>
+      <div class="w3-row">
+        <a href="https://www.behance.net/gallery/161568439/-VR" target="_blank">
+          <div class="w3-quarter">
+            <img src="img/GameDesign/TouatBooks/TouatBooksA2RGB.jpg" class="w3-round image padding10" alt="Table"
+              style="height:100%; margin:auto;">
+          </div>
+          <div class="w3-threequarter">
+            <p class="text-gray text17 text-bold">【以VR打造一場沈浸式書展】虛擬實境遊戲《取締者》 VR遊戲設計</p>
+            <p class="text-gray text12">2021/11~2022/5</p>
+            <p class="text-gray text15">
+              負責內容：<br>擔任PM，做業主跟製作團隊的橋樑。<br>
+              1. 聯繫業主討論開發事項、遊戲操作說明。每月以簡報以及影片報告進度。<br>
+              2. 設計遊戲流程，確保遊戲體驗過程順暢且議題清晰。<br>
+              3. 製作進度控管，與團隊合作開發專案。<br>
+              4. 主視覺與預告片提案製作。</p>
+            <p class="text-gray text15">
+              專案主要內容：<br>
+              以HTC一體機VR頭盔vive focus 3製作一款單人遊戲《取締者》。體驗者需要在時限內進入各NGO辦公室，營救珍藏本並銷毀資料，超過時間將被逮捕。</p>
+            <p class="text-gray text15">成效：在合作書店巡迴展演，遊戲次數達300人以上。</p>
+          </div>
+        </a>
+      </div>
+
+      <div class="w3-row">
+        <a href="https://www.behance.net/gallery/124047907/_" target="_blank">
+          <div class="w3-quarter">
+            <img src="img\Illustration\Freewild-artStudio\小自荒原_201208_7.jpg" class="w3-round image padding10"
+              alt="Table" style="height:100%; margin:auto;">
+          </div>
+          <div class="w3-threequarter">
+            <p class="text-gray text17 text-bold">小自荒原藝術工作室兒童美術老師</p>
+            <p class="text-gray text12">2020/2~2022/7</p>
+            <p class="text-gray text15">
+              負責內容：<br>
+              1. 獨立帶領學童進行複合媒材、手作等等課程。 <br>
+              2. 擬訂教學計畫、準備教案引導學生認識不同的媒材表現手法，獲得畫圖樂趣。<br>
+              3. 課後教學狀況評估。
+            <p class="text-gray text15">
+              專案主要內容：帶領學童進行美術課程。
+            <p class="text-gray text15">成效：獨力完成43個教案。</p><br>
+          </div>
+        </a>
+      </div>
+    </div>
+
+
+
+  </div>
+
+  <!-- End Page Content -->
+  </div>
+
+  <!-- Footer -->
+  <footer class="Footer" style="margin-top:128px">
+    <a href="https://www.facebook.com/daphnetsaidaphnetsai"><i class="fa fa-facebook-official Hover-opacity"></i></a>
+    <a href="https://www.instagram.com/tsai_yi_shan/"><i class="fa fa-instagram Hover-opacity"></i></a>
+    <a href="https://www.behance.net/paintingrainbowray"><i class="fa fa-behance Hover-opacity"></i></a>
+    <p style="font-size: 15px;">Copyright © 2023 Design By <a href="index.html" target="_blank">TsaiYishan</a></p>
+  </footer>
+
+  <script>
+    // Open and close sidebar
+    function Open() {
+      document.getElementById("mySidebar").style.width = "100%";
+      document.getElementById("mySidebar").style.display = "block";
+    }
+
+    function Close() {
+      document.getElementById("mySidebar").style.display = "none";
+    }
+  </script>
+
+  <script>
+    window.addEventListener('scroll', () => {
+      const floatingText = document.getElementById('floatingArea');
+      // 获取元素的位置信息
+      const elementPosition = floatingText.getBoundingClientRect();
+      // 使用元素的顶部位置作为 offset
+      const offset = elementPosition.bottom;
+      if (offset > 0) {
+        floatingText.classList.add('animate');
+      } else {
+        floatingText.classList.remove('animate');
+      }
+    });
+  </script>
 
 
 
