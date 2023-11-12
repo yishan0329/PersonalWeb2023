@@ -15,7 +15,7 @@
   outline: 0;
 }
 
-.Bgimg {
+/* .Bgimg {
   background-image: url(img/GameDesign/Sugar-coatedCoin/Sugar-coatedCoin.png);
   min-height: 100%;
   background-position: center;
@@ -28,7 +28,7 @@
     background-position: center;
     background-size: cover;
   }
-}
+} */
 
 .Button {
   border: none;
@@ -108,7 +108,7 @@
   width: 200px;
   background-color: #fff;
   position: fixed !important;
-  z-index: 1;
+  z-index: 99;
   overflow: auto;
   color: #fff !important;
   background-color: #000 !important;
@@ -147,7 +147,7 @@
 }
 
 .container:hover .overlay {
-  opacity: 0.7;
+  opacity: 0.9;
 }
 
 .padding10 {
@@ -205,46 +205,58 @@
 .rwdh6 {
   font-size: 1.2rem;
 }
+
 .rwdtxt {
   font-size: 0.8rem;
 }
+
 @media (max-width: 599px) {
   .rwdtxt {
-   font-size: calc(0.8rem + (1.3-1.2) * ((100vw - 600px) / (1200 - 600)));
+    font-size: calc(0.8rem + (1.3-1.2) * ((100vw - 600px) / (1200 - 600)));
   }
+
   .rwdh6 {
     font-size: calc(1.1rem + (1.3-1.2) * ((100vw - 600px) / (1200 - 600)));
-   }
+  }
 }
+
 @media (min-width: 600px) and (max-width: 1200px) {
   .rwdtxt {
-   font-size: calc(0.8rem + (1.3-1.2) * ((100vw - 600px) / (1200 - 600)));
+    font-size: calc(0.8rem + (1.3-1.2) * ((100vw - 600px) / (1200 - 600)));
   }
+
   .rwdh6 {
     font-size: calc(1.2rem + (1.3-1.2) * ((100vw - 600px) / (1200 - 600)));
-   }
+  }
 }
+
 @media (min-width: 1200px) {
   .rwdtxt {
-     font-size: 0.95rem;
+    font-size: 0.95rem;
   }
+
   .rwdh6 {
     font-size: 1.2rem;
- }
+  }
 }
 
 /*兩側空間rwd*/
-.margin-right-left{
-  margin-right: 50px; margin-left: 50px;
+.margin-right-left {
+  margin-right: 50px;
+  margin-left: 50px;
 }
+
 @media (max-width: 800px) {
-  .margin-right-left{
-    margin-right: 0px; margin-left: 0px;
+  .margin-right-left {
+    margin-right: 0px;
+    margin-left: 0px;
   }
 }
+
 @media (min-width: 1200px) {
-  .margin-right-left{
-    margin-right: 50px; margin-left: 50px;
+  .margin-right-left {
+    margin-right: 50px;
+    margin-left: 50px;
   }
 }
 
@@ -262,4 +274,161 @@
 .floating-area.animate {
   transform: translateY(0);
   opacity: 1;
+}
+
+
+/*landing page ani*/
+.image-container {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+
+#image1 {
+  position: absolute;
+  z-index: -4;
+  width: 100%;
+
+}
+
+#image2 {
+  position: absolute;
+  z-index: -3;
+  width: 100%;
+
+}
+
+#image3 {
+  position: absolute;
+  z-index: -2;
+  width: 100%;
+
+}
+
+#image4 {
+  position: absolute;
+  z-index: -1;
+  width: 100%;
+
+}
+
+#image5 {
+  position: absolute;
+  z-index: 0;
+  width: 100%;
+
+}
+
+#imagewhite {
+  z-index: 0;
+  width: 100%;
+  /* position: fixed; */
+  /*fixe維持在上層*/
+  position: absolute;
+  top: 0px;
+  /*貼上面*/
+  left: 0px;
+  /*貼左邊*/
+}
+
+.animated-title {
+  animation: titlescaleAnimation 10s infinite;
+  /* 启用动画 */
+}
+
+@keyframes titlescaleAnimation {
+
+  0%,
+  100% {
+    transform: scale(0.95);
+  }
+
+  50% {
+    transform: scale(0.98);
+  }
+}
+
+.animated-goldfish {
+  animation: goldfishAnimation 15s infinite;
+  /* 启用动画 */
+}
+
+@keyframes goldfishAnimation {
+  0% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
+
+  100% {
+    transform: translateY(0);
+  }
+}
+
+.animated-head {
+  animation: headAnimation 15s infinite;
+  /* 启用动画 */
+}
+
+@keyframes headAnimation {
+  0% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(15px);
+  }
+
+  100% {
+    transform: translateY(0);
+  }
+}
+
+.text-area {
+  padding: 8% 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background: #fff;
+}
+
+
+/* 首頁按鈕 */
+.index-btn-grid {
+  width: 33%;
+  max-width: 700px; /* 最大宽度 */
+  height: auto; /* 高度自适应 */
+}
+@media screen and (max-width: 800px) {
+  .index-btn-grid {
+    width: 100%;
+  }
+
+}
+
+.index-btn{
+  background-color: #FFFFFF;
+  border:1px solid #ccc!important
+}
+
+/*首頁標題*/
+.display-left {
+  position: absolute;
+  top: 83%;
+  left: 9%;
+  transform: translate(0%, -50%);
+  -ms-transform: translate(-0%, -50%)
+}
+@media screen and (max-width: 800px) {
+  .display-left {
+    position: absolute;
+    top: 110%;
+    left: 4%;
+    transform: translate(0%, -50%);
+    -ms-transform: translate(-0%, -50%)
+  }
 }
