@@ -407,7 +407,11 @@
   .index-btn-grid {
     width: 100%;
   }
-
+}
+@media screen and (max-width: 500px) {
+  .index-btn-grid {
+    display: none;
+  }
 }
 
 .index-btn{
