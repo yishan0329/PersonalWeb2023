@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>YISHAN</title>
+    <link rel="shortcut icon" href="img/favicon.ico">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="MYCSS.css">
+    <link rel="stylesheet" href="mystyle.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style type="text/css">
+        body,
+        h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 36px;
+            font-weight: bold;
+        }
+
+        p {
+            font-family: 'Montserrat';
+            color: #666666;
+        }
+
+        /*圖片下邊界*/
+        .w3-row-padding img {
+            margin-bottom: 30px
+        }
+
+        /*圖片中間間隔*/
+        .w3-row-padding,
+        .w3-row-padding>.w3-half,
+        .w3-row-padding>.w3-third,
+        .w3-row-padding>.w3-twothird,
+        .w3-row-padding>.w3-threequarter,
+        .w3-row-padding>.w3-quarter,
+        .w3-row-padding>.w3-col {
+            padding: 12px;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <!-- Sidebar -->
+    <nav class="Sidebar Animate-top " style="display:none;padding-top:150px" id="mySidebar">
+        <a href="javascript:void(0)" onclick="Close()" class="Button Display-topright" style="padding:6px 24px">
+            <i class="fa fa-remove"></i>
+        </a>
+        <div class="Bar-block Center">
+            <a href="GameDesign.html" class="Bar-text-grey Button">Game Design</a>
+            <a href="Illustration.html" class="Bar-text-grey Button">Illustration</a>
+            <a href="Prints.html" class="Bar-text-grey Button">Print</a>
+            <a href="Vedio.html" class="Bar-text-grey Button">Vedio</a>
+            <a href="WebDesign.html" class="Bar-text-grey Button">Web Design</a>
+        </div>
+    </nav>
+
+    <!-- !PAGE CONTENT! -->
+    <div class="Content">
+
+        <!-- Header -->
+        <div style="opacity: 0.60">
+            <span class="Button Content-list" onclick="Open()"><i class="fa fa-bars"></i></span>
+            <div class="Clear"></div>
+            <header class="Center w3-margin-bottom">
+                <a href="index.html">
+                    <h1 class="Button"><b>蔡宜珊</b></h1>
+                </a>
+                <p style="font-size:16px"><b>paintingrainbowray@gmail.com</b></p>
+            </header>
+
+        </div>
+
+
+        <!-- title -->
+        <div style=" padding:50px 10px 10px">
+            <!-- 中文 -->
+            <h1 class="Center" style="color:#666666">DIGITIMES INC.<br>動畫教案素材製作</h1>
+            <hr>
+        </div>
+
+        <!-- Projects Grid ,ad ------------------------------------------------------------------------------->
+        <div class="w3-row-padding tabcontent margin-right-left" id="tsmcCnt">
+            <section class="sc_sponsor main_sc">
+                <div>
+                    <!-- 子分類 -->
+                    <div class="sort_cnt" style="position: relative; top: -50px;">
+                        <div class="sorts" id="tsmc_Sort">
+                            <div class="item">
+                                <a id="all" data-cat="all" class="item_link sort_btn_s text-white rwdtxt">所有作品</a>
+                            </div>
+                            <div class="item">
+                                <a id="Character" data-cat="character"
+                                    class="item_link sort_btn_s text-white rwdtxt">角色</a>
+                            </div>
+                            <div class="item">
+                                <a id="Scene" data-cat="scene" class="item_link sort_btn_s text-white rwdtxt">場景</a>
+                            </div>
+                            <div class="item">
+                                <a id="Cover" data-cat="cover" class="item_link sort_btn_s text-white rwdtxt">片頭設計</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="sponsors" id="tsmc_Sort">
+                            <!-- 左行 -->
+                            <div class="w3-third" style=" padding: 20px;">
+                                <!-- 場景 -->
+                                <div class="tsmc_item" data-cat="scene">
+                                    <img src="img\digitimes\project\tsmc_ani\Carbon\晶片博士家-廚房.jpg" style="width:100%">
+                                    <img src="img\digitimes\project\tsmc_ani\DNA\一_開場_影_擦美白霜示意.jpg" style="width:100%">
+                                    <img src="img\digitimes\project\tsmc_ani\Green\飛行器停機坪.jpg" style="width:100%">
+                                    <img src="img\digitimes\project\tsmc_ani\Green\對話區.jpg" style="width:100%">
+                                </div>
+
+                                <!-- 片頭設計 -->
+                                <div class="tsmc_item" data-cat="cover">
+                                    <img src="img\digitimes\project\tsmc_ani\Carbon\cover.jpg" style="width:100%">
+                                </div>
+                                <!-- 角色 -->
+                                <div class="tsmc_item" data-cat="character">
+                                    <img src="img\digitimes\project\tsmc_ani\Green\speak.gif" style="width:100%">
+                                </div>
+                            </div>
+
+                            <!-- 中行 -->
+                            <div class="w3-third" style=" padding: 20px;">
+                                <!-- 場景 -->
+                                <div class="tsmc_item" data-cat="scene"> 
+                                    <img src="img\digitimes\project\tsmc_ani\DNA\二_DNA組成_互動_滿版凸顯細胞核區域圖.jpg" style="width:100%">
+                                    <img src="img\digitimes\project\tsmc_ani\DNA\三_染色體的影響_互動_互動示意.jpg" style="width:100%">
+                                    <img src="img\digitimes\project\tsmc_ani\DNA\三_染色體的影響_影_10-4示意.jpg" style="width:100%">
+                                    <img src="img\digitimes\project\tsmc_ani\DNA\四_現代DNA應用_影片_16-4示意.jpg" style="width:100%">
+                                </div>
+
+                                <!-- 片頭設計 -->
+                                <div class="tsmc_item" data-cat="cover">
+                                    <img src="img\digitimes\project\tsmc_ani\DNA\示意.jpg" style="width:100%">
+                                    <img src="img\digitimes\project\tsmc_ani\DNA\建築說明.jpg" style="width:100%">
+                                </div>
+                                <!-- 角色 -->
+                                <div class="tsmc_item" data-cat="character">
+                                    <img src="img\digitimes\project\tsmc_ani\Green\滴管.gif" style="width:100%">
+                                </div>
+                            </div>
+
+                            <!-- 右行 -->
+                            <div class="w3-third" style=" padding: 20px;">
+                                <!-- 場景 -->
+                                <div class="tsmc_item" data-cat="scene">
+                                    <img src="img\digitimes\project\tsmc_ani\Green\互動4_互動畫面示意.jpg" style="width:100%">
+                                    <img src="img\digitimes\project\tsmc_ani\Green\影片3_哭泣地球示意.jpg" style="width:100%">
+                                </div>
+                                <!-- 片頭設計 -->
+                                <div class="tsmc_item" data-cat="cover">
+                                    <img src="img\digitimes\project\tsmc_ani\Green\示意.jpg" style="width:100%">
+                                    <img src="img\digitimes\project\tsmc_ani\Green\建築說明.jpg" style="width:100%">
+                                </div>
+                                <!-- 角色 -->
+                                <div class="tsmc_item" data-cat="character">
+                                    <img src="img\digitimes\project\tsmc_ani\Green\疑問-說話.gif" style="width:100%">
+                                    <img src="img\digitimes\project\tsmc_ani\Green\開心說話.gif" style="width:100%">
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- End Page Content -->
+    </div>
+
+    <!-- Footer -->
+    <footer class="Footer" style="margin-top:128px">
+        <a href="https://www.facebook.com/daphnetsaidaphnetsai"><i
+                class="fa fa-facebook-official Hover-opacity"></i></a>
+        <a href="https://www.instagram.com/tsai_yi_shan/"><i class="fa fa-instagram Hover-opacity"></i></a>
+        <p style="font-size: 15px;">Copyright © 2023 Design By <a href="index.html" target="_blank">TsaiYishan</a></p>
+    </footer>
+
+
+    <script>
+        // Open and close sidebar
+        function Open() {
+            document.getElementById("mySidebar").style.width = "100%";
+            document.getElementById("mySidebar").style.display = "block";
+        }
+
+        function Close() {
+            document.getElementById("mySidebar").style.display = "none";
+        }
+
+        // Get the element with id="defaultOpen" and click on it
+        document.getElementById("defaultOpen").click();
+
+    </script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!--子相簿分類:ad-->
+    <script type="text/javascript">
+        var tsmc = {
+            sort: function (items) {
+                $('#tsmcCnt').find('.tsmc_item').not(items).fadeOut(500);
+                items.fadeIn(500);
+            },
+            showAll: function (items) {
+                items.fadeIn(500);
+            },
+            doSort: function () {
+                $('#tsmc_Sort').on('click', '.item_link', function () {
+                    $('#tsmc_Sort .item_link').removeClass('is_active');
+                    $(this).addClass('is_active');
+                    // console.log($(this).prop('id'));
+                    var $sort = $(this);
+                    if ($sort.is('#all')) {
+                        tsmc.showAll($('.tsmc_item', '#tsmcCnt'));
+                    } else {
+                        var items = $('.tsmc_item[data-cat=' + $sort.data('cat') + ']', '#tsmcCnt');
+                        tsmc.sort(items);
+                    }
+                });
+            }
+        };
+        tsmc.doSort();
+        ;
+    </script>
+
+</body>
+
+</html>
