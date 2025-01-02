@@ -82,11 +82,14 @@
 			<hr>
 			<!-- 大分類頁 -->
 			<div class="sorts">
-				<a href="#" onclick="openPage('ad', this, '#6C6C6C')" class="tablink sort_btn text-white rwdh6">廣告</a>
-				<a href="#" onclick="openPage('kv', this, '#6C6C6C')" class="tablink sort_btn text-white rwdh6"
+				<a href="#" onclick="openPage('ad', this, '#6C6C6C')" class="tablink sort_btn rwdh6">廣告</a>
+				<a href="#" onclick="openPage('kv', this, '#6C6C6C')" class="tablink sort_btn rwdh6"
 					id="defaultOpen">主視覺</a>
+				<a href="#" onclick="openPage('project', this, '#6C6C6C')"
+					class="tablink sort_btn rwdh6">專案</a>
 				<a href="#" onclick="openPage('layout', this, '#6C6C6C')"
-					class="tablink sort_btn text-white rwdh6">布置物</a>
+					class="tablink sort_btn rwdh6">布置物</a>
+					
 			</div>
 		</div>
 
@@ -98,17 +101,17 @@
 					<div class="sort_cnt" style="position: relative; top: -50px;">
 						<div class="sorts" id="Ad_Sort">
 							<div class="item">
-								<a id="all" data-cat="all" class="item_link sort_btn_s text-white rwdtxt">所有作品</a>
+								<a id="all" data-cat="all" class="item_link sort_btn_s rwdtxt">所有作品</a>
+							</div>
+							<div class="item">
+								<a id="Ad" data-cat="ad" class="item_link sort_btn_s rwdtxt">廣告</a>
 							</div>
 							<div class="item">
 								<a id="Print_ad" data-cat="print_ad"
-									class="item_link sort_btn_s text-white rwdtxt">平面廣告</a>
+									class="item_link sort_btn_s rwdtxt">平面廣告</a>
 							</div>
 							<div class="item">
-								<a id="Edm" data-cat="edm" class="item_link sort_btn_s text-white rwdtxt">edm</a>
-							</div>
-							<div class="item">
-								<a id="Ad" data-cat="ad" class="item_link sort_btn_s text-white rwdtxt">廣告</a>
+								<a id="Edm" data-cat="edm" class="item_link sort_btn_s rwdtxt">edm</a>
 							</div>
 						</div>
 					</div>
@@ -379,12 +382,6 @@
 			</div>
 			<!-- 中行 -->
 			<div class="w3-third">
-				<div class="container">
-					<img src="img\digitimes\project\tsmc_ani\Green\示意.jpg" style="width:100%" class="image">
-					<div class="overlay">
-						<a href="2023_tsmc_ani.html" target="_blank"><div class="text">教案動畫視覺<br>2023</div></a>
-					</div>
-				</div>
 				<!-- 2024_12 -->
 				<img src="img\digitimes\kv\2024_10to12\1132667.jpg" style="width:100%" class="image">
 				<!-- 2024_7 -->
@@ -412,6 +409,24 @@
 				<img src="" style="width:100%">
 			</div>
 		</div>
+		<!-- Projects Grid ,project ------------------------------------------------------------------------------->
+		<div class="w3-row-padding tabcontent margin-right-left" id="project">
+			<!-- 左行 -->
+			<div class="w3-third">
+			</div>
+			<!-- 中行 -->
+			<div class="w3-third">
+				<div class="container">
+					<img src="img\digitimes\project\tsmc_ani\Green\示意.jpg" style="width:100%" class="image">
+					<div class="overlay">
+						<a href="2023_tsmc_ani.html" target="_blank"><div class="text">教案動畫視覺<br>2023</div></a>
+					</div>
+				</div>
+			</div>
+			<!-- 右行 -->
+			<div class="w3-third">
+			</div>
+		</div>
 
 		<!-- Projects Grid ,layout ------------------------------------------------------------------------------->
 		<div class="w3-row-padding tabcontent margin-right-left" id="layout">
@@ -421,11 +436,11 @@
 					<div class="sort_cnt" style="position: relative; top: -50px;">
 						<div class="sorts" id="layoutSort">
 							<div class="item">
-								<a id="all" data-cat="all" class="layout_link sort_btn_s text-white rwdtxt">所有作品</a>
+								<a id="all" data-cat="all" class="layout_link sort_btn_s rwdtxt">所有作品</a>
 							</div>
 							<div class="item">
 								<a id="digital" data-cat="digital"
-									class="layout_link sort_btn_s text-white rwdtxt">字卡</a>
+									class="layout_link sort_btn_s rwdtxt">字卡</a>
 							</div>
 						</div>
 					</div>

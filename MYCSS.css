@@ -152,37 +152,36 @@ hr{border:0;border-top:1px solid #eee;margin:20px 0}
 .sort_btn{
     display: block;
     border-radius: 8px;
-    padding: 0.75em 1.5em;
-    background-color: #424242;
+    padding: 0.75em 1em;
     font-size: 1em;
     line-height: 1;
-    color: #fff;
+    color: #666666;
     cursor: pointer;
     transition: 250ms;
     text-decoration: none;
-    margin: 10px;
+    margin: 5px;
 }
 .sort_btn:hover {
 	color: white;
 	background-color: #252525;
   }
 .sorts {
-    padding: 20px 0;
+    padding: 15px 0;
     display: flex;
     justify-content: center;
 }
 
 .sort_btn_s{
-    display: block;
-    border-radius: 8px;
-    padding: 0.75em 1.5em;
-    background-color: #7a7a7a;
-    font-size: 1em;
-    line-height: 1;
-    color: #fff;
-    cursor: pointer;
-    transition: 250ms;
-    text-decoration: none;
+  display: block;
+  border-radius: 8px;
+  padding: 0.75em 1em;
+  font-size: 1em;
+  line-height: 1;
+  color: #666666;
+  cursor: pointer;
+  transition: 250ms;
+  text-decoration: none;
+  margin: 10px;
     margin: 0px 5px;
 }
 .sort_btn_s:hover {
@@ -190,5 +189,14 @@ hr{border:0;border-top:1px solid #eee;margin:20px 0}
 	background-color: #252525;
   }
 
+.layout_link.is_active{
+  color: white;
+	background-color: rgb(108, 108, 108);
+}
+
+.sort_btn_s.is_active{
+  color: white;
+	background-color: rgb(108, 108, 108);
+}
 
 
