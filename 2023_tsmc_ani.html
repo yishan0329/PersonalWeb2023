@@ -90,17 +90,17 @@
                     <div class="sort_cnt" style="position: relative; top: -50px;">
                         <div class="sorts" id="tsmc_Sort">
                             <div class="item">
-                                <a id="all" data-cat="all" class="item_link sort_btn_s text-white rwdtxt">所有作品</a>
+                                <a id="all" data-cat="all" class="item_link sort_btn_s rwdtxt">所有作品</a>
                             </div>
                             <div class="item">
                                 <a id="Character" data-cat="character"
-                                    class="item_link sort_btn_s text-white rwdtxt">角色</a>
+                                    class="item_link sort_btn_s rwdtxt">角色</a>
                             </div>
                             <div class="item">
-                                <a id="Scene" data-cat="scene" class="item_link sort_btn_s text-white rwdtxt">場景</a>
+                                <a id="Scene" data-cat="scene" class="item_link sort_btn_s rwdtxt">場景</a>
                             </div>
                             <div class="item">
-                                <a id="Cover" data-cat="cover" class="item_link sort_btn_s text-white rwdtxt">片頭設計</a>
+                                <a id="Cover" data-cat="cover" class="item_link sort_btn_s rwdtxt">片頭設計</a>
                             </div>
                         </div>
                     </div>
@@ -108,6 +108,10 @@
                         <div class="sponsors" id="tsmc_Sort">
                             <!-- 左行 -->
                             <div class="w3-third" style=" padding: 20px;">
+                                <!-- 片頭設計 -->
+                                <div class="tsmc_item" data-cat="cover">
+                                    <img src="img\digitimes\project\tsmc_ani\Carbon\cover.jpg" style="width:100%">
+                                </div>
                                 <!-- 場景 -->
                                 <div class="tsmc_item" data-cat="scene">
                                     <img src="img\digitimes\project\tsmc_ani\Carbon\晶片博士家-廚房.jpg" style="width:100%">
@@ -116,10 +120,7 @@
                                     <img src="img\digitimes\project\tsmc_ani\Green\對話區.jpg" style="width:100%">
                                 </div>
 
-                                <!-- 片頭設計 -->
-                                <div class="tsmc_item" data-cat="cover">
-                                    <img src="img\digitimes\project\tsmc_ani\Carbon\cover.jpg" style="width:100%">
-                                </div>
+                                
                                 <!-- 角色 -->
                                 <div class="tsmc_item" data-cat="character">
                                     <img src="img\digitimes\project\tsmc_ani\Green\speak.gif" style="width:100%">
@@ -128,6 +129,11 @@
 
                             <!-- 中行 -->
                             <div class="w3-third" style=" padding: 20px;">
+                                <!-- 片頭設計 -->
+                                <div class="tsmc_item" data-cat="cover">
+                                    <img src="img\digitimes\project\tsmc_ani\DNA\示意.jpg" style="width:100%">
+                                    <img src="img\digitimes\project\tsmc_ani\DNA\建築說明.jpg" style="width:100%">
+                                </div>
                                 <!-- 場景 -->
                                 <div class="tsmc_item" data-cat="scene"> 
                                     <img src="img\digitimes\project\tsmc_ani\DNA\二_DNA組成_互動_滿版凸顯細胞核區域圖.jpg" style="width:100%">
@@ -136,11 +142,6 @@
                                     <img src="img\digitimes\project\tsmc_ani\DNA\四_現代DNA應用_影片_16-4示意.jpg" style="width:100%">
                                 </div>
 
-                                <!-- 片頭設計 -->
-                                <div class="tsmc_item" data-cat="cover">
-                                    <img src="img\digitimes\project\tsmc_ani\DNA\示意.jpg" style="width:100%">
-                                    <img src="img\digitimes\project\tsmc_ani\DNA\建築說明.jpg" style="width:100%">
-                                </div>
                                 <!-- 角色 -->
                                 <div class="tsmc_item" data-cat="character">
                                     <img src="img\digitimes\project\tsmc_ani\Green\滴管.gif" style="width:100%">
@@ -149,16 +150,17 @@
 
                             <!-- 右行 -->
                             <div class="w3-third" style=" padding: 20px;">
-                                <!-- 場景 -->
-                                <div class="tsmc_item" data-cat="scene">
-                                    <img src="img\digitimes\project\tsmc_ani\Green\互動4_互動畫面示意.jpg" style="width:100%">
-                                    <img src="img\digitimes\project\tsmc_ani\Green\影片3_哭泣地球示意.jpg" style="width:100%">
-                                </div>
                                 <!-- 片頭設計 -->
                                 <div class="tsmc_item" data-cat="cover">
                                     <img src="img\digitimes\project\tsmc_ani\Green\示意.jpg" style="width:100%">
                                     <img src="img\digitimes\project\tsmc_ani\Green\建築說明.jpg" style="width:100%">
                                 </div>
+                                <!-- 場景 -->
+                                <div class="tsmc_item" data-cat="scene">
+                                    <img src="img\digitimes\project\tsmc_ani\Green\互動4_互動畫面示意.jpg" style="width:100%">
+                                    <img src="img\digitimes\project\tsmc_ani\Green\影片3_哭泣地球示意.jpg" style="width:100%">
+                                </div>
+                                
                                 <!-- 角色 -->
                                 <div class="tsmc_item" data-cat="character">
                                     <img src="img\digitimes\project\tsmc_ani\Green\疑問-說話.gif" style="width:100%">
@@ -200,7 +202,7 @@
 
     </script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <!--子相簿分類:ad-->
+    <!--子相簿分類-->
     <script type="text/javascript">
         var tsmc = {
             sort: function (items) {
