@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>YISHAN</title>
+	<link rel="shortcut icon" href="img/favicon.ico">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="MYCSS.css">
+	<link rel="stylesheet" href="mystyle.css">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<style type="text/css">
+		body,
+		h1 {
+			font-family: 'Montserrat', sans-serif;
+			font-size: 36px;
+			font-weight: bold;
+		}
+
+		p {
+			font-family: 'Montserrat';
+			color: #666666;
+		}
+
+		/*圖片下邊界*/
+		.w3-row-padding img {
+			margin-bottom: 20px
+		}
+
+		/*圖片中間間隔*/
+		.w3-row-padding,
+		.w3-row-padding>.w3-half,
+		.w3-row-padding>.w3-third,
+		.w3-row-padding>.w3-twothird,
+		.w3-row-padding>.w3-threequarter,
+		.w3-row-padding>.w3-quarter,
+		.w3-row-padding>.w3-col {
+			padding: 12px;
+		}
+	</style>
+
+</head>
+
+<body>
+
+	<!-- Sidebar -->
+	<nav class="Sidebar Animate-top " style="display:none;padding-top:150px" id="mySidebar">
+		<a href="javascript:void(0)" onclick="Close()" class="Button Display-topright" style="padding:6px 24px">
+			<i class="fa fa-remove"></i>
+		</a>
+		<div class="Bar-block Center">
+			<a href="GameDesign.html" class="Bar-text-grey Button">Game Design</a>
+			<a href="Illustration.html" class="Bar-text-grey Button">Illustration</a>
+			<a href="Prints.html" class="Bar-text-grey Button">Print</a>
+			<a href="Video.html" class="Bar-text-grey Button">Video</a>
+			<a href="WebDesign.html" class="Bar-text-grey Button">Web Design</a>
+		</div>
+	</nav>
+
+	<!-- !PAGE CONTENT! -->
+	<div class="Content">
+
+		<!-- Header -->
+		<div style="opacity: 0.60">
+			<span class="Button Content-list" onclick="Open()"><i class="fa fa-bars"></i></span>
+			<div class="Clear"></div>
+			<header class="Center w3-margin-bottom">
+				<a href="index.html">
+					<h1 class="Button"><b>蔡宜珊</b></h1>
+				</a>
+				<p style="font-size:16px"><b>paintingrainbowray@gmail.com</b></p>
+			</header>
+
+		</div>
+
+
+		<!-- title -->
+		<div style=" padding:50px">
+			<!-- 中文 -->
+			<h1 class="Center" style="color:#666666">7don活動商品頁<br>2024</h1>
+		</div>
+
+		<!-- Projects Grid -->
+		<div class="w3-row-padding margin-right-left" id="myphoto">
+			<!-- 左行 -->
+			<div class="w3-third">
+				<div class="container">
+					<img src="img/WebDesign/2024_7don/首頁.jpg" style="width:100%" class="image">
+				</div>
+				<div class="container">
+					<img src="img/WebDesign/2024_7don/結帳付款.jpg" style="width:100%" class="image">
+				</div>
+				
+			</div>
+
+			<!-- 中行 -->
+			<div class="w3-third">
+				<div class="container">
+					<img src="img/WebDesign/2024_7don/活動主頁.jpg" style="width:100%" class="image">
+				</div>
+				<div class="container">
+					<img src="img/WebDesign/2024_7don/交易明細.jpg" style="width:100%" class="image">
+				</div>
+				
+			</div>
+			<!-- 右行 -->
+			<div class="w3-third">
+				<div class="container">
+					<img src="img/WebDesign/2024_7don/購物車.jpg" style="width:100%" class="image">
+				</div>
+				<div class="container">
+					<img src="img/WebDesign/2024_7don/訂單紀錄.jpg" style="width:100%" class="image">
+				</div>
+			</div>
+		</div>
+
+
+		<!-- End Page Content -->
+	</div>
+
+	<!-- Footer -->
+	<footer class="Footer" style="margin-top:128px">
+		<a href="https://www.facebook.com/daphnetsaidaphnetsai"><i
+				class="fa fa-facebook-official Hover-opacity"></i></a>
+		<a href="https://www.instagram.com/tsai_yi_shan/"><i class="fa fa-instagram Hover-opacity"></i></a>
+		<p style="font-size: 15px;">Copyright © 2023 Design By <a href="index.html" target="_blank">TsaiYishan</a></p>
+	</footer>
+
+
+	<script>
+		// Open and close sidebar
+		function Open() {
+			document.getElementById("mySidebar").style.width = "100%";
+			document.getElementById("mySidebar").style.display = "block";
+		}
+
+		function Close() {
+			document.getElementById("mySidebar").style.display = "none";
+		}
+	</script>
+
+
+
+</body>
+
+</html>
