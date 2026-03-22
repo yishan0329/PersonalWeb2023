@@ -15,20 +15,28 @@ function Close() {
 }
 
 
-// ── 2. Scroll Fade Panels ───────────────
+// ── 2. Scroll Fade Panels + Freelance Tab 聯動 ──
 (function () {
-  const PANEL_COUNT = 3;
-  const wrapper = document.getElementById('about-scroll-wrapper');
-  const sticky  = document.getElementById('about-sticky');
-  const spacer  = document.getElementById('about-spacer');
-  const panels  = document.querySelectorAll('.about-panel');
-  const dots    = document.querySelectorAll('.scroll-dot');
 
-  let currentPanel = 0;
+  // 滾動總段數：panel-1(1段) + panel-2(1段) + panel-freelance(3段) + panel-exhibitions(1段) = 6段
+  var TOTAL_STEPS   = 6;
+  var PANEL_COUNT   = 4;   // about-panel 數量
+  var TAB_STEPS     = 3;   // freelance 內 tab 數
+  var TAB_ORDER     = ['web', 'video', 'visual'];
+
+  var wrapper = document.getElementById('about-scroll-wrapper');
+  var sticky  = document.getElementById('about-sticky');
+  var spacer  = document.getElementById('about-spacer');
+  var panels  = document.querySelectorAll('.about-panel');
+  var dots    = document.querySelectorAll('.scroll-dot');
+
+  var currentPanel  = 0;
+  var currentTabIdx = 0;
+  var freelanceDone = false;
 
   function resize() {
-    const vh = window.innerHeight;
-    spacer.style.height = (PANEL_COUNT * vh) + 'px';
+    var vh = window.innerHeight;
+    spacer.style.height = (TOTAL_STEPS * vh) + 'px';
     sticky.style.height = vh + 'px';
   }
   resize();
@@ -43,28 +51,91 @@ function Close() {
     dots[currentPanel].classList.add('active');
   }
 
+  function showTab(tabIdx) {
+    if (tabIdx === currentTabIdx) return;
+    currentTabIdx = tabIdx;
+    var tabName = TAB_ORDER[tabIdx];
+    document.querySelectorAll('.ftab').forEach(function(b) {
+      b.classList.toggle('active', b.dataset.tab === tabName);
+    });
+    document.querySelectorAll('.ftab-content').forEach(function(c) {
+      c.classList.toggle('active', c.dataset.tab === tabName);
+    });
+    if (tabIdx === TAB_STEPS - 1) {
+      freelanceDone = true;
+      var lockedDot = document.querySelector('.scroll-dot[data-panel="3"]');
+      if (lockedDot) lockedDot.classList.remove('locked');
+    }
+  }
+
   window.addEventListener('scroll', function () {
-    const rect          = wrapper.getBoundingClientRect();
-    const wrapperTop    = -rect.top;
-    const wrapperHeight = wrapper.offsetHeight - window.innerHeight;
+    var rect          = wrapper.getBoundingClientRect();
+    var wrapperTop    = -rect.top;
+    var wrapperHeight = wrapper.offsetHeight - window.innerHeight;
 
     if (wrapperTop < 0 || wrapperTop > wrapperHeight) return;
 
-    const progress = wrapperTop / wrapperHeight;
-    const panelIdx = Math.min(PANEL_COUNT - 1, Math.floor(progress * PANEL_COUNT));
-    showPanel(panelIdx);
+    var progress  = wrapperTop / wrapperHeight;
+    var step      = Math.min(TOTAL_STEPS - 1, Math.floor(progress * TOTAL_STEPS));
+
+    // step 0 → panel-1, step 1 → panel-2
+    // step 2/3/4 → panel-freelance (tab web/video/visual)
+    // step 5 → panel-exhibitions（需 freelanceDone）
+    if (step <= 1) {
+      showPanel(step);
+    } else if (step <= 4) {
+      showPanel(2);
+      showTab(step - 2);
+    } else {
+      if (freelanceDone) {
+        showPanel(3);
+      } else {
+        showPanel(2);
+        showTab(TAB_STEPS - 1);
+      }
+    }
   }, { passive: true });
 
   dots.forEach(function (dot, i) {
     dot.addEventListener('click', function () {
-      const wrapperTop    = wrapper.getBoundingClientRect().top + window.scrollY;
-      const sectionHeight = wrapper.offsetHeight - window.innerHeight;
-      const target        = wrapperTop + (i / PANEL_COUNT) * sectionHeight;
+      if (i === 3 && !freelanceDone) return;
+      var wrapperTop    = wrapper.getBoundingClientRect().top + window.scrollY;
+      var wrapperHeight = wrapper.offsetHeight - window.innerHeight;
+      var stepMap       = [0, 1, 2, TOTAL_STEPS - 1];
+      var target        = wrapperTop + (stepMap[i] / TOTAL_STEPS) * wrapperHeight;
       window.scrollTo({ top: target, behavior: 'smooth' });
     });
   });
 
+  // 初始鎖定第 4 個圓點
+  var lockedDot = document.querySelector('.scroll-dot[data-panel="3"]');
+  if (lockedDot) lockedDot.classList.add('locked');
+
 })();
+
+
+// ── 4. Freelance Tab 手動點擊 ──────────
+document.querySelectorAll('.ftab').forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    var tabName  = this.dataset.tab;
+    var TAB_ORDER = ['web', 'video', 'visual'];
+    var stepMap  = { web: 2, video: 3, visual: 4 };
+    var TOTAL_STEPS = 6;
+
+    document.querySelectorAll('.ftab').forEach(function(b) {
+      b.classList.toggle('active', b.dataset.tab === tabName);
+    });
+    document.querySelectorAll('.ftab-content').forEach(function(c) {
+      c.classList.toggle('active', c.dataset.tab === tabName);
+    });
+
+    var wrapper      = document.getElementById('about-scroll-wrapper');
+    var wrapperTop   = wrapper.getBoundingClientRect().top + window.scrollY;
+    var wrapperHeight = wrapper.offsetHeight - window.innerHeight;
+    var target       = wrapperTop + (stepMap[tabName] / TOTAL_STEPS) * wrapperHeight;
+    window.scrollTo({ top: target, behavior: 'instant' });
+  });
+});
 
 
 // ── 3. Carousel（自動輪播）──────────────

@@ -119,7 +119,7 @@
     /* Photo */
     .about-photo {
       width: 100%;
-      border-radius: 3px;
+      border-radius: 20px;
       object-fit: cover;
       display: block;
     }
@@ -167,26 +167,48 @@
 
 
     /* ── Responsive ── */
-    @media (max-width: 720px) {
-      .panel-grid {
-        grid-template-columns: 1fr;
-        gap: 28px;
-      }
+@media (max-width: 720px) {
 
-      .about-panel {
-        padding: 56px 24px 40px;
-        align-items: flex-start;
-        overflow-y: auto;
-      }
+  /* 主視覺：手機版獨立佔滿一個螢幕高度，下滑才進入 Panel */
+  .image-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100svh;
+    width: 100%;
+  }
 
-      .panel-label {
-        left: 24px;
-      }
+  /* nav button header 手機版隱藏（主視覺下方的按鈕區） */
+  header.w3-display-container {
+    display: none;
+  }
 
-      #scroll-dots {
-        right: 12px;
-      }
-    }
+  /* 每個 panel 高度限制在 1000px 內，超出可捲動 */
+  #about-sticky {
+    height: 100svh;
+    max-height: 1000px;
+  }
+
+  .about-panel {
+    padding: 48px 20px 32px;
+    align-items: flex-start;
+    overflow-y: auto;
+    max-height: 1000px;
+  }
+
+  .panel-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .panel-label {
+    left: 20px;
+  }
+
+  #scroll-dots {
+    right: 10px;
+  }
+}
   </style>
 </head>
 
@@ -287,8 +309,8 @@
               <!-- ↓ 加這個 wrapper -->
               <div class="project-links">
                 <a href="2025_auto.html" target="_blank" >2025自動化大展</a>
-                <a href="https://www.digitimes.com.tw/seminar/dailyentrepreneur/" target="_blank">創業家日報遊戲視覺</a>
-                <a href="2023_tsmc_ani.html" target="_blank">台積電教案動畫視覺</a>
+                <a href="https://www.digitimes.com.tw/seminar/dailyentrepreneur/" target="_blank">2024創業家日報遊戲視覺</a>
+                <a href="2023_tsmc_ani.html" target="_blank">2023台積電教案動畫視覺</a>
                 <span>Stable Diffusion建置</span>
               </div>
 
@@ -302,9 +324,67 @@
           </div>
         </div>
 
-        <!-- ▸ Panel 3: 獲獎 + 展演經歷 -->
+
+        <!-- ▸ panel-freelance: 接案作品 -->
+        <div class="about-panel" id="panel-freelance">
+          <span class="panel-label">03 &nbsp;/&nbsp; Freelance</span>
+          <div class="panel-grid" style="grid-template-columns: 1fr; max-width:1100px;">
+            <p class="text-gray text22" style="text-align: center;"><b>專案實例</b></p>
+            <div class="freelance-tabs">
+              <button class="ftab active" data-tab="web">網頁設計</button>
+              <button class="ftab" data-tab="video">影片剪輯</button>
+              <button class="ftab" data-tab="visual">視覺設計</button>
+            </div>
+
+            <div class="ftab-content active" data-tab="web">
+              <div class="freelance-grid">
+                <a href="https://ec.7don.com.tw/panasonictaipeicityrun" class="freelance-item">
+                  <img src="img/WebDesign/2025_panasonic遊戲/首頁.png" alt="網頁作品1">
+                  <p class="text-gray text15">panasonic網頁遊戲</p>
+                </a>
+                <a href="https://tpfgrandprix.7don.com.tw/" class="freelance-item">
+                  <img src="img/WebDesign/2025_tpfgp/2025tpfgp.jpg" alt="網頁作品2">
+                  <p class="text-gray text15">2025 Taichung Power Fitness Grand Prix</p>
+                </a>
+                <div class="freelance-item">
+                  <img src="img/WebDesign/虛擬畫廊.jpg" alt="網頁作品3">
+                  <p class="text-gray text15">線上畫廊</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="ftab-content" data-tab="video">
+              <div class="freelance-grid">
+                <a href="https://www.youtube.com/playlist?list=PLkAO237EKMKtlEdDKWMRME7M8IRXOqSYW" class="freelance-item">
+                  <img src="img/video/TSF2023_4.jpg" alt="影片作品1">
+                  <p class="text-gray text15">台灣科學節廣告動畫製作</p>
+                </a>
+                <a href="https://www.facebook.com/reel/255738734140500" class="freelance-item">
+                  <img src="img/video/傳播節短片.jpg" alt="影片作品2">
+                  <p class="text-gray text15">「人造關係—開箱：傳播科技特展」短片</p>
+                </a>
+              </div>
+            </div>
+
+            <div class="ftab-content" data-tab="visual">
+              <div class="freelance-grid">
+                <div class="freelance-item">
+                  <img src="img\Illustration\2024科學節佈置物layout.jpg" alt="視覺作品1">
+                  <p class="text-gray text15">科學節攤位廣宣</p>
+                </div>
+                <a href="https://www.behance.net/gallery/153014083/_" class="freelance-item">
+                  <img src="img/GameDesign/文創工作室/海報.jpg" alt="視覺作品2">
+                  <p class="text-gray text15">《屋乎挨栽》3D數位模型資料系統 UI設計</p>
+                </a>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- ▸ Panel 4: 獲獎 + 展演經歷 -->
         <div class="about-panel" id="panel-3">
-          <span class="panel-label">03 &nbsp;/&nbsp; Exhibitions</span>
+          <span class="panel-label">04 &nbsp;/&nbsp; Exhibitions</span>
           <div class="panel-grid">
             <div>
               <p class="text-gray text22"><b>獲獎經歷</b></p>
@@ -352,7 +432,8 @@
   <div id="scroll-dots">
     <div class="scroll-dot active" data-panel="0" title="Profile"></div>
     <div class="scroll-dot" data-panel="1" title="Work"></div>
-    <div class="scroll-dot" data-panel="2" title="Exhibitions"></div>
+    <div class="scroll-dot" data-panel="2" title="Freelance"></div>
+    <div class="scroll-dot" data-panel="3" title="Exhibitions"></div>
   </div>
 
   <script src="scroll-sections-DIGITIMES.js"></script>
