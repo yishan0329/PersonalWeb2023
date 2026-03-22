@@ -19,24 +19,25 @@ function Close() {
 (function () {
 
   // 滾動總段數：panel-1(1段) + panel-2(1段) + panel-freelance(3段) + panel-exhibitions(1段) = 6段
-  var TOTAL_STEPS   = 6;
-  var PANEL_COUNT   = 4;   // about-panel 數量
-  var TAB_STEPS     = 3;   // freelance 內 tab 數
-  var TAB_ORDER     = ['web', 'video', 'visual'];
+  var TOTAL_STEPS = 6;
+  var PANEL_COUNT = 4;   // about-panel 數量
+  var TAB_STEPS = 3;   // freelance 內 tab 數
+  var TAB_ORDER = ['web', 'video', 'visual'];
 
   var wrapper = document.getElementById('about-scroll-wrapper');
-  var sticky  = document.getElementById('about-sticky');
-  var spacer  = document.getElementById('about-spacer');
-  var panels  = document.querySelectorAll('.about-panel');
-  var dots    = document.querySelectorAll('.scroll-dot');
+  var sticky = document.getElementById('about-sticky');
+  var spacer = document.getElementById('about-spacer');
+  var panels = document.querySelectorAll('.about-panel');
+  var dots = document.querySelectorAll('.scroll-dot');
 
-  var currentPanel  = 0;
+  var currentPanel = 0;
   var currentTabIdx = 0;
   var freelanceDone = false;
 
   function resize() {
     var vh = window.innerHeight;
-    spacer.style.height = (TOTAL_STEPS * vh) + 'px';
+    var multiplier = window.innerWidth <= 720 ? 2.8 : 1; //手機版每段變成 2.8倍高
+    spacer.style.height = (TOTAL_STEPS * vh * multiplier) + 'px';
     sticky.style.height = vh + 'px';
   }
   resize();
@@ -55,10 +56,10 @@ function Close() {
     if (tabIdx === currentTabIdx) return;
     currentTabIdx = tabIdx;
     var tabName = TAB_ORDER[tabIdx];
-    document.querySelectorAll('.ftab').forEach(function(b) {
+    document.querySelectorAll('.ftab').forEach(function (b) {
       b.classList.toggle('active', b.dataset.tab === tabName);
     });
-    document.querySelectorAll('.ftab-content').forEach(function(c) {
+    document.querySelectorAll('.ftab-content').forEach(function (c) {
       c.classList.toggle('active', c.dataset.tab === tabName);
     });
     if (tabIdx === TAB_STEPS - 1) {
@@ -69,14 +70,14 @@ function Close() {
   }
 
   window.addEventListener('scroll', function () {
-    var rect          = wrapper.getBoundingClientRect();
-    var wrapperTop    = -rect.top;
+    var rect = wrapper.getBoundingClientRect();
+    var wrapperTop = -rect.top;
     var wrapperHeight = wrapper.offsetHeight - window.innerHeight;
 
     if (wrapperTop < 0 || wrapperTop > wrapperHeight) return;
 
-    var progress  = wrapperTop / wrapperHeight;
-    var step      = Math.min(TOTAL_STEPS - 1, Math.floor(progress * TOTAL_STEPS));
+    var progress = wrapperTop / wrapperHeight;
+    var step = Math.min(TOTAL_STEPS - 1, Math.floor(progress * TOTAL_STEPS));
 
     // step 0 → panel-1, step 1 → panel-2
     // step 2/3/4 → panel-freelance (tab web/video/visual)
@@ -99,10 +100,10 @@ function Close() {
   dots.forEach(function (dot, i) {
     dot.addEventListener('click', function () {
       if (i === 3 && !freelanceDone) return;
-      var wrapperTop    = wrapper.getBoundingClientRect().top + window.scrollY;
+      var wrapperTop = wrapper.getBoundingClientRect().top + window.scrollY;
       var wrapperHeight = wrapper.offsetHeight - window.innerHeight;
-      var stepMap       = [0, 1, 2, TOTAL_STEPS - 1];
-      var target        = wrapperTop + (stepMap[i] / TOTAL_STEPS) * wrapperHeight;
+      var stepMap = [0, 1, 2, TOTAL_STEPS - 1];
+      var target = wrapperTop + (stepMap[i] / TOTAL_STEPS) * wrapperHeight;
       window.scrollTo({ top: target, behavior: 'smooth' });
     });
   });
@@ -115,24 +116,24 @@ function Close() {
 
 
 // ── 4. Freelance Tab 手動點擊 ──────────
-document.querySelectorAll('.ftab').forEach(function(btn) {
-  btn.addEventListener('click', function() {
-    var tabName  = this.dataset.tab;
+document.querySelectorAll('.ftab').forEach(function (btn) {
+  btn.addEventListener('click', function () {
+    var tabName = this.dataset.tab;
     var TAB_ORDER = ['web', 'video', 'visual'];
-    var stepMap  = { web: 2, video: 3, visual: 4 };
+    var stepMap = { web: 2, video: 3, visual: 4 };
     var TOTAL_STEPS = 6;
 
-    document.querySelectorAll('.ftab').forEach(function(b) {
+    document.querySelectorAll('.ftab').forEach(function (b) {
       b.classList.toggle('active', b.dataset.tab === tabName);
     });
-    document.querySelectorAll('.ftab-content').forEach(function(c) {
+    document.querySelectorAll('.ftab-content').forEach(function (c) {
       c.classList.toggle('active', c.dataset.tab === tabName);
     });
 
-    var wrapper      = document.getElementById('about-scroll-wrapper');
-    var wrapperTop   = wrapper.getBoundingClientRect().top + window.scrollY;
+    var wrapper = document.getElementById('about-scroll-wrapper');
+    var wrapperTop = wrapper.getBoundingClientRect().top + window.scrollY;
     var wrapperHeight = wrapper.offsetHeight - window.innerHeight;
-    var target       = wrapperTop + (stepMap[tabName] / TOTAL_STEPS) * wrapperHeight;
+    var target = wrapperTop + (stepMap[tabName] / TOTAL_STEPS) * wrapperHeight;
     window.scrollTo({ top: target, behavior: 'instant' });
   });
 });
@@ -141,8 +142,8 @@ document.querySelectorAll('.ftab').forEach(function(btn) {
 // ── 3. Carousel（自動輪播）──────────────
 function initCarousel(trackId, dotsId, images, autoplayMs) {
   autoplayMs = autoplayMs || 3000;
-  var track   = document.getElementById(trackId);
-  var dotsEl  = document.getElementById(dotsId);
+  var track = document.getElementById(trackId);
+  var dotsEl = document.getElementById(dotsId);
   var current = 0;
 
   images.forEach(function (src) {
@@ -177,7 +178,61 @@ var DIGITIMES_list = [
   "img/digitimes/kv/2025_1to3/智-桌機Banner.jpg",
   "img/digitimes/kv/2025_1to3/優-桌機Banner.jpg",
   "img/digitimes/kv/2025_1to3/用-桌機Banner.jpg",
-  "img/digitimes/project/2025創業家日報遊戲/首頁.jpg" 
+  "img/digitimes/project/2025創業家日報遊戲/首頁.jpg"
   // 新增圖片加在這裡，格式同上
 ];
 initCarousel("workCarouselTrack", "workCarouselDots", DIGITIMES_list, 3000);
+
+
+// ── 5. 主視覺淡出（手機版）──────────────
+(function () {
+  var hero = document.querySelector('.image-container');
+  if (!hero) return;
+
+  window.addEventListener('scroll', function () {
+    // 只在手機版作用
+    if (window.innerWidth > 720) {
+      hero.style.opacity = '';
+      return;
+    }
+
+    var scrollY   = window.scrollY;
+    var heroHeight = hero.offsetHeight;
+
+    // scrollY 從 0 到 heroHeight 的一半時淡出
+    var fadeEnd    = heroHeight * 0.5;
+    var opacity    = 1 - (scrollY / fadeEnd);
+    opacity        = Math.max(0, Math.min(1, opacity));
+
+    hero.style.opacity = opacity;
+  }, { passive: true });
+})();
+
+// ── 6. Panel 自動縮放（手機版）──────────
+(function () {
+  var MAX_HEIGHT = 800;
+
+  function scalePanel() {
+    if (window.innerWidth > 720) {
+      // 電腦版還原
+      document.querySelectorAll('.about-panel').forEach(function(p) {
+        p.style.transform = '';
+        p.style.transformOrigin = '';
+      });
+      return;
+    }
+
+    var vh = window.innerHeight;
+    if (vh >= MAX_HEIGHT) return; // 夠高就不縮
+
+    var scale = vh / MAX_HEIGHT;
+
+    document.querySelectorAll('.about-panel').forEach(function(p) {
+      p.style.transform = 'scale(' + scale + ')';
+      p.style.transformOrigin = 'top center';
+    });
+  }
+
+  scalePanel();
+  window.addEventListener('resize', scalePanel);
+})();

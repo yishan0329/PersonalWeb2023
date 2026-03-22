@@ -202,7 +202,7 @@
 }
 
 .freelance-item img {
-  height: 280px;       /* 固定圖片高度，三欄整齊對齊 */
+  height: 200px;       /* 固定圖片高度，三欄整齊對齊 */
   object-fit: cover;   /* 裁切填滿，不變形 */
 }
 
