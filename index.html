@@ -5,14 +5,13 @@
   <title>YISHAN</title>
   <link rel="shortcut icon" href="img/favicon.ico">
   <meta property="og:image" content="http://www.moc2718.com/ntuanet/10926104YISHAN/img/video/fulldomee.jpg" />
-  <!-- 網頁縮圖 -->
-  <meta property="og:description" content="蔡宜珊個人網站 錄像 版畫 網頁設計 遊戲設計" /><!-- 網頁描述 -->
+  <meta property="og:description" content="蔡宜珊個人網站 錄像 版畫 網頁設計 遊戲設計" />
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-
   <link rel="stylesheet" href="MYCSS.css">
   <link rel="stylesheet" href="mystyle.css">
+  <link rel="stylesheet" href="scroll-sections.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
@@ -33,25 +32,23 @@
 
     body,
     html {
-      height: 100%
+      height: 100%;
     }
 
     html {
-      box-sizing: border-box
+      box-sizing: border-box;
     }
 
     *,
     *:before,
     *:after {
-      box-sizing: inherit
+      box-sizing: inherit;
     }
 
-    /*圖片下邊界*/
     .w3-row-padding img {
       margin-bottom: 20px;
     }
 
-    /*圖片中間間隔*/
     .w3-row-padding,
     .w3-row-padding>.w3-half,
     .w3-row-padding>.w3-third,
@@ -62,15 +59,141 @@
       padding: 0px;
     }
 
-  </style>
+    /* ══════════════════════════════════════
+       SCROLL SECTION SYSTEM
+    ══════════════════════════════════════ */
 
+    #about-scroll-wrapper {
+      position: relative;
+    }
+
+    /* Sticky viewport: stays fixed while user scrolls through the spacer */
+    #about-sticky {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow: hidden;
+      background-color: #FFFFFF;
+    }
+
+    /* All panels stacked on top of each other */
+    .about-panel {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 70px 60px 50px;
+      opacity: 0;
+      transition: opacity 0.75s ease;
+      pointer-events: none;
+    }
+
+    .about-panel.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    /* Two-column grid inside each panel */
+    .panel-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      width: 100%;
+      max-width: 1100px;
+      align-items: start;
+    }
+
+    /* Section label top-left */
+    .panel-label {
+      position: absolute;
+      top: 26px;
+      left: 60px;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 10px;
+      letter-spacing: 0.22em;
+      color: #c0c0c0;
+      text-transform: uppercase;
+    }
+
+    /* Photo */
+    .about-photo {
+      width: 100%;
+      border-radius: 3px;
+      object-fit: cover;
+      display: block;
+    }
+
+
+    /* Digitimes image */
+    .digitimes-img {
+      width: 100%;
+      display: block;
+      margin-top: 18px;
+      border-radius: 3px;
+    }
+
+    /* ── Scroll dots ── */
+    #scroll-dots {
+      position: fixed;
+      right: 26px;
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      z-index: 999;
+    }
+
+    .scroll-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #d0d0d0;
+      transition: background 0.35s, transform 0.35s;
+      cursor: pointer;
+    }
+
+    .scroll-dot.active {
+      background: #555;
+      transform: scale(1.5);
+    }
+
+    /* ── Spacer (gives 3 × 100vh of scroll room) ── */
+    #about-spacer {
+      /* JS sets this dynamically, but provide a fallback */
+      height: 300vh;
+    }
+
+
+    /* ── Responsive ── */
+    @media (max-width: 720px) {
+      .panel-grid {
+        grid-template-columns: 1fr;
+        gap: 28px;
+      }
+
+      .about-panel {
+        padding: 56px 24px 40px;
+        align-items: flex-start;
+        overflow-y: auto;
+      }
+
+      .panel-label {
+        left: 24px;
+      }
+
+      #scroll-dots {
+        right: 12px;
+      }
+    }
+  </style>
 </head>
 
 <body style="background-color:rgb(255, 255, 255);">
 
-
   <!-- Sidebar -->
-  <nav class="Sidebar Animate-top " style="display:none;padding-top:150px" id="mySidebar">
+  <nav class="Sidebar Animate-top" style="display:none;padding-top:150px" id="mySidebar">
     <a href="javascript:void(0)" onclick="Close()" class="Button Display-topright" style="padding:6px 24px">
       <i class="fa fa-remove"></i>
     </a>
@@ -84,66 +207,113 @@
     </div>
   </nav>
 
-  <!-- Navbar (sit on top) -->
+  <!-- Navbar -->
   <div class="w3-top">
     <header class="Center w3-margin-bottom" style="position:relative; opacity: 0.60">
       <span class="Button Content-list" onclick="Open()"><i class="fa fa-bars"></i></span>
     </header>
   </div>
 
-  <!-- !PAGE CONTENT! -->
+  <!-- PAGE CONTENT -->
   <div class="Content">
-      <!--主視覺-->
-      <section class="image-container">
-        <img src="landing_png/title.png" class="animated-title" id="image5">
-        <img src="landing_png/下腦光.png" class="animated-head" id="image4">
-        <img src="landing_png/上腦.png" class="animated-goldfish" id="image3">
-        <img src="landing_png/下腦.png" class="animated-head" id="image2">
-        <img src="landing_png/bg.jpg" id="image1">
-      </section>
-      <!-- Image header -->
-      <header class="w3-display-container w3-wide">
-        <img class="w3-image" src="landing_png/框.png" width="100%">
-        <div class="display-left w3-padding-large index-btn-grid">
-          <!-- <h1 class="w3-text-white">Jane's</h1>
-        <h1 class="w3-jumbo w3-text-white w3-hide-small"><b>FASHION BLOG</b></h1> -->
-          <a href="GameDesign.html" class="w3-button w3-white w3-round-xxlarge index-btn" style="margin: 7px;">Game Design</a>
-          <a href="Illustration.html" class="w3-button w3-white w3-round-xxlarge index-btn" style="margin: 7px;">Illustration</a>
-          <a href="Prints.html" class="w3-button w3-white  w3-round-xxlarge index-btn"  style="margin: 7px;">Print</a>
-          <a href="Video.html" class="w3-button w3-white  w3-round-xxlarge index-btn"  style="margin: 7px;">Video</a>
-          <a href="WebDesign.html" class="w3-button w3-white  w3-round-xxlarge index-btn"  style="margin: 7px;">Web Design</a>
-          <a href="VisualDesign.html" class="w3-button w3-white  w3-round-xxlarge index-btn"  style="margin: 7px;">Visual Design</a>
-        </div>
-      </header>
 
+    <!-- 主視覺 -->
+    <section class="image-container">
+      <img src="landing_png/title.png" class="animated-title" id="image5">
+      <img src="landing_png/下腦光.png" class="animated-head" id="image4">
+      <img src="landing_png/上腦.png" class="animated-goldfish" id="image3">
+      <img src="landing_png/下腦.png" class="animated-head" id="image2">
+      <img src="landing_png/bg.jpg" id="image1">
+    </section>
 
+    <!-- Header with nav buttons -->
+    <header class="w3-display-container w3-wide">
+      <img class="w3-image" src="landing_png/框.png" width="100%">
+      <div class="display-left w3-padding-large index-btn-grid">
+        <a href="GameDesign.html" class="w3-button w3-white w3-round-xxlarge index-btn" style="margin:7px;">Game
+          Design</a>
+        <a href="Illustration.html" class="w3-button w3-white w3-round-xxlarge index-btn"
+          style="margin:7px;">Illustration</a>
+        <a href="Prints.html" class="w3-button w3-white w3-round-xxlarge index-btn" style="margin:7px;">Print</a>
+        <a href="Video.html" class="w3-button w3-white w3-round-xxlarge index-btn" style="margin:7px;">Video</a>
+        <a href="WebDesign.html" class="w3-button w3-white w3-round-xxlarge index-btn" style="margin:7px;">Web
+          Design</a>
+        <a href="VisualDesign.html" class="w3-button w3-white w3-round-xxlarge index-btn" style="margin:7px;">Visual
+          Design</a>
+      </div>
+    </header>
 
-    <!-- Projects Grid -->
-    <div style="background-color: #FFFFFF;">
-      <div class="floating-area" id="floatingArea">
-        <div style=" padding:50px">
-          <!-- About Grid -->
-          <div class="w3-row">
-            <div class="w3-half">
-              <img src="img/photo2025.jpg" class="w3-round image" alt="Table"
-                style="width:100%; margin:auto; padding:50px;">
+    <!-- ══════════════════════════════════════
+         SCROLL-FADE ABOUT SECTIONS
+    ══════════════════════════════════════ -->
+    <div style="background-color:#FFFFFF;" id="about-scroll-wrapper">
+
+      <!-- Sticky container that holds all panels -->
+      <div id="about-sticky">
+
+        <!-- ▸ Panel 1: 照片 + 學歷 & 獲獎 -->
+        <div class="about-panel active" id="panel-1">
+          <span class="panel-label">01 &nbsp;/&nbsp; Profile</span>
+          <div class="panel-grid">
+            <div>
+              <img src="img/photo2025.jpg" class="about-photo" alt="Yishan">
             </div>
-            <div class="w3-half" style=" padding:20px">
+            <div>
+              <p class="text-gray text22"><b>學歷</b></p>
+              <p class="text-gray text17">2020–2023&emsp;國立臺灣藝術大學 多媒體動畫藝術學系（新媒體藝術碩士班），臺北</p>
+              <p class="text-gray text17">2016–2020&emsp;國立臺北藝術大學 美術學系（版畫組），臺北</p>
+
+              <p class="text-gray text22" style="margin-top:28px;"><b>獲獎經歷</b></p>
+              <a href="https://laborchcg.com.tw/23C33/" target="_blank">
+                <p class="text-gray text17">2023&emsp;創意梗圖競賽「彰化就業好所在」組第三名</p>
+              </a>
+              <p class="text-gray text17">2023&emsp;黑白繪畫大賽2023 電繪組 G組—公開組(年齡不限) 金獎</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- ▸ Panel 2: 工作經驗 + Digitimes 圖片 -->
+        <div class="about-panel" id="panel-2">
+          <span class="panel-label">02 &nbsp;/&nbsp; Work</span>
+          <div class="panel-grid">
+            <div>
               <p class="text-gray text22"><b>工作經驗</b></p>
               <a href="DIGITIMES2023-.html">
-                <img src="img/digitimes/kv/2025_1to3/智-桌機Banner.jpg" style="width:45%; margin:auto;">
-                <p class="text-gray text17">2023-&emsp;DIGITIMES 視覺設計</p>
-              </a><br>
-              <p class="text-gray text22"><b>學歷</b></p>
-              <p class="text-gray text17">2020-2023&emsp;國立臺灣藝術大學 多媒體動畫藝術學系（新媒體藝術碩士班），臺北</p>
-              <p class="text-gray text17">2016-2020&emsp;國立臺北藝術大學 美術學系（版畫組），臺北</p><br>
+                <p class="text-gray text17" style="margin-bottom:14px;">2023–&emsp;DIGITIMES 視覺設計</p>
+              </a>
+              <p class="text-gray text15">參與科技媒體品牌之視覺設計，包含 KV、Banner、活動設計、網頁設計,乃至實體輸出物等等視覺製作，持續累積產業設計經驗。</p>
+              <p class="text-gray text17">專案經驗</p>
 
+              <!-- ↓ 加這個 wrapper -->
+              <div class="project-links">
+                <a href="2025_auto.html" target="_blank" >2025自動化大展</a>
+                <a href="https://www.digitimes.com.tw/seminar/dailyentrepreneur/" target="_blank">創業家日報遊戲視覺</a>
+                <a href="2023_tsmc_ani.html" target="_blank">台積電教案動畫視覺</a>
+                <span>Stable Diffusion建置</span>
+              </div>
+
+            </div>
+            <div>
+              <div class="carousel-track-wrap">
+                <div class="carousel-track" id="workCarouselTrack"></div>
+              </div>
+              <div class="carousel-dots" id="workCarouselDots"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ▸ Panel 3: 獲獎 + 展演經歷 -->
+        <div class="about-panel" id="panel-3">
+          <span class="panel-label">03 &nbsp;/&nbsp; Exhibitions</span>
+          <div class="panel-grid">
+            <div>
               <p class="text-gray text22"><b>獲獎經歷</b></p>
               <a href="https://laborchcg.com.tw/23C33/" target="_blank">
                 <p class="text-gray text17">2023&emsp;創意梗圖競賽「彰化就業好所在」組第三名</p>
               </a>
-              <p class="text-gray text17">2023&emsp;黑白繪畫大賽2023 電繪組 G組--公開組(年齡不限) 金獎</p><br>
-
+              <p class="text-gray text17">2023&emsp;黑白繪畫大賽2023 電繪組 G組—公開組(年齡不限) 金獎</p>
+            </div>
+            <div>
               <p class="text-gray text22"><b>展演經歷</b></p>
               <p class="text-gray text17">2023&emsp;《Render Soul》，錄像，「宇宙‧無極—科技藝術特展」，臺中市屯區藝文中心，臺中</p>
               <p class="text-gray text17">2022&emsp;《白盒子》，錄像，圓宇宙－沉浸式圓頂投影體驗展，府中15，新北</p>
@@ -159,52 +329,33 @@
               <p class="text-gray text17">2019&emsp;《可以看我一下嗎？美術館給你的情書》，聯展，關美館，臺北</p>
             </div>
           </div>
-          <br>
-
-
         </div>
-      </div>
-    </div>
+
+      </div><!-- /about-sticky -->
+
+      <!-- Scroll spacer: 3 × 100vh of scroll room -->
+      <div id="about-spacer"></div>
+
+    </div><!-- /about-scroll-wrapper -->
 
     <!-- Footer -->
-    <footer class="Footer" style="margin-top:128px">
+    <footer class="Footer" style="margin-top:0">
       <a href="https://www.facebook.com/daphnetsaidaphnetsai"><i class="fa fa-facebook-official Hover-opacity"></i></a>
       <a href="https://www.instagram.com/tsai_yi_shan/"><i class="fa fa-instagram Hover-opacity"></i></a>
       <a href="https://www.behance.net/paintingrainbowray"><i class="fa fa-behance Hover-opacity"></i></a>
-      <p style="font-size: 15px;">Copyright © 2023 Design By <a href="index.html" target="_blank">TsaiYishan</a></p>
+      <p style="font-size:15px;">Copyright © 2023 Design By <a href="index.html" target="_blank">TsaiYishan</a></p>
     </footer>
+
+  </div><!-- /Content -->
+
+  <!-- Navigation dots -->
+  <div id="scroll-dots">
+    <div class="scroll-dot active" data-panel="0" title="Profile"></div>
+    <div class="scroll-dot" data-panel="1" title="Work"></div>
+    <div class="scroll-dot" data-panel="2" title="Exhibitions"></div>
   </div>
 
-
-
-  <script>
-    // Open and close sidebar
-    function Open() {
-      document.getElementById("mySidebar").style.width = "100%";
-      document.getElementById("mySidebar").style.display = "block";
-    }
-
-    function Close() {
-      document.getElementById("mySidebar").style.display = "none";
-    }
-  </script>
-
-  <script>
-    window.addEventListener('scroll', () => {
-      const floatingText = document.getElementById('floatingArea');
-      // 获取元素的位置信息
-      const elementPosition = floatingText.getBoundingClientRect();
-      // 使用元素的顶部位置作为 offset
-      const offset = elementPosition.bottom;
-      if (offset > 0) {
-        floatingText.classList.add('animate');
-      } else {
-        floatingText.classList.remove('animate');
-      }
-    });
-  </script>
-
-
+  <script src="scroll-sections-DIGITIMES.js"></script>
 
 </body>
 

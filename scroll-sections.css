@@ -1,0 +1,58 @@
+.carousel-track-wrap {
+  overflow: hidden;
+  border-radius: 4px;
+  margin-top: 12px;
+}
+
+.carousel-track {
+  display: flex;
+  transition: transform 0.6s ease;
+}
+
+.carousel-track img {
+  min-width: 100%;
+  width: 100%;
+  object-fit: contain;  /* 完整顯示，不裁切 */
+  border-radius: 3px;
+  display: block;
+}
+
+.carousel-dots {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  margin-top: 10px;
+}
+
+.carousel-dots .cdot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #ccc;
+  transition: background 0.3s;
+}
+
+.carousel-dots .cdot.active { background: #333; }
+
+.project-links {
+  display: flex;
+  justify-content: space-between;  /* 平均分散，撐滿整行 */
+  width: 100%;
+  flex-wrap: wrap;                  /* 手機版自動換行 */
+  gap: 8px;
+}
+
+.project-links a,
+.project-links span {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 13px;
+  color: #666666;
+  text-decoration: none;
+  border: 1px solid #ccc!important;
+  border-radius: 8px;
+  padding: 4px 10px;  /* ← 加這行，上下4px 左右10px */
+}
+
+.project-links a:hover {
+  color: #333;
+}
