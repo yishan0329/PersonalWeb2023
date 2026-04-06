@@ -167,48 +167,48 @@
 
 
     /* ── Responsive ── */
-@media (max-width: 720px) {
+    @media (max-width: 720px) {
 
-  /* 主視覺：手機版獨立佔滿一個螢幕高度，下滑才進入 Panel */
-  .image-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100svh;
-    width: 100%;
-  }
+      /* 主視覺：手機版獨立佔滿一個螢幕高度，下滑才進入 Panel */
+      .image-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100svh;
+        width: 100%;
+      }
 
-  /* nav button header 手機版隱藏（主視覺下方的按鈕區） */
-  header.w3-display-container {
-    display: none;
-  }
+      /* nav button header 手機版隱藏（主視覺下方的按鈕區） */
+      header.w3-display-container {
+        display: none;
+      }
 
-  /* 每個 panel 高度限制在 800px 內，超出可捲動 */
-  #about-sticky {
-    height: 100svh;
-    /* max-height: 800px; */
-  }
+      /* 每個 panel 高度限制在 800px 內，超出可捲動 */
+      #about-sticky {
+        height: 100svh;
+        /* max-height: 800px; */
+      }
 
-  .about-panel {
-    padding: 48px 20px 32px;
-    align-items: flex-start;
-    /* overflow-y: auto;
+      .about-panel {
+        padding: 48px 20px 32px;
+        align-items: flex-start;
+        /* overflow-y: auto;
     max-height: 800px; */
-  }
+      }
 
-  .panel-grid {
-    grid-template-columns: 1fr;
-    gap: 20px;
-  }
+      .panel-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
 
-  .panel-label {
-    left: 20px;
-  }
+      .panel-label {
+        left: 20px;
+      }
 
-  #scroll-dots {
-    right: 10px;
-  }
-}
+      #scroll-dots {
+        right: 10px;
+      }
+    }
   </style>
 </head>
 
@@ -303,13 +303,13 @@
               <a href="DIGITIMES2023-.html">
                 <p class="text-gray text17" style="margin-bottom:14px;">2023–&emsp;DIGITIMES 視覺設計</p>
               </a>
-              <p class="text-gray text15">參與科技媒體品牌之視覺設計，包含 KV、Banner、活動設計、網頁設計,乃至實體輸出物等等視覺製作，持續累積產業設計經驗。</p>
+              <p class="text-gray text15">參與科技媒體品牌之視覺設計，包含 KV、Banner、網頁設計,乃至實體輸出物等等視覺製作，持續累積產業設計經驗。</p>
               <p class="text-gray text17">專案經驗</p>
 
               <!-- ↓ 加這個 wrapper -->
               <div class="project-links">
-                <a href="2025_auto.html" target="_blank" >2025自動化大展</a>
-                <a href="https://www.digitimes.com.tw/seminar/dailyentrepreneur/" target="_blank">2024創業家日報遊戲視覺</a>
+                <a href="2025_auto.html" target="_blank">2025自動化大展</a>
+                <a href="https://www.behance.net/gallery/246453151/DIGITIMES-INC-" target="_blank">2024創業家日報遊戲視覺</a>
                 <a href="2023_tsmc_ani.html" target="_blank">2023台積電教案動畫視覺</a>
                 <span>Stable Diffusion建置</span>
               </div>
@@ -334,15 +334,16 @@
               <button class="ftab active" data-tab="web">網頁設計</button>
               <button class="ftab" data-tab="video">影片剪輯</button>
               <button class="ftab" data-tab="visual">視覺設計</button>
+              <button class="ftab" data-tab="game">遊戲設計</button>
             </div>
 
             <div class="ftab-content active" data-tab="web">
               <div class="freelance-grid">
-                <a href="https://ec.7don.com.tw/panasonictaipeicityrun" class="freelance-item">
+                <a href="https://ec.7don.com.tw/panasonictaipeicityrun" class="freelance-item"  target="_blank">
                   <img src="img/WebDesign/2025_panasonic遊戲/首頁.png" alt="網頁作品1">
                   <p class="text-gray text15">panasonic網頁遊戲</p>
                 </a>
-                <a href="https://tpfgrandprix.7don.com.tw/" class="freelance-item">
+                <a href="https://tpfgrandprix.7don.com.tw/" class="freelance-item"  target="_blank">
                   <img src="img/WebDesign/2025_tpfgp/2025tpfgp.jpg" alt="網頁作品2">
                   <p class="text-gray text15">2025 Taichung Power Fitness Grand Prix</p>
                 </a>
@@ -355,11 +356,12 @@
 
             <div class="ftab-content" data-tab="video">
               <div class="freelance-grid">
-                <a href="https://www.youtube.com/playlist?list=PLkAO237EKMKtlEdDKWMRME7M8IRXOqSYW" class="freelance-item">
+                <a href="https://www.youtube.com/playlist?list=PLkAO237EKMKtlEdDKWMRME7M8IRXOqSYW"
+                  class="freelance-item"  target="_blank">
                   <img src="img/video/TSF2023_4.jpg" alt="影片作品1">
                   <p class="text-gray text15">台灣科學節廣告動畫製作</p>
                 </a>
-                <a href="https://www.facebook.com/reel/255738734140500" class="freelance-item">
+                <a href="https://www.facebook.com/reel/255738734140500" class="freelance-item"  target="_blank">
                   <img src="img/video/傳播節短片.jpg" alt="影片作品2">
                   <p class="text-gray text15">「人造關係—開箱：傳播科技特展」短片</p>
                 </a>
@@ -369,12 +371,29 @@
             <div class="ftab-content" data-tab="visual">
               <div class="freelance-grid">
                 <div class="freelance-item">
-                  <img src="img\Illustration\2024科學節佈置物layout.jpg" alt="視覺作品1">
+                  <img src="img/Illustration/2024科學節佈置物layout.jpg" alt="視覺作品1">
                   <p class="text-gray text15">科學節攤位廣宣</p>
                 </div>
-                <a href="https://www.behance.net/gallery/153014083/_" class="freelance-item">
+                <a href="https://www.behance.net/gallery/153014083/_" class="freelance-item" target="_blank">
                   <img src="img/GameDesign/文創工作室/海報.jpg" alt="視覺作品2">
                   <p class="text-gray text15">《屋乎挨栽》3D數位模型資料系統 UI設計</p>
+                </a>
+              </div>
+            </div>
+
+            <div class="ftab-content" data-tab="game">
+              <div class="freelance-grid">
+                <a href="https://www.behance.net/gallery/246675875/The-Spell-Snakey-" class="freelance-item" target="_blank">
+                  <img src="img/GameDesign/TheSpellSnakey/thespellsnakey.jpg" alt="遊戲作品1">
+                  <p class="text-gray text15">《The Spell Snakey》2d遊戲</p>
+                </a>
+                <a href="https://www.behance.net/gallery/161787221/_" class="freelance-item" target="_blank">
+                  <img src="img/GameDesign/Sugar-coatedCoin/Sugar-coatedCoin1.jpg" alt="遊戲作品2">
+                  <p class="text-gray text15">《Sugar-coatedCoin》2d解謎遊戲</p>
+                </a>
+                <a href="https://www.behance.net/gallery/161568439/-VR" class="freelance-item" target="_blank">
+                  <img src="img/GameDesign/TouatBooks/TouatBooks.jpg" alt="遊戲作品3">
+                  <p class="text-gray text15">《取締者》VR遊戲</p>
                 </a>
               </div>
             </div>

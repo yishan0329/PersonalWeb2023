@@ -19,10 +19,10 @@ function Close() {
 (function () {
 
   // 滾動總段數：panel-1(1段) + panel-2(1段) + panel-freelance(3段) + panel-exhibitions(1段) = 6段
-  var TOTAL_STEPS = 6;
+  var TOTAL_STEPS = 7;
   var PANEL_COUNT = 4;   // about-panel 數量
-  var TAB_STEPS = 3;   // freelance 內 tab 數
-  var TAB_ORDER = ['web', 'video', 'visual'];
+  var TAB_STEPS = 4;   // freelance 內 tab 數
+  var TAB_ORDER = ['web', 'video', 'visual', 'game'];
 
   var wrapper = document.getElementById('about-scroll-wrapper');
   var sticky = document.getElementById('about-sticky');
@@ -84,7 +84,7 @@ function Close() {
     // step 5 → panel-exhibitions（需 freelanceDone）
     if (step <= 1) {
       showPanel(step);
-    } else if (step <= 4) {
+    } else if (step <= 5) { 
       showPanel(2);
       showTab(step - 2);
     } else {
@@ -119,9 +119,9 @@ function Close() {
 document.querySelectorAll('.ftab').forEach(function (btn) {
   btn.addEventListener('click', function () {
     var tabName = this.dataset.tab;
-    var TAB_ORDER = ['web', 'video', 'visual'];
-    var stepMap = { web: 2, video: 3, visual: 4 };
-    var TOTAL_STEPS = 6;
+    var TAB_ORDER = ['web', 'video', 'visual', 'game'];
+    var stepMap = { web: 2, video: 3, visual: 4, game: 5 };
+    var TOTAL_STEPS = 7;  // ← 6 改成 7
 
     document.querySelectorAll('.ftab').forEach(function (b) {
       b.classList.toggle('active', b.dataset.tab === tabName);
@@ -196,13 +196,13 @@ initCarousel("workCarouselTrack", "workCarouselDots", DIGITIMES_list, 3000);
       return;
     }
 
-    var scrollY   = window.scrollY;
+    var scrollY = window.scrollY;
     var heroHeight = hero.offsetHeight;
 
     // scrollY 從 0 到 heroHeight 的一半時淡出
-    var fadeEnd    = heroHeight * 0.5;
-    var opacity    = 1 - (scrollY / fadeEnd);
-    opacity        = Math.max(0, Math.min(1, opacity));
+    var fadeEnd = heroHeight * 0.5;
+    var opacity = 1 - (scrollY / fadeEnd);
+    opacity = Math.max(0, Math.min(1, opacity));
 
     hero.style.opacity = opacity;
   }, { passive: true });
@@ -215,7 +215,7 @@ initCarousel("workCarouselTrack", "workCarouselDots", DIGITIMES_list, 3000);
   function scalePanel() {
     if (window.innerWidth > 720) {
       // 電腦版還原
-      document.querySelectorAll('.about-panel').forEach(function(p) {
+      document.querySelectorAll('.about-panel').forEach(function (p) {
         p.style.transform = '';
         p.style.transformOrigin = '';
       });
@@ -227,7 +227,7 @@ initCarousel("workCarouselTrack", "workCarouselDots", DIGITIMES_list, 3000);
 
     var scale = vh / MAX_HEIGHT;
 
-    document.querySelectorAll('.about-panel').forEach(function(p) {
+    document.querySelectorAll('.about-panel').forEach(function (p) {
       p.style.transform = 'scale(' + scale + ')';
       p.style.transformOrigin = 'top center';
     });
