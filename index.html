@@ -208,6 +208,87 @@
       #scroll-dots {
         right: 10px;
       }
+
+      /* ── 手機版：about section 改為正常流，停用 sticky scroll ── */
+
+      /* spacer 隱藏（JS 也會設為 0） */
+      #about-spacer {
+        display: none !important;
+      }
+
+      /* sticky 改成 static，高度自動 */
+      #about-sticky {
+        position: static !important;
+        height: auto !important;
+        overflow: visible !important;
+      }
+
+      /* 所有 panel 正常流排列 */
+      .about-panel {
+        position: static !important;
+        opacity: 1 !important;
+        pointer-events: auto !important;
+        display: block !important;
+        padding: 48px 20px 100px;
+        border-bottom: 1px solid #f0f0f0;
+        min-height: 0;
+      }
+
+      /* panel-label 改回 static，跟著內容走 */
+      .panel-label {
+        position: static !important;
+        display: block;
+        margin-bottom: 16px;
+      }
+
+      /* 隱藏 scroll dots（正常流模式不需要） */
+      #scroll-dots {
+        display: none !important;
+      }
+
+      /* ── 手機版：freelance tab 改為分類標題，全部顯示 ── */
+
+      /* 隱藏 tab 按鈕列 */
+      .freelance-tabs {
+        display: none !important;
+      }
+
+      /* 所有 tab 內容區塊全部顯示 */
+      .ftab-content {
+        display: block !important;
+      }
+
+      /* 每個分類區塊加標題標籤 */
+      .ftab-content::before {
+        display: inline-block;
+        font-family: 'Montserrat', sans-serif;
+        font-size: 12px;
+        color: #aaa;
+        border: 1.5px solid #ddd;
+        border-radius: 20px;
+        padding: 5px 16px;
+        margin-bottom: 14px;
+      }
+      .ftab-content[data-tab="web"]::before    { content: "網頁設計"; }
+      .ftab-content[data-tab="video"]::before  { content: "影片剪輯"; }
+      .ftab-content[data-tab="visual"]::before { content: "視覺設計"; }
+      .ftab-content[data-tab="game"]::before   { content: "遊戲設計"; }
+
+      /* 分類間距 */
+      .ftab-content + .ftab-content {
+        margin-top: 28px;
+      }
+
+      /* 手機版 2 欄 grid */
+      .freelance-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      /* 圖片高度 */
+      .freelance-item img {
+        height: 140px;
+        object-fit: cover;
+      }
     }
   </style>
 </head>
@@ -314,6 +395,7 @@
                 <span>Stable Diffusion建置</span>
               </div>
 
+              <a href="DIGITIMES2023-.html"><div class="section-title">更多案例</div></a>
             </div>
             <div>
               <div class="carousel-track-wrap">

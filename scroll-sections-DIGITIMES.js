@@ -40,6 +40,13 @@ function Close() {
     spacer.style.height = (TOTAL_STEPS * vh * multiplier) + 'px';
     sticky.style.height = vh + 'px';
   }
+  
+  // 手機版：停用 sticky scroll，CSS 已改成正常流排列
+  if (window.innerWidth <= 720) {
+    // 不初始化 scroll 監聽，讓 CSS 的正常流排列生效
+    return;
+  }
+  
   resize();
   window.addEventListener('resize', resize);
 
@@ -213,6 +220,15 @@ initCarousel("workCarouselTrack", "workCarouselDots", DIGITIMES_list, 3000);
   var MAX_HEIGHT = 800;
 
   function scalePanel() {
+    // 手機版改為正常流，不需要縮放
+    if (window.innerWidth <= 720) {
+      document.querySelectorAll('.about-panel').forEach(function (p) {
+        p.style.transform = '';
+        p.style.transformOrigin = '';
+      });
+      return;
+    }
+
     if (window.innerWidth > 720) {
       // 電腦版還原
       document.querySelectorAll('.about-panel').forEach(function (p) {
