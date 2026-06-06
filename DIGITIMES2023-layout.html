@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="shortcut icon" href="img/favicon.ico">
+<title>YISHAN – DIGITIMES視覺設計作品集</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500&family=DM+Mono:wght@300;400&display=swap');
+
+  :root {
+    --bg: #ffffff;
+    --divider: #e8e8e8;
+    --text-primary: #111111;
+    --text-secondary: #666666;
+    --text-muted: #aaaaaa;
+    --nav-h: 44px;
+    --sidebar-w: 320px;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    height: 100%;
+    font-family: 'Noto Sans TC', sans-serif;
+    background: var(--bg);
+    color: var(--text-primary);
+    overflow: hidden;
+  }
+
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: var(--nav-h);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    background: #fff;
+    z-index: 100;
+  }
+
+  .nav-breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11.5px;
+    color: var(--text-muted);
+    font-family: 'DM Mono', monospace;
+    font-weight: 300;
+    letter-spacing: 0.01em;
+  }
+  .nav-breadcrumb a { color: var(--text-secondary); text-decoration: none; transition: color .15s; }
+  .nav-breadcrumb a:hover { color: var(--text-primary); }
+  .nav-sep { color: #ddd; }
+
+  .nav-home {
+    width: 28px; height: 28px;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color .15s;
+  }
+  .nav-home:hover { color: var(--text-primary); }
+  .nav-home svg { width: 14px; height: 14px; }
+
+  .layout {
+    display: flex;
+    height: 100vh;
+    padding-top: var(--nav-h);
+  }
+
+  .viewer {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    background: #fff;
+  }
+
+  .single-view {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 28px;
+    overflow: hidden;
+    background: #fff;
+  }
+
+  .single-view img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    display: block;
+    opacity: 0;
+    transition: opacity .3s ease;
+  }
+  .single-view img.loaded { opacity: 1; }
+
+  .grid-view {
+    flex: 1;
+    overflow: hidden;
+    padding: 16px 16px 0;
+    display: none;
+    flex-direction: column;
+    background: #fff;
+  }
+  .grid-view.active { display: flex; }
+
+  .grid-page {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+    gap: 20px;
+    flex: 1;
+    min-height: 0;
+  }
+
+  .grid-thumb {
+    overflow: hidden;
+    cursor: pointer;
+    position: relative;
+    transition: opacity .15s;
+    min-height: 0;
+  border-radius: 10px;
+  }
+  .grid-thumb:hover { opacity: 0.75; }
+  .grid-thumb.active img { outline: 1.5px solid #111; outline-offset: -1.5px; }
+  .grid-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .grid-thumb .thumb-num {
+    position: absolute;
+    bottom: 4px; right: 5px;
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    font-weight: 300;
+    color: rgba(0,0,0,0.4);
+    background: rgba(255,255,255,0.7);
+    padding: 1px 4px;
+  }
+
+  .viewer-controls {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px;
+    background: #fff;
+    flex-shrink: 0;
+  }
+
+  .nav-arrows { display: flex; align-items: center; gap: 8px; }
+
+  .arrow-btn {
+    width: 26px; height: 26px;
+    display: flex; align-items: center; justify-content: center;
+    border: none; background: transparent;
+    color: var(--text-muted); cursor: pointer;
+    transition: color .15s; padding: 0;
+  }
+  .arrow-btn:hover:not(:disabled) { color: var(--text-primary); }
+  .arrow-btn:disabled { opacity: 0.25; cursor: default; }
+
+  .page-counter {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px; font-weight: 300;
+    color: var(--text-muted);
+    letter-spacing: 0.05em;
+    min-width: 52px; text-align: center;
+  }
+  .page-counter .cur { color: var(--text-primary); }
+
+  /* Category badge next to counter */
+  .page-category {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px; font-weight: 300;
+    color: var(--text-muted);
+    letter-spacing: 0.06em;
+  }
+
+  .view-toggle { display: flex; gap: 2px; }
+
+  .toggle-btn {
+    width: 28px; height: 28px;
+    display: flex; align-items: center; justify-content: center;
+    border: none; background: transparent;
+    color: var(--text-muted); cursor: pointer;
+    transition: color .15s; border-radius: 3px;
+  }
+  .toggle-btn.active { color: var(--text-primary); }
+  .toggle-btn:not(.active):hover { color: #888; }
+  .toggle-btn svg { width: 13px; height: 13px; }
+
+  .divider {
+    width: 1px;
+    background: var(--divider);
+    flex-shrink: 0;
+    align-self: stretch;
+  }
+
+  .sidebar {
+    width: var(--sidebar-w);
+    flex-shrink: 0;
+    background: #fff;
+    overflow-y: auto;
+    padding: 32px 26px;
+  }
+  .sidebar::-webkit-scrollbar { width: 3px; }
+  .sidebar::-webkit-scrollbar-thumb { background: #eee; }
+
+  .sidebar h1 {
+    font-size: 19px; font-weight: 500;
+    letter-spacing: -0.01em; line-height: 1.3;
+    margin-bottom: 24px;
+  }
+
+  .sidebar section { margin-bottom: 26px; }
+
+  .sidebar h2 {
+    font-size: 10px; font-weight: 400;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--text-muted);
+    font-family: 'DM Mono', monospace;
+    margin-bottom: 12px; padding-bottom: 8px;
+    border-bottom: 1px solid var(--divider);
+  }
+
+  .sidebar p {
+    font-size: 13px; font-weight: 300;
+    line-height: 1.8; color: var(--text-secondary);
+  }
+
+  .process-item { display: flex; gap: 12px; margin-bottom: 14px; }
+  .process-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px; font-weight: 300;
+    color: var(--text-muted); min-width: 18px; padding-top: 2px;
+  }
+  .process-title { font-size: 12.5px; font-weight: 500; margin-bottom: 3px; color: var(--text-primary); }
+  .process-desc { font-size: 12px; font-weight: 300; color: var(--text-secondary); line-height: 1.7; }
+
+  .tags { display: flex; flex-wrap: wrap; gap: 6px; }
+  .tag {
+    font-size: 11.5px; font-weight: 300;
+    padding: 4px 10px;
+    border: 1px solid #ddd;
+    color: var(--text-secondary);
+  }
+
+  @media (max-width: 768px) {
+    html, body { overflow: auto; }
+    .layout { flex-direction: column; height: auto; overflow: visible; }
+    .viewer { height: 60vw; min-height: 260px; flex-shrink: 0; }
+    .divider { width: auto; height: 1px; align-self: auto; }
+    .grid-page { grid-template-columns: repeat(2, 1fr); grid-template-rows: repeat(2, 1fr); }
+    .sidebar { width: 100%; padding: 24px 18px; }
+    :root { --sidebar-w: 100%; }
+  }
+
+  @media (max-width: 480px) {
+    .grid-page { grid-template-columns: repeat(2, 1fr); grid-template-rows: repeat(2, 1fr); }
+    .viewer { height: 68vw; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-breadcrumb">
+    <a href="index.html" target="_blank" rel="noopener">蔡宜珊</a>
+    <span class="nav-sep">/</span>
+    <a href="DIGITIMES2023-index.html" target="_blank" rel="noopener">2023–DIGITIMES 視覺設計</a>
+  </div>
+  <a href="index.html" class="nav-home" title="首頁">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1H4a1 1 0 01-1-1V9.5z"/>
+      <path d="M9 21V12h6v9"/>
+    </svg>
+  </a>
+</nav>
+
+<div class="layout">
+  <div class="viewer">
+    <div class="single-view" id="singleView">
+      <img id="mainImg" src="" alt="作品圖片" />
+    </div>
+    <div class="grid-view" id="gridView"></div>
+
+    <div class="viewer-controls">
+      <div class="nav-arrows">
+        <button class="arrow-btn" id="prevBtn">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+        </button>
+        <div class="page-counter"><span class="cur" id="currentPage">1</span> / <span id="totalPages">-</span></div>
+        <button class="arrow-btn" id="nextBtn">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+        </button>
+        <span class="page-category" id="pageCategory"></span>
+      </div>
+      <div class="view-toggle">
+        <button class="toggle-btn active" id="singleToggle" title="單圖瀏覽">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="1"/></svg>
+        </button>
+        <button class="toggle-btn" id="gridToggle" title="格狀瀏覽">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/>
+            <rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <aside class="sidebar">
+    <h1>布置物設計</h1>
+    <section>
+      <h2>專案說明</h2>
+      <p>依據主視覺風格延伸各式布置物設計，進行活動空間與實體布置物的執行，打造具一致性的活動體驗。</p>
+    </section>
+      <h2>製作項目</h2>
+      <div class="tags">
+        <span class="tag">背板設計</span>
+        <span class="tag">展場佈置設計</span>
+        <span class="tag">活動字卡設計</span>
+        <span class="tag">簡報設計</span>
+        <span class="tag">周邊品設計</span>
+      </div>
+    </section>
+  </aside>
+</div>
+
+<script>
+  // ── IMAGE DATA ──
+  // Each entry: { src, category, link (optional) }
+  const images = [
+    // 2025_7to9
+{ src: 'img/digitimes/layout/print/2025_7to9/示意.jpg', category: 'Print' },
+
+// 2025_4to6
+{ src: 'img/digitimes/layout/print/2025_4to6/1141348.jpg', category: 'Print' },
+
+// 2025_1to3
+{ src: 'img/digitimes/layout/print/2025_1to3/2025aiexpo-award.jpg', category: 'Print' },
+{ src: 'img/digitimes/layout/print/2025_1to3/2025aiexpo-award入圍.jpg', category: 'Print' },
+{ src: 'img/digitimes/layout/print/2025_1to3/2025aiexpo-瓶貼.jpg', category: 'Print' },
+{ src: 'img/digitimes/layout/print/2025_1to3/a.jpg', category: 'Print' },
+
+// 2024_10to12
+{ src: 'img/digitimes/layout/print/2024_10to12/A11關鍵字預測牆B.jpg', category: 'Print' },
+{ src: 'img/digitimes/layout/print/2024_10to12/B直式.jpg', category: 'Print' },
+
+// 2024_7to9
+{ src: 'img/digitimes/layout/print/2024_7to9/Z05_菜單全.jpg', category: 'Print' },
+{ src: 'img/digitimes/layout/print/2024_7to9/識別證.jpg', category: 'Print' },
+{ src: 'img/digitimes/layout/print/2024_7to9/邀請函內頁.jpg', category: 'Print' },
+{ src: 'img/digitimes/layout/print/2024_7to9/邀請卡.jpg', category: 'Print' },
+
+// 2024_1to3
+{ src: 'img/digitimes/layout/digital/2024_1to3/E09子母畫面.jpg', category: 'Digital' },
+{ src: 'img/digitimes/layout/digital/2024_1to3/E09子母畫面 14-00~14-30.jpg', category: 'Digital' },
+{ src: 'img/digitimes/layout/digital/2024_1to3/5結尾問卷字卡.jpg', category: 'Digital' },
+{ src: 'img/digitimes/layout/digital/2024_1to3/活動開始.jpg', category: 'Digital' },
+{ src: 'img/digitimes/layout/digital/2024_1to3/16-20-16-50.jpg', category: 'Digital' },
+
+// 2023_8to12 Print
+{ src: 'img/digitimes/layout/print/2023_8to12/E03-電子看板_議程.jpg', category: 'Print' },
+{ src: 'img/digitimes/layout/print/2023_8to12/a.jpg', category: 'Print' },
+{ src: 'img/digitimes/layout/print/2023_8to12/背板10-1.jpg', category: 'Print' },
+
+// 2023_8to12 Digital
+{ src: 'img/digitimes/layout/digital/2023_8to12/正式議程-林思怡.png', category: 'Digital' },
+{ src: 'img/digitimes/layout/digital/2023_8to12/議程.jpg', category: 'Digital' },
+{ src: 'img/digitimes/layout/digital/2023_8to12/黃逸平.jpg', category: 'Digital' },
+{ src: 'img/digitimes/layout/digital/2023_8to12/7.jpg', category: 'Digital' },
+{ src: 'img/digitimes/layout/digital/2023_8to12/子母_安全3.jpg', category: 'Digital' },
+//{ src: 'img/digitimes/layout/digital/2023_8to12/道安ppt.jpg', category: 'Digital' },
+//{ src: 'img/digitimes/layout/digital/2023_8to12/醫電PPT.jpg', category: 'Digital' },
+//{ src: 'img/digitimes/layout/digital/2023_8to12/renesas-PPT.jpg', category: 'Digital' },
+//{ src: 'img/digitimes/layout/digital/2023_8to12/智慧城鄉-PPT.jpg', category: 'Digital' },
+//{ src: 'img/digitimes/layout/digital/2023_8to12/teams-PPT.jpg', category: 'Digital' },
+//{ src: 'img/digitimes/layout/digital/2023_8to12/teams-PPT2.jpg', category: 'Digital' },
+
+// 2023_3to7 Print
+{ src: 'img/digitimes/layout/print/2023_3to7/1121373凱德.jpg', category: 'Print' },
+//{ src: 'img/digitimes/layout/print/2023_3to7/1120998R2_2.jpg', category: 'Print' },
+//{ src: 'img/digitimes/layout/print/2023_3to7/1120632邁達特.jpg', category: 'Print' },
+//{ src: 'img/digitimes/layout/print/2023_3to7/凱德PARTNER.jpg', category: 'Print' },
+{ src: 'img/digitimes/layout/print/2023_3to7/1120930研杰.jpg', category: 'Print' },
+//{ src: 'img/digitimes/layout/print/2023_3to7/1120632邁達特1.jpg', category: 'Print' },
+//{ src: 'img/digitimes/layout/print/2023_3to7/1121109R1_背板.jpg', category: 'Print' },
+//{ src: 'img/digitimes/layout/print/2023_3to7/1120880新立.jpg', category: 'Print' },
+{ src: 'img/digitimes/layout/print/2023_3to7/1120532Mouser_背板.jpg', category: 'Print' },
+{ src: 'img/digitimes/layout/print/2023_3to7/背板.jpg', category: 'Print' },
+{ src: 'img/digitimes/layout/print/2023_3to7/1120835R1_2.jpg', category: 'Print' },
+{ src: 'img/digitimes/layout/print/2023_3to7/1120421AI EXPO 學習歷程_黑.jpg', category: 'Print' },
+
+// 2023_3to7 Digital
+{ src: 'img/digitimes/layout/digital/2023_3to7/1121171.jpg', category: 'Digital' },
+{ src: 'img/digitimes/layout/digital/2023_3to7/1121058.jpg', category: 'Digital' },
+{ src: 'img/digitimes/layout/digital/2023_3to7/1120944活動預告字卡.jpg', category: 'Digital' },
+{ src: 'img/digitimes/layout/digital/2023_3to7/1120786.jpg', category: 'Digital' },
+{ src: 'img/digitimes/layout/digital/2023_3to7/0317SiFive.jpg', category: 'Digital' },
+{ src: 'img/digitimes/layout/digital/2023_3to7/0412DWebinar.jpg', category: 'Digital' },
+{ src: 'img/digitimes/layout/digital/2023_3to7/泓格線上論壇_影片背景.jpg', category: 'Digital' },
+{ src: 'img/digitimes/layout/digital/2023_3to7/1121187.jpg', category: 'Digital' },
+{ src: 'img/digitimes/layout/digital/2023_3to7/1120944.jpg', category: 'Digital' },
+{ src: 'img/digitimes/layout/digital/2023_3to7/1120916_片頭.jpg', category: 'Digital' },
+{ src: 'img/digitimes/layout/digital/2023_3to7/ADI片尾字卡.jpg', category: 'Digital' },
+{ src: 'img/digitimes/layout/digital/2023_3to7/1121089.jpg', category: 'Digital' },
+{ src: 'img/digitimes/layout/digital/2023_3to7/1121052_內頁2.jpg', category: 'Digital' },
+{ src: 'img/digitimes/layout/digital/2023_3to7/1120916.jpg', category: 'Digital' },
+{ src: 'img/digitimes/layout/digital/2023_3to7/1120534.jpg', category: 'Digital' },
+{ src: 'img/digitimes/layout/digital/2023_3to7/cta_片頭.jpg', category: 'Digital' },
+{ src: 'img/digitimes/layout/digital/2023_3to7/1121089_E09.jpg', category: 'Digital' },
+{ src: 'img/digitimes/layout/digital/2023_3to7/1121052_內頁3.jpg', category: 'Digital' },
+{ src: 'img/digitimes/layout/digital/2023_3to7/1120941.jpg', category: 'Digital' },
+{ src: 'img/digitimes/layout/digital/2023_3to7/1120690.jpg', category: 'Digital' },
+  ];
+
+  const GRID_PER_PAGE = window.innerWidth <= 768 ? 4 : 20;
+  const total = images.length;
+  const totalGridPages = Math.ceil(total / GRID_PER_PAGE);
+
+  let current = 0;       // single-view index
+  let isGrid = false;
+  let gridPage = 0;      // 0-based grid page
+
+  const mainImg       = document.getElementById('mainImg');
+  const currentPageEl = document.getElementById('currentPage');
+  const totalPagesEl  = document.getElementById('totalPages');
+  const pageCatEl     = document.getElementById('pageCategory');
+  const prevBtn       = document.getElementById('prevBtn');
+  const nextBtn       = document.getElementById('nextBtn');
+  const singleView    = document.getElementById('singleView');
+  const gridView      = document.getElementById('gridView');
+  const singleToggle  = document.getElementById('singleToggle');
+  const gridToggle    = document.getElementById('gridToggle');
+
+  totalPagesEl.textContent = total;
+
+  // ── Render grid page ──
+  function renderGridPage(page) {
+    gridView.innerHTML = '';
+    const grid = document.createElement('div');
+    grid.className = 'grid-page';
+
+    const start = page * GRID_PER_PAGE;
+    const end = Math.min(start + GRID_PER_PAGE, total);
+
+    for (let i = start; i < end; i++) {
+      const img = images[i];
+      const thumb = document.createElement('div');
+      thumb.className = 'grid-thumb' + (i === current ? ' active' : '');
+      thumb.innerHTML = `<img src="${img.src}" alt="縮圖 ${i+1}" loading="lazy"><span class="thumb-num">${i+1}</span>`;
+      thumb.addEventListener('click', () => { goTo(i); switchToSingle(); });
+      grid.appendChild(thumb);
+    }
+
+    gridView.appendChild(grid);
+  }
+
+  // ── Single-view navigation ──
+  function goTo(index) {
+    current = Math.max(0, Math.min(total - 1, index));
+    currentPageEl.textContent = current + 1;
+    pageCatEl.textContent = images[current].category;
+    prevBtn.disabled = current === 0;
+    nextBtn.disabled = current === total - 1;
+
+    mainImg.classList.remove('loaded');
+    mainImg.src = images[current].src;
+    mainImg.onload = () => mainImg.classList.add('loaded');
+
+    mainImg.style.cursor = images[current].link ? 'pointer' : 'default';
+    mainImg.onclick = images[current].link
+      ? () => window.open(images[current].link, '_blank')
+      : null;
+  }
+
+  function switchToSingle() {
+    isGrid = false;
+    singleView.style.display = 'flex';
+    gridView.classList.remove('active');
+    singleToggle.classList.add('active');
+    gridToggle.classList.remove('active');
+    totalPagesEl.textContent = total;
+    currentPageEl.textContent = current + 1;
+    pageCatEl.textContent = images[current].category;
+    prevBtn.disabled = current === 0;
+    nextBtn.disabled = current === total - 1;
+  }
+
+  function switchToGrid() {
+    isGrid = true;
+    // jump to the grid page containing current image
+    gridPage = Math.floor(current / GRID_PER_PAGE);
+    singleView.style.display = 'none';
+    gridView.classList.add('active');
+    singleToggle.classList.remove('active');
+    gridToggle.classList.add('active');
+    renderGridPage(gridPage);
+    updateGridCounter();
+  }
+
+  function updateGridCounter() {
+    currentPageEl.textContent = gridPage + 1;
+    totalPagesEl.textContent = totalGridPages;
+    pageCatEl.textContent = '';
+    prevBtn.disabled = gridPage === 0;
+    nextBtn.disabled = gridPage === totalGridPages - 1;
+  }
+
+  prevBtn.addEventListener('click', () => {
+    if (isGrid) {
+      if (gridPage > 0) { gridPage--; renderGridPage(gridPage); updateGridCounter(); }
+    } else {
+      goTo(current - 1);
+    }
+  });
+  nextBtn.addEventListener('click', () => {
+    if (isGrid) {
+      if (gridPage < totalGridPages - 1) { gridPage++; renderGridPage(gridPage); updateGridCounter(); }
+    } else {
+      goTo(current + 1);
+    }
+  });
+
+  singleToggle.addEventListener('click', switchToSingle);
+  gridToggle.addEventListener('click', switchToGrid);
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowLeft') prevBtn.click();
+    if (e.key === 'ArrowRight') nextBtn.click();
+  });
+
+  goTo(0);
+  switchToGrid();  // ← 加這行入場即方格瀏覽
+</script>
+</body>
+</html>
