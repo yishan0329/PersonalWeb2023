@@ -1,603 +1,803 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="shortcut icon" href="img/favicon.ico">
-<title>YISHAN – DIGITIMES視覺設計作品集</title>
-<style>
-  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500&family=DM+Mono:wght@300;400&display=swap');
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="img/favicon.ico">
+  <title>YISHAN – DIGITIMES視覺設計作品集</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500&family=DM+Mono:wght@300;400&display=swap');
 
-  :root {
-    --bg: #ffffff;
-    --divider: #e8e8e8;
-    --text-primary: #111111;
-    --text-secondary: #666666;
-    --text-muted: #aaaaaa;
-    --nav-h: 44px;
-    --sidebar-w: 320px;
-  }
+    :root {
+      --bg: #ffffff;
+      --divider: #e8e8e8;
+      --text-primary: #111111;
+      --text-secondary: #666666;
+      --text-muted: #aaaaaa;
+      --nav-h: 44px;
+      --sidebar-w: 320px;
+    }
 
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-  html, body {
-    height: 100%;
-    font-family: 'Noto Sans TC', sans-serif;
-    background: var(--bg);
-    color: var(--text-primary);
-    overflow: hidden;
-  }
+    html,
+    body {
+      height: 100%;
+      font-family: 'Noto Sans TC', sans-serif;
+      background: var(--bg);
+      color: var(--text-primary);
+      overflow: hidden;
+    }
 
-  nav {
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    height: var(--nav-h);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 20px;
-    background: #fff;
-    z-index: 100;
-  }
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: var(--nav-h);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 20px;
+      background: #fff;
+      z-index: 100;
+    }
 
-  .nav-breadcrumb {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    font-size: 11.5px;
-    color: var(--text-muted);
-    font-family: 'DM Mono', monospace;
-    font-weight: 300;
-    letter-spacing: 0.01em;
-  }
-  .nav-breadcrumb a { color: var(--text-secondary); text-decoration: none; transition: color .15s; }
-  .nav-breadcrumb a:hover { color: var(--text-primary); }
-  .nav-sep { color: #ddd; }
+    .nav-breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11.5px;
+      color: var(--text-muted);
+      font-family: 'DM Mono', monospace;
+      font-weight: 300;
+      letter-spacing: 0.01em;
+    }
 
-  .nav-home {
-    width: 28px; height: 28px;
-    display: flex; align-items: center; justify-content: center;
-    color: var(--text-muted);
-    text-decoration: none;
-    transition: color .15s;
-  }
-  .nav-home:hover { color: var(--text-primary); }
-  .nav-home svg { width: 14px; height: 14px; }
+    .nav-breadcrumb a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: color .15s;
+    }
 
-  .layout {
-    display: flex;
-    height: 100vh;
-    padding-top: var(--nav-h);
-  }
+    .nav-breadcrumb a:hover {
+      color: var(--text-primary);
+    }
 
-  .viewer {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-    background: #fff;
-  }
+    .nav-sep {
+      color: #ddd;
+    }
 
-  .single-view {
-    flex: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 28px;
-    overflow: hidden;
-    background: #fff;
-  }
+    .nav-home {
+      width: 28px;
+      height: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color .15s;
+    }
 
-  .single-view img {
-    max-width: 100%;
-    max-height: 100%;
-    object-fit: contain;
-    display: block;
-    opacity: 0;
-    transition: opacity .3s ease;
-  }
-  .single-view img.loaded { opacity: 1; }
+    .nav-home:hover {
+      color: var(--text-primary);
+    }
 
-  .grid-view {
-    flex: 1;
-    overflow: hidden;
-    padding: 16px 16px 0;
-    display: none;
-    flex-direction: column;
-    background: #fff;
-  }
-  .grid-view.active { display: flex; }
+    .nav-home svg {
+      width: 14px;
+      height: 14px;
+    }
 
-  .grid-page {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    grid-template-rows: repeat(4, 1fr);
-    gap: 20px;
-    flex: 1;
-    min-height: 0;
-  }
+    .layout {
+      display: flex;
+      height: 100vh;
+      padding-top: var(--nav-h);
+    }
 
-  .grid-thumb {
-    overflow: hidden;
-    cursor: pointer;
-    position: relative;
-    transition: opacity .15s;
-    min-height: 0;
-  border-radius: 10px;
-  }
-  .grid-thumb:hover { opacity: 0.75; }
-  .grid-thumb.active img { outline: 1.5px solid #111; outline-offset: -1.5px; }
-  .grid-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
-  .grid-thumb .thumb-num {
-    position: absolute;
-    bottom: 4px; right: 5px;
-    font-family: 'DM Mono', monospace;
-    font-size: 9px;
-    font-weight: 300;
-    color: rgba(0,0,0,0.4);
-    background: rgba(255,255,255,0.7);
-    padding: 1px 4px;
-  }
+    .viewer {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      background: #fff;
+    }
 
-  .viewer-controls {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 10px 20px;
-    background: #fff;
-    flex-shrink: 0;
-  }
+    .single-view {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 28px;
+      overflow: hidden;
+      background: #fff;
+    }
 
-  .nav-arrows { display: flex; align-items: center; gap: 8px; }
+    .single-view img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      display: block;
+      opacity: 0;
+      transition: opacity .3s ease;
+    }
 
-  .arrow-btn {
-    width: 26px; height: 26px;
-    display: flex; align-items: center; justify-content: center;
-    border: none; background: transparent;
-    color: var(--text-muted); cursor: pointer;
-    transition: color .15s; padding: 0;
-  }
-  .arrow-btn:hover:not(:disabled) { color: var(--text-primary); }
-  .arrow-btn:disabled { opacity: 0.25; cursor: default; }
+    .single-view img.loaded {
+      opacity: 1;
+    }
 
-  .page-counter {
-    font-family: 'DM Mono', monospace;
-    font-size: 11px; font-weight: 300;
-    color: var(--text-muted);
-    letter-spacing: 0.05em;
-    min-width: 52px; text-align: center;
-  }
-  .page-counter .cur { color: var(--text-primary); }
+    .grid-view {
+      flex: 1;
+      overflow: hidden;
+      padding: 16px 16px 0;
+      display: none;
+      flex-direction: column;
+      background: #fff;
+    }
 
-  /* Category badge next to counter */
-  .page-category {
-    font-family: 'DM Mono', monospace;
-    font-size: 10px; font-weight: 300;
-    color: var(--text-muted);
-    letter-spacing: 0.06em;
-  }
+    .grid-view.active {
+      display: flex;
+    }
 
-  .view-toggle { display: flex; gap: 2px; }
+    .grid-page {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      grid-template-rows: repeat(4, 1fr);
+      gap: 20px;
+      flex: 1;
+      min-height: 0;
+    }
 
-  .toggle-btn {
-    width: 28px; height: 28px;
-    display: flex; align-items: center; justify-content: center;
-    border: none; background: transparent;
-    color: var(--text-muted); cursor: pointer;
-    transition: color .15s; border-radius: 3px;
-  }
-  .toggle-btn.active { color: var(--text-primary); }
-  .toggle-btn:not(.active):hover { color: #888; }
-  .toggle-btn svg { width: 13px; height: 13px; }
+    .grid-thumb {
+      overflow: hidden;
+      cursor: pointer;
+      position: relative;
+      transition: opacity .15s;
+      min-height: 0;
+      border-radius: 10px;
+    }
 
-  .divider {
-    width: 1px;
-    background: var(--divider);
-    flex-shrink: 0;
-    align-self: stretch;
-  }
+    .grid-thumb:hover {
+      opacity: 0.75;
+    }
 
-  .sidebar {
-    width: var(--sidebar-w);
-    flex-shrink: 0;
-    background: #fff;
-    overflow-y: auto;
-    padding: 32px 26px;
-  }
-  .sidebar::-webkit-scrollbar { width: 3px; }
-  .sidebar::-webkit-scrollbar-thumb { background: #eee; }
+    .grid-thumb.active img {
+      outline: 1.5px solid #111;
+      outline-offset: -1.5px;
+    }
 
-  .sidebar h1 {
-    font-size: 19px; font-weight: 500;
-    letter-spacing: -0.01em; line-height: 1.3;
-    margin-bottom: 24px;
-  }
+    .grid-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
 
-  .sidebar section { margin-bottom: 26px; }
+    .grid-thumb .thumb-num {
+      position: absolute;
+      bottom: 4px;
+      right: 5px;
+      font-family: 'DM Mono', monospace;
+      font-size: 9px;
+      font-weight: 300;
+      color: rgba(0, 0, 0, 0.4);
+      background: rgba(255, 255, 255, 0.7);
+      padding: 1px 4px;
+    }
 
-  .sidebar h2 {
-    font-size: 10px; font-weight: 400;
-    letter-spacing: 0.12em; text-transform: uppercase;
-    color: var(--text-muted);
-    font-family: 'DM Mono', monospace;
-    margin-bottom: 12px; padding-bottom: 8px;
-    border-bottom: 1px solid var(--divider);
-  }
+    .viewer-controls {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 20px;
+      background: #fff;
+      flex-shrink: 0;
+    }
 
-  .sidebar p {
-    font-size: 13px; font-weight: 300;
-    line-height: 1.8; color: var(--text-secondary);
-  }
+    .nav-arrows {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
 
-  .tag {
-    cursor: pointer;
-    transition: background .15s, color .15s, border-color .15s;
-  }
-  .tag.active {
-    background: #111;
-    color: #fff;
-    border-color: #111;
-  }
+    .arrow-btn {
+      width: 26px;
+      height: 26px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: none;
+      background: transparent;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: color .15s;
+      padding: 0;
+    }
 
-  .process-item { display: flex; gap: 12px; margin-bottom: 14px; }
-  .process-num {
-    font-family: 'DM Mono', monospace;
-    font-size: 10px; font-weight: 300;
-    color: var(--text-muted); min-width: 18px; padding-top: 2px;
-  }
-  .process-title { font-size: 12.5px; font-weight: 500; margin-bottom: 3px; color: var(--text-primary); }
-  .process-desc { font-size: 12px; font-weight: 300; color: var(--text-secondary); line-height: 1.7; }
+    .arrow-btn:hover:not(:disabled) {
+      color: var(--text-primary);
+    }
 
-  .tags { display: flex; flex-wrap: wrap; gap: 6px; }
-  .tag {
-    font-size: 11.5px; font-weight: 300;
-    padding: 4px 10px;
-    border: 1px solid #ddd;
-    color: var(--text-secondary);
-  }
+    .arrow-btn:disabled {
+      opacity: 0.25;
+      cursor: default;
+    }
 
-  @media (max-width: 768px) {
-    html, body { overflow: auto; }
-    .layout { flex-direction: column; height: auto; overflow: visible; }
-    .viewer { height: 60vw; min-height: 260px; flex-shrink: 0; }
-    .divider { width: auto; height: 1px; align-self: auto; }
-    .grid-page { grid-template-columns: repeat(2, 1fr); grid-template-rows: repeat(2, 1fr); }
-    .sidebar { width: 100%; padding: 24px 18px; }
-    :root { --sidebar-w: 100%; }
-  }
+    .page-counter {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      font-weight: 300;
+      color: var(--text-muted);
+      letter-spacing: 0.05em;
+      min-width: 52px;
+      text-align: center;
+    }
 
-  @media (max-width: 480px) {
-    .grid-page { grid-template-columns: repeat(2, 1fr); grid-template-rows: repeat(2, 1fr); }
-    .viewer { height: 68vw; }
-  }
-</style>
+    .page-counter .cur {
+      color: var(--text-primary);
+    }
+
+    /* Category badge next to counter */
+    .page-category {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      font-weight: 300;
+      color: var(--text-muted);
+      letter-spacing: 0.06em;
+    }
+
+    .view-toggle {
+      display: flex;
+      gap: 2px;
+    }
+
+    .toggle-btn {
+      width: 28px;
+      height: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: none;
+      background: transparent;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: color .15s;
+      border-radius: 3px;
+    }
+
+    .toggle-btn.active {
+      color: var(--text-primary);
+    }
+
+    .toggle-btn:not(.active):hover {
+      color: #888;
+    }
+
+    .toggle-btn svg {
+      width: 13px;
+      height: 13px;
+    }
+
+    .divider {
+      width: 1px;
+      background: var(--divider);
+      flex-shrink: 0;
+      align-self: stretch;
+    }
+
+    .sidebar {
+      width: var(--sidebar-w);
+      flex-shrink: 0;
+      background: #fff;
+      overflow-y: auto;
+      padding: 32px 26px;
+    }
+
+    .sidebar::-webkit-scrollbar {
+      width: 3px;
+    }
+
+    .sidebar::-webkit-scrollbar-thumb {
+      background: #eee;
+    }
+
+    .sidebar h1 {
+      font-size: 19px;
+      font-weight: 500;
+      letter-spacing: -0.01em;
+      line-height: 1.3;
+      margin-bottom: 24px;
+    }
+
+    .sidebar section {
+      margin-bottom: 26px;
+    }
+
+    .sidebar h2 {
+      font-size: 10px;
+      font-weight: 400;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      font-family: 'DM Mono', monospace;
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--divider);
+    }
+
+    .sidebar p {
+      font-size: 13px;
+      font-weight: 300;
+      line-height: 1.8;
+      color: var(--text-secondary);
+    }
+
+    .tag {
+      cursor: pointer;
+      transition: background .15s, color .15s, border-color .15s;
+    }
+
+    .tag.active {
+      background: #111;
+      color: #fff;
+      border-color: #111;
+    }
+
+    .process-item {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .process-num {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      font-weight: 300;
+      color: var(--text-muted);
+      min-width: 18px;
+      padding-top: 2px;
+    }
+
+    .process-title {
+      font-size: 12.5px;
+      font-weight: 500;
+      margin-bottom: 3px;
+      color: var(--text-primary);
+    }
+
+    .process-desc {
+      font-size: 12px;
+      font-weight: 300;
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .tag {
+      font-size: 11.5px;
+      font-weight: 300;
+      padding: 4px 10px;
+      border: 1px solid #ddd;
+      color: var(--text-secondary);
+    }
+
+    @media (max-width: 768px) {
+
+      html,
+      body {
+        overflow: auto;
+      }
+
+      .layout {
+        flex-direction: column;
+        height: auto;
+        overflow: visible;
+      }
+
+      .viewer {
+        height: 60vw;
+        min-height: 260px;
+        flex-shrink: 0;
+      }
+
+      .divider {
+        width: auto;
+        height: 1px;
+        align-self: auto;
+      }
+
+      .grid-page {
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(2, 1fr);
+      }
+
+      .sidebar {
+        width: 100%;
+        padding: 24px 18px;
+      }
+
+      :root {
+        --sidebar-w: 100%;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .grid-page {
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(2, 1fr);
+      }
+
+      .viewer {
+        height: 68vw;
+      }
+    }
+  </style>
 </head>
+
 <body>
 
-<nav>
-  <div class="nav-breadcrumb">
-    <a href="index.html" target="_blank" rel="noopener">蔡宜珊</a>
-    <span class="nav-sep">/</span>
-    <a href="DIGITIMES2023-index.html" target="_blank" rel="noopener">2023–DIGITIMES 視覺設計</a>
-  </div>
-  <a href="index.html" class="nav-home" title="首頁">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1H4a1 1 0 01-1-1V9.5z"/>
-      <path d="M9 21V12h6v9"/>
-    </svg>
-  </a>
-</nav>
-
-<div class="layout">
-  <div class="viewer">
-    <div class="single-view" id="singleView">
-      <img id="mainImg" src="" alt="作品圖片" />
+  <nav>
+    <div class="nav-breadcrumb">
+      <a href="index.html" target="_blank" rel="noopener">蔡宜珊</a>
+      <span class="nav-sep">/</span>
+      <a href="DIGITIMES2023-index.html" target="_blank" rel="noopener">2023–DIGITIMES 視覺設計</a>
     </div>
-    <div class="grid-view" id="gridView"></div>
+    <a href="index.html" class="nav-home" title="首頁">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+        stroke-linejoin="round">
+        <path d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1H4a1 1 0 01-1-1V9.5z" />
+        <path d="M9 21V12h6v9" />
+      </svg>
+    </a>
+  </nav>
 
-    <div class="viewer-controls">
-      <div class="nav-arrows">
-        <button class="arrow-btn" id="prevBtn">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
-        </button>
-        <div class="page-counter"><span class="cur" id="currentPage">1</span> / <span id="totalPages">-</span></div>
-        <button class="arrow-btn" id="nextBtn">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
-        </button>
-        <span class="page-category" id="pageCategory"></span>
+  <div class="layout">
+    <div class="viewer">
+      <div class="single-view" id="singleView">
+        <img id="mainImg" src="" alt="作品圖片" />
       </div>
-      <div class="view-toggle">
-        <button class="toggle-btn active" id="singleToggle" title="單圖瀏覽">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="1"/></svg>
-        </button>
-        <button class="toggle-btn" id="gridToggle" title="格狀瀏覽">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-            <rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/>
-            <rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/>
-          </svg>
-        </button>
+      <div class="grid-view" id="gridView"></div>
+
+      <div class="viewer-controls">
+        <div class="nav-arrows">
+          <button class="arrow-btn" id="prevBtn">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+              stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="15 18 9 12 15 6" />
+            </svg>
+          </button>
+          <div class="page-counter"><span class="cur" id="currentPage">1</span> / <span id="totalPages">-</span></div>
+          <button class="arrow-btn" id="nextBtn">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+              stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="9 18 15 12 9 6" />
+            </svg>
+          </button>
+          <span class="page-category" id="pageCategory"></span>
+        </div>
+        <div class="view-toggle">
+          <button class="toggle-btn active" id="singleToggle" title="單圖瀏覽">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+              stroke-linejoin="round">
+              <rect x="3" y="3" width="18" height="18" rx="1" />
+            </svg>
+          </button>
+          <button class="toggle-btn" id="gridToggle" title="格狀瀏覽">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+              stroke-linejoin="round">
+              <rect x="3" y="3" width="7" height="7" rx="1" />
+              <rect x="14" y="3" width="7" height="7" rx="1" />
+              <rect x="3" y="14" width="7" height="7" rx="1" />
+              <rect x="14" y="14" width="7" height="7" rx="1" />
+            </svg>
+          </button>
+        </div>
       </div>
     </div>
+
+    <div class="divider"></div>
+
+    <aside class="sidebar">
+      <h1>主視覺設計</h1>
+      <section>
+        <h2>專案說明</h2>
+        <p>負責活動／節目主視覺整體規劃與執行，從概念發想、視覺策略制定到最終設計，建立可延伸應用的視覺，確保資訊能有效傳達給目標受眾。</p>
+      </section>
+      <section>
+        <h2>設計流程</h2>
+        <div class="process-item">
+          <div class="process-num">01</div>
+          <div>
+            <div class="process-title">需求分析與策略定位</div>
+            <div class="process-desc">與專案團隊討論活動核心訊息，釐清主視覺需傳達的議題與視覺方向。</div>
+          </div>
+        </div>
+        <div class="process-item">
+          <div class="process-num">02</div>
+          <div>
+            <div class="process-title">概念發想與風格探索</div>
+            <div class="process-desc">透過競品分析、產業趨勢研究，蒐集組視覺方向靈感。</div>
+          </div>
+        </div>
+        <div class="process-item">
+          <div class="process-num">03</div>
+          <div>
+            <div class="process-title">主視覺設計</div>
+            <div class="process-desc">將核心概念轉化為具體視覺語言，整合圖像、字體、色彩及版面結構，建立主視覺核心畫面。</div>
+          </div>
+        </div>
+      </section>
+      <section>
+        <h2>製作項目</h2>
+        <div class="tags" id="filterTags">
+          <span class="tag" data-category="企業識別與活動視覺">活動視覺</span>
+          <span class="tag" data-category="外部委託視覺">外部委託視覺</span>
+          <span class="tag" data-category="IC之音">IC之音節目視覺</span>
+          <span class="tag" data-category="其他">其他</span>
+        </div>
+      </section>
+    </aside>
   </div>
 
-  <div class="divider"></div>
+  <script>
+    // ── IMAGE DATA ──
+    // Each entry: { src, category, link (optional) }
+    const images = [
+      //2026
+      { src: 'img/digitimes/kv/2026_4to6/LINE_ALBUM_kv_260607_1.jpg', category: 'IC之音' },
+      { src: 'img/digitimes/kv/2026_4to6/LINE_ALBUM_kv_260607_2.jpg', category: '企業識別與活動視覺' },
+      { src: 'img/digitimes/kv/2026_4to6/LINE_ALBUM_kv_260607_4.jpg', category: '外部委託視覺' },
+      { src: 'img/digitimes/kv/2026_4to6/LINE_ALBUM_kv_260607_3.jpg', category: '外部委託視覺' },
 
-  <aside class="sidebar">
-    <h1>主視覺設計</h1>
-    <section>
-      <h2>專案說明</h2>
-      <p>負責活動／節目主視覺整體規劃與執行，從概念發想、視覺策略制定到最終設計，建立可延伸應用的視覺，確保資訊能有效傳達給目標受眾。</p>
-    </section>
-    <section>
-      <h2>設計流程</h2>
-      <div class="process-item">
-        <div class="process-num">01</div>
-        <div>
-          <div class="process-title">需求分析與策略定位</div>
-          <div class="process-desc">與專案團隊討論活動核心訊息，釐清主視覺需傳達的議題與視覺方向。</div>
-        </div>
-      </div>
-      <div class="process-item">
-        <div class="process-num">02</div>
-        <div>
-          <div class="process-title">概念發想與風格探索</div>
-          <div class="process-desc">透過競品分析、產業趨勢研究，蒐集組視覺方向靈感。</div>
-        </div>
-      </div>
-      <div class="process-item">
-        <div class="process-num">03</div>
-        <div>
-          <div class="process-title">主視覺設計</div>
-          <div class="process-desc">將核心概念轉化為具體視覺語言，整合圖像、字體、色彩及版面結構，建立主視覺核心畫面。</div>
-        </div>
-      </div>
-    </section>
-    <section>
-      <h2>製作項目</h2>
-      <div class="tags" id="filterTags">
-        <span class="tag" data-category="企業識別與活動視覺">活動視覺</span>
-        <span class="tag" data-category="外部委託視覺">外部委託視覺</span>
-        <span class="tag" data-category="IC之音">IC之音節目視覺</span>
-        <span class="tag" data-category="其他">其他</span>
-      </div>
-    </section>
-  </aside>
-</div>
 
-<script>
-  // ── IMAGE DATA ──
-  // Each entry: { src, category, link (optional) }
-  const images = [
-    // IC之音
-    { src: 'img/digitimes/kv/2025_10to12/1206新竹國際教育展.jpg', category: 'IC之音' },
-    { src: 'img/digitimes/kv/2025_1to3/智-桌機Banner.jpg',       category: 'IC之音', link: 'https://www.ic975.com/aiflow/' },
-    { src: 'img/digitimes/kv/2025_1to3/用-桌機Banner.jpg',        category: 'IC之音', link: 'https://www.ic975.com/aiflow/' },
-    { src: 'img/digitimes/kv/2025_1to3/優-桌機Banner.jpg',        category: 'IC之音', link: 'https://www.ic975.com/aiflow/' },
-    { src: 'img/digitimes/kv/2025_1to3/幸福推理.jpg',             category: 'IC之音' },
-    { src: 'img/digitimes/kv/2025_7to9/0913 i Forum 國際教育論壇.jpg', category: 'IC之音' },
-    { src: 'img/digitimes/kv/2025_4to6/ic-晚安Fun音樂.jpg',       category: 'IC之音' },
-    { src: 'img/digitimes/kv/2025_4to6/ic-夏日出走.jpg',          category: 'IC之音' },
-    { src: 'img/digitimes/kv/2024_4to6/ic萌寵特別企劃.jpg',       category: 'IC之音' },
-    { src: 'img/digitimes/kv/2024_7to9/桌機Banner 2.jpg',         category: 'IC之音' },
+      //2025
+      // IC之音
+      { src: 'img/digitimes/kv/2025_10to12/1206新竹國際教育展.jpg', category: 'IC之音' },
+      { src: 'img/digitimes/kv/2025_7to9/0913 i Forum 國際教育論壇.jpg', category: 'IC之音' },
+      { src: 'img/digitimes/kv/2024_7to9/桌機Banner 2.jpg', category: 'IC之音' },
+      { src: 'img/digitimes/kv/2025_4to6/ic-晚安Fun音樂.jpg', category: 'IC之音' },
+      { src: 'img/digitimes/kv/2025_4to6/ic-夏日出走.jpg', category: 'IC之音' },
+      { src: 'img/digitimes/kv/2025_1to3/智-桌機Banner.jpg', category: 'IC之音', link: 'https://www.ic975.com/aiflow/' },
+      { src: 'img/digitimes/kv/2025_1to3/用-桌機Banner.jpg', category: 'IC之音', link: 'https://www.ic975.com/aiflow/' },
+      { src: 'img/digitimes/kv/2025_1to3/優-桌機Banner.jpg', category: 'IC之音', link: 'https://www.ic975.com/aiflow/' },
+      // 企業識別與活動視覺
+      { src: 'img/digitimes/kv/2025_10to12/1203_TechForum.jpg', category: '企業識別與活動視覺' },
+      { src: 'img/digitimes/kv/2025_7to9/0725Dforum.jpg', category: '企業識別與活動視覺' },
+      { src: 'img/digitimes/kv/2025_10to12/1017_DForum智慧醫療論壇.jpg', category: '企業識別與活動視覺' },
+      { src: 'img/digitimes/kv/2025_7to9/0808mcu.jpg', category: '企業識別與活動視覺' },
+      { src: 'img/digitimes/kv/2025_7to9/ces2026.jpg', category: '企業識別與活動視覺' },
+      { src: 'img/digitimes/kv/2025_4to6/1141481.jpg', category: '企業識別與活動視覺' },
+      { src: 'img/digitimes/kv/2025_4to6/0626Dforum.jpg', category: '企業識別與活動視覺' },
+      { src: 'img/digitimes/kv/2025_1to3/sp-no3.jpg', category: '企業識別與活動視覺' },
+      { src: 'img/digitimes/kv/2025_1to3/20250121Dforum.jpg', category: '企業識別與活動視覺' },
+      { src: 'img/digitimes/kv/2025_7to9/0718智慧機械.jpg', category: '企業識別與活動視覺' },
+      { src: 'img/digitimes/kv/2025_7to9/AI Search.jpg', category: '企業識別與活動視覺' },
+      { src: 'img/digitimes/kv/2025_7to9/關稅系列研究報告.jpg', category: '企業識別與活動視覺' },
+      { src: 'img/digitimes/kv/2025_4to6/0411 hpc.jpg', category: '企業識別與活動視覺' },
+      { src: 'img/digitimes/kv/2025_4to6/0521b.jpg', category: '企業識別與活動視覺' },
+      // 外部委託視覺
+      { src: 'img/digitimes/kv/2025_10to12/1128_Henkel.jpg', category: '外部委託視覺' },
+      { src: 'img/digitimes/kv/2025_7to9/Henkel ebook.jpg', category: '外部委託視覺' },
+      { src: 'img/digitimes/kv/2025_1to3/富士通.jpg', category: '外部委託視覺' },
+      { src: 'img/digitimes/kv/2025_10to12/1209_Veeam.jpg', category: '外部委託視覺' },
+      { src: 'img/digitimes/kv/2025_7to9/0912 Henkel SEMICON.jpg', category: '外部委託視覺' },
+      { src: 'img/digitimes/kv/2025_7to9/2025自動化展會.jpg', category: '外部委託視覺' },
+      { src: 'img/digitimes/kv/2025_4to6/0423amazon.jpg', category: '外部委託視覺' },
 
-    // 企業識別與活動視覺
-    { src: 'img/digitimes/kv/2025_10to12/1203_TechForum.jpg',        category: '企業識別與活動視覺' },
-    { src: 'img/digitimes/kv/2025_7to9/0725Dforum.jpg',              category: '企業識別與活動視覺' },
-    { src: 'img/digitimes/kv/2025_1to3/20250121Dforum.jpg',          category: '企業識別與活動視覺' },
-    { src: 'img/digitimes/kv/2024_7to9/主視覺.jpg',                  category: '企業識別與活動視覺' },
-    { src: 'img/digitimes/kv/2024_7to9/b.jpg',                       category: '企業識別與活動視覺' },
-    { src: 'img/digitimes/kv/2023_3to8/ASC_kv.jpg',                  category: '企業識別與活動視覺' },
-    { src: 'img/digitimes/kv/2023_9to12/v2-2.jpg',                   category: '企業識別與活動視覺' },
-    { src: 'img/digitimes/kv/2025_10to12/1017_DForum智慧醫療論壇.jpg', category: '企業識別與活動視覺' },
-    { src: 'img/digitimes/kv/2025_7to9/0808mcu.jpg',                 category: '企業識別與活動視覺' },
-    { src: 'img/digitimes/kv/2025_7to9/ces2026.jpg',                 category: '企業識別與活動視覺' },
-    { src: 'img/digitimes/kv/2025_4to6/1141481.jpg',                 category: '企業識別與活動視覺' },
-    { src: 'img/digitimes/kv/2025_4to6/0626Dforum.jpg',              category: '企業識別與活動視覺' },
-    { src: 'img/digitimes/kv/2025_1to3/sp-no3.jpg',                  category: '企業識別與活動視覺' },
-    { src: 'img/digitimes/kv/2024_1to3/cut3A.jpg',                   category: '企業識別與活動視覺' },
-    { src: 'img/digitimes/kv/2025_7to9/0718智慧機械.jpg',            category: '企業識別與活動視覺' },
-    { src: 'img/digitimes/kv/2025_7to9/AI Search.jpg',               category: '企業識別與活動視覺' },
-    { src: 'img/digitimes/kv/2025_7to9/關稅系列研究報告.jpg',        category: '企業識別與活動視覺' },
-    { src: 'img/digitimes/kv/2025_4to6/0411 hpc.jpg',                category: '企業識別與活動視覺' },
-    { src: 'img/digitimes/kv/2025_4to6/0521b.jpg',                   category: '企業識別與活動視覺' },
-    { src: 'img/digitimes/kv/2024_10to12/20241120Dforum.jpg',        category: '企業識別與活動視覺' },
-    { src: 'img/digitimes/kv/2024_10to12/20241206Dforum.jpg',        category: '企業識別與活動視覺' },
 
-    // 外部委託視覺
-    { src: 'img/digitimes/kv/2025_10to12/1128_Henkel.jpg',       category: '外部委託視覺' },
-    { src: 'img/digitimes/kv/2025_7to9/Henkel ebook.jpg',        category: '外部委託視覺' },
-    { src: 'img/digitimes/kv/2025_1to3/富士通.jpg',              category: '外部委託視覺' },
-    { src: 'img/digitimes/kv/2024_7to9/5b-ol.jpg',               category: '外部委託視覺' },
-    { src: 'img/digitimes/kv/2023_9to12/crypto.jpg',             category: '外部委託視覺' },
-    { src: 'img/digitimes/kv/2025_10to12/1209_Veeam.jpg',        category: '外部委託視覺' },
-    { src: 'img/digitimes/kv/2025_7to9/0912 Henkel SEMICON.jpg', category: '外部委託視覺' },
-    { src: 'img/digitimes/kv/2024_10to12/1132667.jpg',           category: '外部委託視覺' },
-    { src: 'img/digitimes/kv/2023_3to8/kv_c.jpg',                category: '外部委託視覺' },
-    { src: 'img/digitimes/kv/2024_1to3/b.jpg',                   category: '外部委託視覺' },
-    { src: 'img/digitimes/kv/2025_7to9/2025自動化展會.jpg',      category: '外部委託視覺' },
-    { src: 'img/digitimes/kv/2025_4to6/0423amazon.jpg',          category: '外部委託視覺' },
-    { src: 'img/digitimes/kv/2024_7to9/a.jpg',                   category: '外部委託視覺' },
-    { src: 'img/digitimes/kv/2023_3to8/AWS-JIC_ol_修.png',       category: '外部委託視覺' },
+      //2024
+      // IC之音
+      { src: 'img/digitimes/kv/2025_1to3/幸福推理.jpg', category: 'IC之音' },
+      { src: 'img/digitimes/kv/2024_4to6/ic萌寵特別企劃.jpg', category: 'IC之音' },
+      // 企業識別與活動視覺
+      { src: 'img/digitimes/kv/2024_7to9/主視覺.jpg', category: '企業識別與活動視覺' },
+      { src: 'img/digitimes/kv/2024_7to9/b.jpg', category: '企業識別與活動視覺' },
+      { src: 'img/digitimes/kv/2023_3to8/ASC_kv.jpg', category: '企業識別與活動視覺' },
+      { src: 'img/digitimes/kv/2023_9to12/v2-2.jpg', category: '企業識別與活動視覺' },
+      { src: 'img/digitimes/kv/2024_1to3/cut3A.jpg', category: '企業識別與活動視覺' },
+      { src: 'img/digitimes/kv/2024_10to12/20241120Dforum.jpg', category: '企業識別與活動視覺' },
+      { src: 'img/digitimes/kv/2024_10to12/20241206Dforum.jpg', category: '企業識別與活動視覺' },
+      // 外部委託視覺
+      { src: 'img/digitimes/kv/2024_7to9/5b-ol.jpg', category: '外部委託視覺' },
+      { src: 'img/digitimes/kv/2023_9to12/crypto.jpg', category: '外部委託視覺' },
+      { src: 'img/digitimes/kv/2024_10to12/1132667.jpg', category: '外部委託視覺' },
+      { src: 'img/digitimes/kv/2023_3to8/kv_c.jpg', category: '外部委託視覺' },
+      { src: 'img/digitimes/kv/2024_1to3/b.jpg', category: '外部委託視覺' },
+      { src: 'img/digitimes/kv/2024_7to9/a.jpg', category: '外部委託視覺' },
+      { src: 'img/digitimes/kv/2023_3to8/AWS-JIC_ol_修.png', category: '外部委託視覺' },
 
-    // 遺珠
-    { src: 'img/digitimes/kv/no_use/LINE_ALBUM_kv未用到_260607_1.jpg',       category: '其他' },
-    { src: 'img/digitimes/kv/no_use/LINE_ALBUM_kv未用到_260607_3.jpg',       category: '其他' },
-    { src: 'img/digitimes/kv/no_use/LINE_ALBUM_kv未用到_260607_4.jpg',       category: '其他' },
-    { src: 'img/digitimes/kv/no_use/LINE_ALBUM_kv未用到_260607_7.jpg',       category: '其他' },
-    { src: 'img/digitimes/kv/no_use/LINE_ALBUM_kv未用到_260607_8.jpg',       category: '其他' },
-    { src: 'img/digitimes/kv/no_use/LINE_ALBUM_kv未用到_260607_13.jpg',       category: '其他' },
-    { src: 'img/digitimes/kv/no_use/LINE_ALBUM_kv未用到_260607_15.jpg',       category: '其他' },
-    { src: 'img/digitimes/kv/no_use/LINE_ALBUM_kv未用到_260607_16.jpg',       category: '其他' },
-    { src: 'img/digitimes/kv/no_use/LINE_ALBUM_kv未用到_260607_25.jpg',       category: '其他' },
-    { src: 'img/digitimes/kv/no_use/LINE_ALBUM_kv未用到_260607_27.jpg',       category: '其他' },
-    { src: 'img/digitimes/kv/no_use/LINE_ALBUM_kv未用到_260607_29.jpg',       category: '其他' },
-    { src: 'img/digitimes/kv/no_use/LINE_ALBUM_kv未用到_260607_34.jpg',       category: '其他' },
-    { src: 'img/digitimes/kv/no_use/LINE_ALBUM_kv未用到_260607_35.jpg',       category: '其他' },
-    { src: 'img/digitimes/kv/no_use/LINE_ALBUM_kv未用到_260607_36.jpg',       category: '其他' },
-  ];
+      // 遺珠
+      { src: 'img/digitimes/kv/no_use/LINE_ALBUM_kv未用到_260607_1.jpg', category: '其他' },
+      { src: 'img/digitimes/kv/no_use/LINE_ALBUM_kv未用到_260607_3.jpg', category: '其他' },
+      { src: 'img/digitimes/kv/no_use/LINE_ALBUM_kv未用到_260607_4.jpg', category: '其他' },
+      { src: 'img/digitimes/kv/no_use/LINE_ALBUM_kv未用到_260607_7.jpg', category: '其他' },
+      { src: 'img/digitimes/kv/no_use/LINE_ALBUM_kv未用到_260607_8.jpg', category: '其他' },
+      { src: 'img/digitimes/kv/no_use/LINE_ALBUM_kv未用到_260607_13.jpg', category: '其他' },
+      { src: 'img/digitimes/kv/no_use/LINE_ALBUM_kv未用到_260607_15.jpg', category: '其他' },
+      { src: 'img/digitimes/kv/no_use/LINE_ALBUM_kv未用到_260607_16.jpg', category: '其他' },
+      { src: 'img/digitimes/kv/no_use/LINE_ALBUM_kv未用到_260607_25.jpg', category: '其他' },
+      { src: 'img/digitimes/kv/no_use/LINE_ALBUM_kv未用到_260607_27.jpg', category: '其他' },
+      { src: 'img/digitimes/kv/no_use/LINE_ALBUM_kv未用到_260607_29.jpg', category: '其他' },
+      { src: 'img/digitimes/kv/no_use/LINE_ALBUM_kv未用到_260607_34.jpg', category: '其他' },
+      { src: 'img/digitimes/kv/no_use/LINE_ALBUM_kv未用到_260607_35.jpg', category: '其他' },
+      { src: 'img/digitimes/kv/no_use/LINE_ALBUM_kv未用到_260607_36.jpg', category: '其他' },
+      { src: 'img/digitimes/kv/2026_4to6/LINE_ALBUM_kv_260607_5.jpg', category: '企業識別與活動視覺' },
+    ];
 
-  const GRID_PER_PAGE = window.innerWidth <= 768 ? 4 : 20;
-  const total = images.length;
+    const GRID_PER_PAGE = window.innerWidth <= 768 ? 4 : 20;
+    const total = images.length;
 
-  let current = 0;
-  let isGrid = false;
-  let gridPage = 0;
-  let activeCategory = null;   // null = 全部顯示
+    let current = 0;
+    let isGrid = false;
+    let gridPage = 0;
+    let activeCategory = null;   // null = 全部顯示
 
-  // 依 activeCategory 過濾後的圖片清單
-  function filteredImages() {
-    return activeCategory ? images.filter(img => img.category === activeCategory) : images;
-  }
-
-  const mainImg       = document.getElementById('mainImg');
-  const currentPageEl = document.getElementById('currentPage');
-  const totalPagesEl  = document.getElementById('totalPages');
-  const pageCatEl     = document.getElementById('pageCategory');
-  const prevBtn       = document.getElementById('prevBtn');
-  const nextBtn       = document.getElementById('nextBtn');
-  const singleView    = document.getElementById('singleView');
-  const gridView      = document.getElementById('gridView');
-  const singleToggle  = document.getElementById('singleToggle');
-  const gridToggle    = document.getElementById('gridToggle');
-
-  totalPagesEl.textContent = total;
-
-  // ── Render grid page (from filtered list) ──
-  function renderGridPage(page) {
-    gridView.innerHTML = '';
-    const list = filteredImages();
-    const totalGridPages = Math.ceil(list.length / GRID_PER_PAGE);
-    const grid = document.createElement('div');
-    grid.className = 'grid-page';
-
-    const start = page * GRID_PER_PAGE;
-    const end = Math.min(start + GRID_PER_PAGE, list.length);
-
-    for (let i = start; i < end; i++) {
-      const img = list[i];
-      const realIndex = images.indexOf(img);
-      const thumb = document.createElement('div');
-      thumb.className = 'grid-thumb' + (realIndex === current ? ' active' : '');
-      thumb.innerHTML = `<img src="${img.src}" alt="縮圖" loading="lazy">`;
-      thumb.addEventListener('click', () => { goTo(realIndex); switchToSingle(); });
-      grid.appendChild(thumb);
+    // 依 activeCategory 過濾後的圖片清單
+    function filteredImages() {
+      return activeCategory ? images.filter(img => img.category === activeCategory) : images;
     }
 
-    gridView.appendChild(grid);
-  }
+    const mainImg = document.getElementById('mainImg');
+    const currentPageEl = document.getElementById('currentPage');
+    const totalPagesEl = document.getElementById('totalPages');
+    const pageCatEl = document.getElementById('pageCategory');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const singleView = document.getElementById('singleView');
+    const gridView = document.getElementById('gridView');
+    const singleToggle = document.getElementById('singleToggle');
+    const gridToggle = document.getElementById('gridToggle');
 
-  // ── Single-view navigation (within filtered list) ──
-  function goTo(realIndex) {
-    current = Math.max(0, Math.min(images.length - 1, realIndex));
-    const list = filteredImages();
-    const posInList = list.indexOf(images[current]);
-    currentPageEl.textContent = posInList + 1;
-    totalPagesEl.textContent = list.length;
-    pageCatEl.textContent = images[current].category;
-    prevBtn.disabled = posInList <= 0;
-    nextBtn.disabled = posInList >= list.length - 1;
+    totalPagesEl.textContent = total;
 
-    mainImg.classList.remove('loaded');
-    mainImg.src = images[current].src;
-    mainImg.onload = () => mainImg.classList.add('loaded');
-
-    mainImg.style.cursor = images[current].link ? 'pointer' : 'default';
-    mainImg.onclick = images[current].link
-      ? () => window.open(images[current].link, '_blank')
-      : null;
-  }
-
-  function switchToSingle() {
-    isGrid = false;
-    singleView.style.display = 'flex';
-    gridView.classList.remove('active');
-    singleToggle.classList.add('active');
-    gridToggle.classList.remove('active');
-    goTo(current);
-  }
-
-  function switchToGrid() {
-    isGrid = true;
-    const list = filteredImages();
-    const posInList = list.indexOf(images[current]);
-    gridPage = Math.max(0, Math.floor((posInList >= 0 ? posInList : 0) / GRID_PER_PAGE));
-    singleView.style.display = 'none';
-    gridView.classList.add('active');
-    singleToggle.classList.remove('active');
-    gridToggle.classList.add('active');
-    renderGridPage(gridPage);
-    updateGridCounter();
-  }
-
-  function updateGridCounter() {
-    const list = filteredImages();
-    const totalGridPages = Math.ceil(list.length / GRID_PER_PAGE);
-    currentPageEl.textContent = gridPage + 1;
-    totalPagesEl.textContent = totalGridPages;
-    pageCatEl.textContent = '';
-    prevBtn.disabled = gridPage === 0;
-    nextBtn.disabled = gridPage >= totalGridPages - 1;
-  }
-
-  // ── Tag filter ──
-  document.querySelectorAll('#filterTags .tag').forEach(tag => {
-    tag.addEventListener('click', () => {
-      const cat = tag.dataset.category;
-      if (activeCategory === cat) {
-        // 再按一次取消篩選
-        activeCategory = null;
-        tag.classList.remove('active');
-      } else {
-        activeCategory = cat;
-        document.querySelectorAll('#filterTags .tag').forEach(t => t.classList.remove('active'));
-        tag.classList.add('active');
-      }
-      // 重設到過濾後第一張
-      const list = filteredImages();
-      if (list.length > 0) {
-        current = images.indexOf(list[0]);
-      }
-      gridPage = 0;
-      if (isGrid) {
-        renderGridPage(gridPage);
-        updateGridCounter();
-      } else {
-        goTo(current);
-      }
-    });
-  });
-
-  prevBtn.addEventListener('click', () => {
-    if (isGrid) {
-      if (gridPage > 0) { gridPage--; renderGridPage(gridPage); updateGridCounter(); }
-    } else {
-      const list = filteredImages();
-      const pos = list.indexOf(images[current]);
-      if (pos > 0) goTo(images.indexOf(list[pos - 1]));
-    }
-  });
-  nextBtn.addEventListener('click', () => {
-    if (isGrid) {
+    // ── Render grid page (from filtered list) ──
+    function renderGridPage(page) {
+      gridView.innerHTML = '';
       const list = filteredImages();
       const totalGridPages = Math.ceil(list.length / GRID_PER_PAGE);
-      if (gridPage < totalGridPages - 1) { gridPage++; renderGridPage(gridPage); updateGridCounter(); }
-    } else {
-      const list = filteredImages();
-      const pos = list.indexOf(images[current]);
-      if (pos < list.length - 1) goTo(images.indexOf(list[pos + 1]));
+      const grid = document.createElement('div');
+      grid.className = 'grid-page';
+
+      const start = page * GRID_PER_PAGE;
+      const end = Math.min(start + GRID_PER_PAGE, list.length);
+
+      for (let i = start; i < end; i++) {
+        const img = list[i];
+        const realIndex = images.indexOf(img);
+        const thumb = document.createElement('div');
+        thumb.className = 'grid-thumb' + (realIndex === current ? ' active' : '');
+        thumb.innerHTML = `<img src="${img.src}" alt="縮圖" loading="lazy">`;
+        thumb.addEventListener('click', () => { goTo(realIndex); switchToSingle(); });
+        grid.appendChild(thumb);
+      }
+
+      gridView.appendChild(grid);
     }
-  });
 
-  singleToggle.addEventListener('click', switchToSingle);
-  gridToggle.addEventListener('click', switchToGrid);
+    // ── Single-view navigation (within filtered list) ──
+    function goTo(realIndex) {
+      current = Math.max(0, Math.min(images.length - 1, realIndex));
+      const list = filteredImages();
+      const posInList = list.indexOf(images[current]);
+      currentPageEl.textContent = posInList + 1;
+      totalPagesEl.textContent = list.length;
+      pageCatEl.textContent = images[current].category;
+      prevBtn.disabled = posInList <= 0;
+      nextBtn.disabled = posInList >= list.length - 1;
 
-  document.addEventListener('keydown', e => {
-    if (e.key === 'ArrowLeft') prevBtn.click();
-    if (e.key === 'ArrowRight') nextBtn.click();
-  });
+      mainImg.classList.remove('loaded');
+      mainImg.src = images[current].src;
+      mainImg.onload = () => mainImg.classList.add('loaded');
 
-  goTo(0);
-  switchToGrid();
-</script>
+      mainImg.style.cursor = images[current].link ? 'pointer' : 'default';
+      mainImg.onclick = images[current].link
+        ? () => window.open(images[current].link, '_blank')
+        : null;
+    }
+
+    function switchToSingle() {
+      isGrid = false;
+      singleView.style.display = 'flex';
+      gridView.classList.remove('active');
+      singleToggle.classList.add('active');
+      gridToggle.classList.remove('active');
+      goTo(current);
+    }
+
+    function switchToGrid() {
+      isGrid = true;
+      const list = filteredImages();
+      const posInList = list.indexOf(images[current]);
+      gridPage = Math.max(0, Math.floor((posInList >= 0 ? posInList : 0) / GRID_PER_PAGE));
+      singleView.style.display = 'none';
+      gridView.classList.add('active');
+      singleToggle.classList.remove('active');
+      gridToggle.classList.add('active');
+      renderGridPage(gridPage);
+      updateGridCounter();
+    }
+
+    function updateGridCounter() {
+      const list = filteredImages();
+      const totalGridPages = Math.ceil(list.length / GRID_PER_PAGE);
+      currentPageEl.textContent = gridPage + 1;
+      totalPagesEl.textContent = totalGridPages;
+      pageCatEl.textContent = '';
+      prevBtn.disabled = gridPage === 0;
+      nextBtn.disabled = gridPage >= totalGridPages - 1;
+    }
+
+    // ── Tag filter ──
+    document.querySelectorAll('#filterTags .tag').forEach(tag => {
+      tag.addEventListener('click', () => {
+        const cat = tag.dataset.category;
+        if (activeCategory === cat) {
+          // 再按一次取消篩選
+          activeCategory = null;
+          tag.classList.remove('active');
+        } else {
+          activeCategory = cat;
+          document.querySelectorAll('#filterTags .tag').forEach(t => t.classList.remove('active'));
+          tag.classList.add('active');
+        }
+        // 重設到過濾後第一張
+        const list = filteredImages();
+        if (list.length > 0) {
+          current = images.indexOf(list[0]);
+        }
+        gridPage = 0;
+        if (isGrid) {
+          renderGridPage(gridPage);
+          updateGridCounter();
+        } else {
+          goTo(current);
+        }
+      });
+    });
+
+    prevBtn.addEventListener('click', () => {
+      if (isGrid) {
+        if (gridPage > 0) { gridPage--; renderGridPage(gridPage); updateGridCounter(); }
+      } else {
+        const list = filteredImages();
+        const pos = list.indexOf(images[current]);
+        if (pos > 0) goTo(images.indexOf(list[pos - 1]));
+      }
+    });
+    nextBtn.addEventListener('click', () => {
+      if (isGrid) {
+        const list = filteredImages();
+        const totalGridPages = Math.ceil(list.length / GRID_PER_PAGE);
+        if (gridPage < totalGridPages - 1) { gridPage++; renderGridPage(gridPage); updateGridCounter(); }
+      } else {
+        const list = filteredImages();
+        const pos = list.indexOf(images[current]);
+        if (pos < list.length - 1) goTo(images.indexOf(list[pos + 1]));
+      }
+    });
+
+    singleToggle.addEventListener('click', switchToSingle);
+    gridToggle.addEventListener('click', switchToGrid);
+
+    document.addEventListener('keydown', e => {
+      if (e.key === 'ArrowLeft') prevBtn.click();
+      if (e.key === 'ArrowRight') nextBtn.click();
+    });
+
+    goTo(0);
+    switchToGrid();
+  </script>
 </body>
+
 </html>
