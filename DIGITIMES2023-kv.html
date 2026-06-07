@@ -229,6 +229,16 @@
     line-height: 1.8; color: var(--text-secondary);
   }
 
+  .tag {
+    cursor: pointer;
+    transition: background .15s, color .15s, border-color .15s;
+  }
+  .tag.active {
+    background: #111;
+    color: #fff;
+    border-color: #111;
+  }
+
   .process-item { display: flex; gap: 12px; margin-bottom: 14px; }
   .process-num {
     font-family: 'DM Mono', monospace;
@@ -344,10 +354,11 @@
     </section>
     <section>
       <h2>製作項目</h2>
-      <div class="tags">
-        <span class="tag">活動視覺</span>
-        <span class="tag">外部委託視覺</span>
-        <span class="tag">IC之音節目視覺</span>
+      <div class="tags" id="filterTags">
+        <span class="tag" data-category="企業識別與活動視覺">活動視覺</span>
+        <span class="tag" data-category="外部委託視覺">外部委託視覺</span>
+        <span class="tag" data-category="IC之音">IC之音節目視覺</span>
+        <span class="tag" data-category="其他">其他</span>
       </div>
     </section>
   </aside>
@@ -407,15 +418,36 @@
     { src: 'img/digitimes/kv/2025_4to6/0423amazon.jpg',          category: '外部委託視覺' },
     { src: 'img/digitimes/kv/2024_7to9/a.jpg',                   category: '外部委託視覺' },
     { src: 'img/digitimes/kv/2023_3to8/AWS-JIC_ol_修.png',       category: '外部委託視覺' },
+
+    // 遺珠
+    { src: 'img/digitimes/kv/no_use/LINE_ALBUM_kv未用到_260607_1.jpg',       category: '其他' },
+    { src: 'img/digitimes/kv/no_use/LINE_ALBUM_kv未用到_260607_3.jpg',       category: '其他' },
+    { src: 'img/digitimes/kv/no_use/LINE_ALBUM_kv未用到_260607_4.jpg',       category: '其他' },
+    { src: 'img/digitimes/kv/no_use/LINE_ALBUM_kv未用到_260607_7.jpg',       category: '其他' },
+    { src: 'img/digitimes/kv/no_use/LINE_ALBUM_kv未用到_260607_8.jpg',       category: '其他' },
+    { src: 'img/digitimes/kv/no_use/LINE_ALBUM_kv未用到_260607_13.jpg',       category: '其他' },
+    { src: 'img/digitimes/kv/no_use/LINE_ALBUM_kv未用到_260607_15.jpg',       category: '其他' },
+    { src: 'img/digitimes/kv/no_use/LINE_ALBUM_kv未用到_260607_16.jpg',       category: '其他' },
+    { src: 'img/digitimes/kv/no_use/LINE_ALBUM_kv未用到_260607_25.jpg',       category: '其他' },
+    { src: 'img/digitimes/kv/no_use/LINE_ALBUM_kv未用到_260607_27.jpg',       category: '其他' },
+    { src: 'img/digitimes/kv/no_use/LINE_ALBUM_kv未用到_260607_29.jpg',       category: '其他' },
+    { src: 'img/digitimes/kv/no_use/LINE_ALBUM_kv未用到_260607_34.jpg',       category: '其他' },
+    { src: 'img/digitimes/kv/no_use/LINE_ALBUM_kv未用到_260607_35.jpg',       category: '其他' },
+    { src: 'img/digitimes/kv/no_use/LINE_ALBUM_kv未用到_260607_36.jpg',       category: '其他' },
   ];
 
   const GRID_PER_PAGE = window.innerWidth <= 768 ? 4 : 20;
   const total = images.length;
-  const totalGridPages = Math.ceil(total / GRID_PER_PAGE);
 
-  let current = 0;       // single-view index
+  let current = 0;
   let isGrid = false;
-  let gridPage = 0;      // 0-based grid page
+  let gridPage = 0;
+  let activeCategory = null;   // null = 全部顯示
+
+  // 依 activeCategory 過濾後的圖片清單
+  function filteredImages() {
+    return activeCategory ? images.filter(img => img.category === activeCategory) : images;
+  }
 
   const mainImg       = document.getElementById('mainImg');
   const currentPageEl = document.getElementById('currentPage');
@@ -430,34 +462,40 @@
 
   totalPagesEl.textContent = total;
 
-  // ── Render grid page ──
+  // ── Render grid page (from filtered list) ──
   function renderGridPage(page) {
     gridView.innerHTML = '';
+    const list = filteredImages();
+    const totalGridPages = Math.ceil(list.length / GRID_PER_PAGE);
     const grid = document.createElement('div');
     grid.className = 'grid-page';
 
     const start = page * GRID_PER_PAGE;
-    const end = Math.min(start + GRID_PER_PAGE, total);
+    const end = Math.min(start + GRID_PER_PAGE, list.length);
 
     for (let i = start; i < end; i++) {
-      const img = images[i];
+      const img = list[i];
+      const realIndex = images.indexOf(img);
       const thumb = document.createElement('div');
-      thumb.className = 'grid-thumb' + (i === current ? ' active' : '');
-      thumb.innerHTML = `<img src="${img.src}" alt="縮圖 ${i+1}" loading="lazy"><span class="thumb-num">${i+1}</span>`;
-      thumb.addEventListener('click', () => { goTo(i); switchToSingle(); });
+      thumb.className = 'grid-thumb' + (realIndex === current ? ' active' : '');
+      thumb.innerHTML = `<img src="${img.src}" alt="縮圖" loading="lazy">`;
+      thumb.addEventListener('click', () => { goTo(realIndex); switchToSingle(); });
       grid.appendChild(thumb);
     }
 
     gridView.appendChild(grid);
   }
 
-  // ── Single-view navigation ──
-  function goTo(index) {
-    current = Math.max(0, Math.min(total - 1, index));
-    currentPageEl.textContent = current + 1;
+  // ── Single-view navigation (within filtered list) ──
+  function goTo(realIndex) {
+    current = Math.max(0, Math.min(images.length - 1, realIndex));
+    const list = filteredImages();
+    const posInList = list.indexOf(images[current]);
+    currentPageEl.textContent = posInList + 1;
+    totalPagesEl.textContent = list.length;
     pageCatEl.textContent = images[current].category;
-    prevBtn.disabled = current === 0;
-    nextBtn.disabled = current === total - 1;
+    prevBtn.disabled = posInList <= 0;
+    nextBtn.disabled = posInList >= list.length - 1;
 
     mainImg.classList.remove('loaded');
     mainImg.src = images[current].src;
@@ -475,17 +513,14 @@
     gridView.classList.remove('active');
     singleToggle.classList.add('active');
     gridToggle.classList.remove('active');
-    totalPagesEl.textContent = total;
-    currentPageEl.textContent = current + 1;
-    pageCatEl.textContent = images[current].category;
-    prevBtn.disabled = current === 0;
-    nextBtn.disabled = current === total - 1;
+    goTo(current);
   }
 
   function switchToGrid() {
     isGrid = true;
-    // jump to the grid page containing current image
-    gridPage = Math.floor(current / GRID_PER_PAGE);
+    const list = filteredImages();
+    const posInList = list.indexOf(images[current]);
+    gridPage = Math.max(0, Math.floor((posInList >= 0 ? posInList : 0) / GRID_PER_PAGE));
     singleView.style.display = 'none';
     gridView.classList.add('active');
     singleToggle.classList.remove('active');
@@ -495,25 +530,61 @@
   }
 
   function updateGridCounter() {
+    const list = filteredImages();
+    const totalGridPages = Math.ceil(list.length / GRID_PER_PAGE);
     currentPageEl.textContent = gridPage + 1;
     totalPagesEl.textContent = totalGridPages;
     pageCatEl.textContent = '';
     prevBtn.disabled = gridPage === 0;
-    nextBtn.disabled = gridPage === totalGridPages - 1;
+    nextBtn.disabled = gridPage >= totalGridPages - 1;
   }
+
+  // ── Tag filter ──
+  document.querySelectorAll('#filterTags .tag').forEach(tag => {
+    tag.addEventListener('click', () => {
+      const cat = tag.dataset.category;
+      if (activeCategory === cat) {
+        // 再按一次取消篩選
+        activeCategory = null;
+        tag.classList.remove('active');
+      } else {
+        activeCategory = cat;
+        document.querySelectorAll('#filterTags .tag').forEach(t => t.classList.remove('active'));
+        tag.classList.add('active');
+      }
+      // 重設到過濾後第一張
+      const list = filteredImages();
+      if (list.length > 0) {
+        current = images.indexOf(list[0]);
+      }
+      gridPage = 0;
+      if (isGrid) {
+        renderGridPage(gridPage);
+        updateGridCounter();
+      } else {
+        goTo(current);
+      }
+    });
+  });
 
   prevBtn.addEventListener('click', () => {
     if (isGrid) {
       if (gridPage > 0) { gridPage--; renderGridPage(gridPage); updateGridCounter(); }
     } else {
-      goTo(current - 1);
+      const list = filteredImages();
+      const pos = list.indexOf(images[current]);
+      if (pos > 0) goTo(images.indexOf(list[pos - 1]));
     }
   });
   nextBtn.addEventListener('click', () => {
     if (isGrid) {
+      const list = filteredImages();
+      const totalGridPages = Math.ceil(list.length / GRID_PER_PAGE);
       if (gridPage < totalGridPages - 1) { gridPage++; renderGridPage(gridPage); updateGridCounter(); }
     } else {
-      goTo(current + 1);
+      const list = filteredImages();
+      const pos = list.indexOf(images[current]);
+      if (pos < list.length - 1) goTo(images.indexOf(list[pos + 1]));
     }
   });
 
@@ -526,7 +597,7 @@
   });
 
   goTo(0);
-  switchToGrid();  // ← 加這行入場即方格瀏覽
+  switchToGrid();
 </script>
 </body>
 </html>

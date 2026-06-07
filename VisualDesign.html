@@ -44,18 +44,23 @@
 
 <body>
 
-	<!-- Sidebar -->
-	<nav class="Sidebar Animate-top " style="display:none;padding-top:150px" id="mySidebar">
-		<a href="javascript:void(0)" onclick="Close()" class="Button Display-topright" style="padding:6px 24px">
-			<i class="fa fa-remove"></i>
-		</a>
-		<div class="Bar-block Center">
-			<a href="GameDesign.html" class="Bar-text-grey Button">Game Design</a>
-			<a href="Illustration.html" class="Bar-text-grey Button">Illustration</a>
-			<a href="Prints.html" class="Bar-text-grey Button">Print</a>
-			<a href="Video.html" class="Bar-text-grey Button">Video</a>
-			<a href="WebDesign.html" class="Bar-text-grey Button">Web Design</a>
-			<a href="VisualDesign.html" class="Bar-text-grey Button">Visual Design</a>
+	<!-- Sidebar --><div id="sidebarOverlay" onclick="Close()"></div>
+	<nav class="Sidebar" id="mySidebar">
+		<button class="sidebar-close" onclick="Close()" aria-label="關閉"></button>
+		<div class="sidebar-inner">
+			<a href="index.html" class="sidebar-link">首頁</a>
+			<div class="sidebar-divider"></div>
+			<div class="sidebar-section-label">工作經驗</div>
+			<a href="DIGITIMES2023-index.html" class="sidebar-link">2023– DIGITIMES 視覺設計</a>
+			<div class="sidebar-divider"></div>
+			<div class="sidebar-section-label">其他作品</div>
+			<div class="sidebar-sub">
+				<a href="GameDesign.html" class="sidebar-link">Game Design</a>
+				<a href="Prints.html" class="sidebar-link">Print</a>
+				<a href="Illustration.html" class="sidebar-link">Illustration</a>
+				<a href="Video.html" class="sidebar-link">Video</a>
+				<a href="WebDesign.html" class="sidebar-link">Web Design</a>
+				<a href="VisualDesign.html" class="sidebar-link">Visual Design</a>
 		</div>
 	</nav>
 
@@ -63,23 +68,24 @@
 	<div class="Content">
 
 		<!-- Header -->
-		<div style="opacity: 0.60">
-			<span class="Button Content-list" onclick="Open()"><i class="fa fa-bars"></i></span>
+		<div
+			<button class="ham-btn" onclick="Open()" aria-label="開啟選單"><span class="ham-inner"></span></button>
 			<div class="Clear"></div>
-			<header class="Center w3-margin-bottom">
-				<a href="index.html">
-					<h1 class="Button"><b>蔡宜珊</b></h1>
-				</a>
-				<p style="font-size:16px"><b>paintingrainbowray@gmail.com</b></p>
-			</header>
 
 		</div>
 
 
-		<!-- title -->
-		<div style=" padding:50px">
-			<!-- 中文 -->
+
+		<!-- Page Title -->
+		<div class="page-title-row">
+			<header class="Center w3-margin-bottom">
+				<a href="index.html">
+					<h1 class="Button" style=" color:#666666;"><b>蔡宜珊</b></h1>
+				</a>
+				<p style="color:#666666; font-size:16px"><b>paintingrainbowray@gmail.com</b></p>
+			</header>
 			<h1 class="Center" style="color:#666666">Visual Design</h1>
+			<hr>
 		</div>
 
 		<!-- Projects Grid -->

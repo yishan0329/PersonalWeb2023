@@ -86,7 +86,19 @@
     padding: 28px;
     overflow: hidden;
     background: #fff;
+    position: relative;
   }
+
+  /* 長條圖模式：可捲動 */
+  .single-view.tall-mode {
+    align-items: flex-start;
+    overflow-y: auto;
+    padding: 0;
+    scrollbar-width: thin;
+    scrollbar-color: #ddd transparent;
+  }
+  .single-view.tall-mode::-webkit-scrollbar { width: 4px; }
+  .single-view.tall-mode::-webkit-scrollbar-thumb { background: #ddd; border-radius: 2px; }
 
   .single-view img {
     max-width: 100%;
@@ -95,8 +107,52 @@
     display: block;
     opacity: 0;
     transition: opacity .3s ease;
+    border-radius: 16px;
   }
   .single-view img.loaded { opacity: 1; }
+
+  /* 長條圖模式下 img 橫向填滿 */
+  .single-view.tall-mode img {
+    width: 100%;
+    max-height: none;
+    object-fit: contain;
+    border-radius: 16px;
+  }
+
+  /* scroll hint：fixed 懸浮在圖片區下方 */
+  .scroll-hint {
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    pointer-events: none;
+    z-index: 50;
+    opacity: 1;
+    transition: opacity .4s ease;
+  }
+  .scroll-hint.hidden { opacity: 0; }
+
+  .scroll-hint-inner {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    background: rgba(0,0,0,0.55);
+    backdrop-filter: blur(6px);
+    color: #fff;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    font-weight: 300;
+    letter-spacing: 0.08em;
+    padding: 5px 12px;
+    border-radius: 20px;
+  }
+  .scroll-hint-inner svg {
+    width: 10px; height: 10px;
+    animation: bounceDown .9s ease-in-out infinite;
+  }
+  @keyframes bounceDown {
+    0%, 100% { transform: translateY(0); }
+    50%       { transform: translateY(3px); }
+  }
 
   .grid-view {
     flex: 1;
@@ -244,7 +300,11 @@
     padding: 4px 10px;
     border: 1px solid #ddd;
     color: var(--text-secondary);
+    cursor: pointer;
+    transition: background .15s, color .15s, border-color .15s;
   }
+  .tag:hover { border-color: #aaa; color: var(--text-primary); }
+  .tag.active { background: #111; color: #fff; border-color: #111; }
 
   @media (max-width: 768px) {
     html, body { overflow: auto; }
@@ -282,6 +342,14 @@
   <div class="viewer">
     <div class="single-view" id="singleView">
       <img id="mainImg" src="" alt="作品圖片" />
+      <div class="scroll-hint hidden" id="scrollHint">
+        <div class="scroll-hint-inner">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="6 9 12 15 18 9"/>
+          </svg>
+          scroll
+        </div>
+      </div>
     </div>
     <div class="grid-view" id="gridView"></div>
 
@@ -319,12 +387,9 @@
       <p>依據主視覺風格延伸各式布置物設計，進行活動空間與實體布置物的執行，打造具一致性的活動體驗。</p>
     </section>
       <h2>製作項目</h2>
-      <div class="tags">
-        <span class="tag">背板設計</span>
-        <span class="tag">展場佈置設計</span>
-        <span class="tag">活動字卡設計</span>
-        <span class="tag">簡報設計</span>
-        <span class="tag">周邊品設計</span>
+      <div class="tags" id="filterTags">
+        <span class="tag" data-category="Print">實體印刷</span>
+        <span class="tag" data-category="Digital">數位展示</span>
       </div>
     </section>
   </aside>
@@ -418,13 +483,17 @@
 { src: 'img/digitimes/layout/digital/2023_3to7/1120690.jpg', category: 'Digital' },
   ];
 
+  const TALL_RATIO = 3;
   const GRID_PER_PAGE = window.innerWidth <= 768 ? 4 : 20;
-  const total = images.length;
-  const totalGridPages = Math.ceil(total / GRID_PER_PAGE);
 
-  let current = 0;       // single-view index
+  let current = 0;
   let isGrid = false;
-  let gridPage = 0;      // 0-based grid page
+  let gridPage = 0;
+  let activeCategory = null;  // null = 全部
+
+  function filteredImages() {
+    return activeCategory ? images.filter(img => img.category === activeCategory) : images;
+  }
 
   const mainImg       = document.getElementById('mainImg');
   const currentPageEl = document.getElementById('currentPage');
@@ -436,41 +505,76 @@
   const gridView      = document.getElementById('gridView');
   const singleToggle  = document.getElementById('singleToggle');
   const gridToggle    = document.getElementById('gridToggle');
+  const scrollHint    = document.getElementById('scrollHint');
 
-  totalPagesEl.textContent = total;
+  // ── Scroll hint 定位 ──
+  function positionScrollHint() {
+    const rect = singleView.getBoundingClientRect();
+    scrollHint.style.bottom = (window.innerHeight - rect.bottom + 14) + 'px';
+    scrollHint.style.left   = rect.left + 'px';
+    scrollHint.style.right  = (window.innerWidth - rect.right) + 'px';
+  }
 
-  // ── Render grid page ──
+  // ── 長條圖偵測 ──
+  function applyTallMode(img) {
+    const ratio = img.naturalHeight / img.naturalWidth;
+    if (ratio > TALL_RATIO) {
+      singleView.classList.add('tall-mode');
+      singleView.scrollTop = 0;
+      positionScrollHint();
+      scrollHint.classList.remove('hidden');
+      singleView.addEventListener('scroll', onSingleScroll, { passive: true });
+    } else {
+      singleView.classList.remove('tall-mode');
+      scrollHint.classList.add('hidden');
+      singleView.removeEventListener('scroll', onSingleScroll);
+    }
+  }
+
+  function onSingleScroll() {
+    if (singleView.scrollTop > 40) scrollHint.classList.add('hidden');
+  }
+
+  // ── Render grid page (filtered) ──
   function renderGridPage(page) {
     gridView.innerHTML = '';
+    const list = filteredImages();
     const grid = document.createElement('div');
     grid.className = 'grid-page';
 
     const start = page * GRID_PER_PAGE;
-    const end = Math.min(start + GRID_PER_PAGE, total);
+    const end = Math.min(start + GRID_PER_PAGE, list.length);
 
     for (let i = start; i < end; i++) {
-      const img = images[i];
+      const img = list[i];
+      const realIndex = images.indexOf(img);
       const thumb = document.createElement('div');
-      thumb.className = 'grid-thumb' + (i === current ? ' active' : '');
-      thumb.innerHTML = `<img src="${img.src}" alt="縮圖 ${i+1}" loading="lazy"><span class="thumb-num">${i+1}</span>`;
-      thumb.addEventListener('click', () => { goTo(i); switchToSingle(); });
+      thumb.className = 'grid-thumb' + (realIndex === current ? ' active' : '');
+      thumb.innerHTML = `<img src="${img.src}" alt="縮圖" loading="lazy"><span class="thumb-num">${i + 1}</span>`;
+      thumb.addEventListener('click', () => { goTo(realIndex); switchToSingle(); });
       grid.appendChild(thumb);
     }
 
     gridView.appendChild(grid);
   }
 
-  // ── Single-view navigation ──
-  function goTo(index) {
-    current = Math.max(0, Math.min(total - 1, index));
-    currentPageEl.textContent = current + 1;
+  // ── Single-view navigation (filtered) ──
+  function goTo(realIndex) {
+    current = Math.max(0, Math.min(images.length - 1, realIndex));
+    const list = filteredImages();
+    const posInList = list.indexOf(images[current]);
+    currentPageEl.textContent = posInList + 1;
+    totalPagesEl.textContent = list.length;
     pageCatEl.textContent = images[current].category;
-    prevBtn.disabled = current === 0;
-    nextBtn.disabled = current === total - 1;
+    prevBtn.disabled = posInList <= 0;
+    nextBtn.disabled = posInList >= list.length - 1;
 
     mainImg.classList.remove('loaded');
     mainImg.src = images[current].src;
-    mainImg.onload = () => mainImg.classList.add('loaded');
+    mainImg.onload = () => {
+      mainImg.classList.add('loaded');
+      applyTallMode(mainImg);
+    };
 
     mainImg.style.cursor = images[current].link ? 'pointer' : 'default';
     mainImg.onclick = images[current].link
@@ -484,17 +588,14 @@
     gridView.classList.remove('active');
     singleToggle.classList.add('active');
     gridToggle.classList.remove('active');
-    totalPagesEl.textContent = total;
-    currentPageEl.textContent = current + 1;
-    pageCatEl.textContent = images[current].category;
-    prevBtn.disabled = current === 0;
-    nextBtn.disabled = current === total - 1;
+    goTo(current);
   }
 
   function switchToGrid() {
     isGrid = true;
-    // jump to the grid page containing current image
-    gridPage = Math.floor(current / GRID_PER_PAGE);
+    const list = filteredImages();
+    const posInList = list.indexOf(images[current]);
+    gridPage = Math.max(0, Math.floor((posInList >= 0 ? posInList : 0) / GRID_PER_PAGE));
     singleView.style.display = 'none';
     gridView.classList.add('active');
     singleToggle.classList.remove('active');
@@ -504,30 +605,62 @@
   }
 
   function updateGridCounter() {
+    const list = filteredImages();
+    const totalGridPages = Math.ceil(list.length / GRID_PER_PAGE);
     currentPageEl.textContent = gridPage + 1;
     totalPagesEl.textContent = totalGridPages;
     pageCatEl.textContent = '';
     prevBtn.disabled = gridPage === 0;
-    nextBtn.disabled = gridPage === totalGridPages - 1;
+    nextBtn.disabled = gridPage >= totalGridPages - 1;
   }
+
+  // ── Tag filter ──
+  document.querySelectorAll('#filterTags .tag').forEach(tag => {
+    tag.addEventListener('click', () => {
+      const cat = tag.dataset.category;
+      if (activeCategory === cat) {
+        activeCategory = null;
+        tag.classList.remove('active');
+      } else {
+        activeCategory = cat;
+        document.querySelectorAll('#filterTags .tag').forEach(t => t.classList.remove('active'));
+        tag.classList.add('active');
+      }
+      const list = filteredImages();
+      if (list.length > 0) current = images.indexOf(list[0]);
+      gridPage = 0;
+      if (isGrid) { renderGridPage(gridPage); updateGridCounter(); }
+      else { goTo(current); }
+    });
+  });
 
   prevBtn.addEventListener('click', () => {
     if (isGrid) {
       if (gridPage > 0) { gridPage--; renderGridPage(gridPage); updateGridCounter(); }
     } else {
-      goTo(current - 1);
+      const list = filteredImages();
+      const pos = list.indexOf(images[current]);
+      if (pos > 0) goTo(images.indexOf(list[pos - 1]));
     }
   });
   nextBtn.addEventListener('click', () => {
     if (isGrid) {
+      const list = filteredImages();
+      const totalGridPages = Math.ceil(list.length / GRID_PER_PAGE);
       if (gridPage < totalGridPages - 1) { gridPage++; renderGridPage(gridPage); updateGridCounter(); }
     } else {
-      goTo(current + 1);
+      const list = filteredImages();
+      const pos = list.indexOf(images[current]);
+      if (pos < list.length - 1) goTo(images.indexOf(list[pos + 1]));
     }
   });
 
   singleToggle.addEventListener('click', switchToSingle);
   gridToggle.addEventListener('click', switchToGrid);
+
+  window.addEventListener('resize', () => {
+    if (!scrollHint.classList.contains('hidden')) positionScrollHint();
+  });
 
   document.addEventListener('keydown', e => {
     if (e.key === 'ArrowLeft') prevBtn.click();
@@ -535,7 +668,7 @@
   });
 
   goTo(0);
-  switchToGrid();  // ← 加這行入場即方格瀏覽
+  switchToGrid();
 </script>
 </body>
 </html>

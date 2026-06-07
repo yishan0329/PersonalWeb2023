@@ -103,17 +103,163 @@
   opacity: 1
 }
 
-.Sidebar {
-  height: 100%;
-  width: 200px;
-  background-color: #fff;
-  position: fixed !important;
-  z-index: 99;
-  overflow: auto;
-  color: #fff !important;
-  background-color: #000 !important;
-  font-size: 36px !important;
+/* =====================
+   SIDEBAR — right slide-in
+   ===================== */
+#sidebarOverlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  z-index: 98;
+  opacity: 0;
+  transition: opacity 0.35s ease;
 }
+#sidebarOverlay.active {
+  display: block;
+  opacity: 1;
+}
+
+.Sidebar {
+  position: fixed !important;
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: 320px;
+  max-width: 80vw;
+  background-color: #111 !important;
+  color: #fff !important;
+  z-index: 99;
+  overflow-y: auto;
+  transform: translateX(100%);
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  /* 桌機：視窗等高、導圓角、直版 */
+  top: 16px;
+  height: calc(100vh - 32px);
+  right: 16px;
+  border-radius: 16px;
+  box-shadow: -4px 0 32px rgba(0,0,0,0.4);
+  padding: 0;
+  box-sizing: border-box;
+}
+.Sidebar.open {
+  transform: translateX(0);
+}
+
+/* 手機版：黑色滿版 */
+@media (max-width: 600px) {
+  .Sidebar {
+    top: 0 !important;
+    right: 0 !important;
+    height: 100% !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    border-radius: 0 !important;
+  }
+}
+
+/* 關閉按鈕 — 圓角方框樣式（對應設計稿） */
+.Sidebar .sidebar-close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: rgba(255,255,255,0.1);
+  border: 1.5px solid rgba(255,255,255,0.22);
+  border-radius: 10px;
+  cursor: pointer;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  transition: background 0.2s, border-color 0.2s;
+  z-index: 10;
+  color: rgba(255,255,255,0.85);
+  font-size: 16px;
+  line-height: 1;
+  font-style: normal;
+}
+.Sidebar .sidebar-close:hover {
+  background: rgba(255,255,255,0.18);
+  border-color: rgba(255,255,255,0.4);
+}
+/* 小方塊 icon */
+.Sidebar .sidebar-close::before {
+  content: '';
+  display: block;
+  width: 12px;
+  height: 12px;
+  border: 1.5px solid rgba(255,255,255,0.85);
+  border-radius: 3px;
+}
+
+/* 選單內容 */
+.sidebar-inner {
+  padding: 80px 24px 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  height: 100%;
+  box-sizing: border-box;
+  overflow-y: auto;
+}
+.sidebar-section-label {
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  color: #666;
+  margin-bottom: 6px;
+  padding: 0 12px;
+}
+.sidebar-divider {
+  height: 0.5px;
+  background: rgba(255,255,255,0.1);
+  margin: 14px 0;
+}
+.sidebar-link {
+  display: block;
+  font-size: 22px;
+  font-weight: 500;
+  color: rgba(255,255,255,0.9) !important;
+  text-decoration: none !important;
+  padding: 14px 16px;
+  border-radius: 12px;
+  transition: background 0.15s, color 0.15s;
+  letter-spacing: 0.01em;
+  line-height: 1.2;
+}
+.sidebar-link:hover {
+  background: rgba(255,255,255,0.07);
+  color: #fff !important;
+}
+.sidebar-link.active {
+  background: rgba(255,255,255,0.1);
+  color: #fff !important;
+}
+.sidebar-sub {
+  margin-left: 0;
+  padding-left: 16px;
+  border-left: 0.5px solid rgba(255,255,255,0.15);
+  margin-bottom: 4px;
+}
+.sidebar-sub .sidebar-link {
+  font-size: 17px;
+  font-weight: 400;
+  color: rgba(255,255,255,0.5) !important;
+  padding: 9px 14px;
+  border-radius: 8px;
+}
+.sidebar-sub .sidebar-link:hover {
+  color: rgba(255,255,255,0.85) !important;
+  background: rgba(255,255,255,0.06);
+}
+.sidebar-sub .sidebar-link.active {
+  color: rgba(255,255,255,0.9) !important;
+}
+
+/* 隱藏原有的 Bar-block 樣式 */
+.Sidebar .Bar-block { display: none !important; }
+.Sidebar .Display-topright { display: none !important; }
 
 
 
@@ -553,3 +699,50 @@
     height: 450vh;
   }
 }
+
+
+/* =====================
+   HAMBURGER OPEN BUTTON
+   ===================== */
+.ham-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  background: rgba(120,120,120,0.25);
+  border: 1.5px solid rgba(180,180,180,0.35);
+  border-radius: 10px;
+  cursor: pointer;
+  padding: 0;
+  transition: background 0.2s, border-color 0.2s, opacity 0.2s;
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  z-index: 97;
+}
+.ham-btn:hover {
+  background: rgba(150,150,150,0.35);
+  border-color: rgba(200,200,200,0.5);
+}
+/* 隱藏：sidebar 打開時 */
+.ham-btn.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+/* 三條橫線 */
+.ham-inner,
+.ham-inner::before,
+.ham-inner::after {
+  display: block;
+  width: 18px;
+  height: 1.5px;
+  background: rgba(255,255,255,0.9);
+  border-radius: 2px;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.ham-inner         { top: 50%; margin-top: -0.75px; }
+.ham-inner::before { content: ''; top: -5px; }
+.ham-inner::after  { content: ''; top:  5px; }

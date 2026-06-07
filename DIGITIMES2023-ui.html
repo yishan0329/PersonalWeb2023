@@ -120,7 +120,7 @@
       position: relative;
     }
 
-    /* 長條圖模式：可捲動 */
+    /* 長條圖模式：遮罩框 + 可捲動 */
     .single-view.tall-mode {
       align-items: flex-start;
       overflow-y: auto;
@@ -129,8 +129,21 @@
       scrollbar-color: #ddd transparent;
     }
 
-    .single-view.tall-mode::-webkit-scrollbar { width: 4px; }
-    .single-view.tall-mode::-webkit-scrollbar-thumb { background: #ddd; border-radius: 2px; }
+    .single-view.tall-mode::-webkit-scrollbar {
+      width: 4px;
+    }
+
+    .single-view.tall-mode::-webkit-scrollbar-thumb {
+      background: #ddd;
+      border-radius: 2px;
+    }
+
+    /* 遮罩框容器 */
+    .tall-mask {
+      width: 100%;
+      position: relative;
+      flex-shrink: 0;
+    }
 
     .single-view img {
       max-width: 100%;
@@ -139,22 +152,26 @@
       display: block;
       opacity: 0;
       transition: opacity .3s ease;
-      border-radius: 16px;
+      border-radius: 16px; /* 圓角遮罩 */
     }
 
-    .single-view img.loaded { opacity: 1; }
+    .single-view img.loaded {
+      opacity: 1;
+    }
 
-    /* 長條圖模式下 img 橫向填滿 */
+    /* 長條圖模式下的 img */
     .single-view.tall-mode img {
-      width: 50%;
+      width: 80%;
       max-height: none;
       object-fit: contain;
       border-radius: 16px;
     }
 
-    /* scroll hint：fixed 懸浮在圖片區塊下方 */
+    /* scroll hint：fixed 懸浮在 singleView 下方邊緣 */
     .scroll-hint {
       position: fixed;
+      left: 0;
+      /* width 跟隨 viewer，由 JS 動態設定 right */
       display: flex;
       justify-content: center;
       pointer-events: none;
@@ -162,7 +179,10 @@
       opacity: 1;
       transition: opacity .4s ease;
     }
-    .scroll-hint.hidden { opacity: 0; }
+
+    .scroll-hint.hidden {
+      opacity: 0;
+    }
 
     .scroll-hint-inner {
       display: flex;
@@ -187,7 +207,7 @@
 
     @keyframes bounceDown {
       0%, 100% { transform: translateY(0); }
-      50%       { transform: translateY(3px); }
+      50% { transform: translateY(3px); }
     }
 
     .grid-view {
@@ -205,8 +225,7 @@
 
     .grid-page {
       display: grid;
-      grid-template-columns: repeat(7, 1fr);
-      grid-template-rows: repeat(3, 1fr);
+      grid-template-columns: repeat(3, 1fr);
       gap: 20px;
       flex: 1;
       min-height: 0;
@@ -397,6 +416,17 @@
       color: var(--text-secondary);
     }
 
+    .tag {
+      cursor: pointer;
+      transition: background .15s, color .15s, border-color .15s;
+    }
+
+    .tag.active {
+      background: #111;
+      color: #fff;
+      border-color: #111;
+    }
+
     .process-item {
       display: flex;
       gap: 12px;
@@ -438,19 +468,6 @@
       padding: 4px 10px;
       border: 1px solid #ddd;
       color: var(--text-secondary);
-      cursor: pointer;
-      transition: background .15s, color .15s, border-color .15s;
-    }
-
-    .tag:hover {
-      border-color: #aaa;
-      color: var(--text-primary);
-    }
-
-    .tag.active {
-      background: #111;
-      color: #fff;
-      border-color: #111;
     }
 
     @media (max-width: 768px) {
@@ -479,8 +496,7 @@
       }
 
       .grid-page {
-        grid-template-columns: repeat(2, 1fr);
-        grid-template-rows: repeat(2, 1fr);
+        grid-template-columns: repeat(1, 1fr);
       }
 
       .sidebar {
@@ -491,16 +507,24 @@
       :root {
         --sidebar-w: 100%;
       }
+
+      /* 手機版隱藏格狀瀏覽切換 */
+      #gridToggle {
+        display: none;
+      }
     }
 
     @media (max-width: 480px) {
       .grid-page {
-        grid-template-columns: repeat(2, 1fr);
-        grid-template-rows: repeat(2, 1fr);
+        grid-template-columns: repeat(1, 1fr);
       }
 
       .viewer {
         height: 68vw;
+      }
+
+      #gridToggle {
+        display: none;
       }
     }
   </style>
@@ -529,8 +553,9 @@
         <img id="mainImg" src="" alt="作品圖片" />
         <div class="scroll-hint hidden" id="scrollHint">
           <div class="scroll-hint-inner">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-              <polyline points="6 9 12 15 18 9"/>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+              stroke-linejoin="round">
+              <polyline points="6 9 12 15 18 9" transform="rotate(0)" />
             </svg>
             scroll
           </div>
@@ -578,17 +603,41 @@
     <div class="divider"></div>
 
     <aside class="sidebar">
-      <h1>廣告設計</h1>
+      <h1>網頁設計</h1>
       <section>
         <h2>專案說明</h2>
-        <p>負責資訊視覺整合，優化閱讀動線，提升內容傳達效率。</p>
+        <p>負責活動網站、品牌形象網站及互動頁面之規劃與設計，從資訊架構、視覺風格到頁面版型配置，建立兼具識別與使用體驗的網頁介面，提升瀏覽體驗。</p>
+      </section>
+      <section>
+        <h2>設計流程</h2>
+        <div class="process-item">
+          <div class="process-num">01</div>
+          <div>
+            <div class="process-title">需求分析</div>
+            <div class="process-desc">與專案團隊討論網站目標、受眾需求及內容架構，釐清網站功能與使用情境，建立整體規劃方向。</div>
+          </div>
+        </div>
+        <div class="process-item">
+          <div class="process-num">02</div>
+          <div>
+            <div class="process-title">介面設計</div>
+            <div class="process-desc">運用 Figma、Illustrator等工具進行頁面製作與響應式版面調整，確保跨裝置瀏覽體驗一致。</div>
+          </div>
+        </div>
+        <div class="process-item">
+          <div class="process-num">03</div>
+          <div>
+            <div class="process-title">交付前端</div>
+            <div class="process-desc">將檔案交付給網頁設計師，並依照回饋調整。</div>
+          </div>
+        </div>
       </section>
       <section>
         <h2>製作項目</h2>
         <div class="tags" id="filterTags">
-          <span class="tag" data-category="Print_ad">平面廣告</span>
-          <span class="tag" data-category="Edm">EDM</span>
-          <span class="tag" data-category="Ad">Banner／社群</span>
+          <span class="tag" data-category="企業識別與活動視覺">活動與產品</span>
+          <span class="tag" data-category="外部委託視覺">外部委託</span>
+          <span class="tag" data-category="IC之音">IC之音</span>
         </div>
       </section>
     </aside>
@@ -598,187 +647,52 @@
     // ── IMAGE DATA ──
     // Each entry: { src, category, link (optional) }
     const images = [
-
       // =====================
       // 2025
       // =====================
-
-      // 2025_7to9
-      { src: 'img/digitimes/ad/ad/2025_7to9/0801LinkedIn.jpg', category: 'Ad' },
-      { src: 'img/digitimes/ad/ad/2025_7to9/0807FB貼文2.jpg', category: 'Ad' },
-      { src: 'img/digitimes/ad/ad/2025_7to9/0819 FB貼文.jpg', category: 'Ad' },
-      { src: 'img/digitimes/ad/ad/2025_7to9/中秋.jpg', category: 'Ad' },
-      { src: 'img/digitimes/ad/print_ad/2025_7to9/1141546.jpg', category: 'Print_ad' },
-      { src: 'img/digitimes/ad/print_ad/2025_7to9/1141586.jpg', category: 'Print_ad' },
-      { src: 'img/digitimes/ad/print_ad/2025_7to9/1141769.jpg', category: 'Print_ad' },
-
-      // 2025_4to6
-      { src: 'img/digitimes/ad/ad/2025_4to6/1141168.jpg', category: 'Ad' },
-      { src: 'img/digitimes/ad/ad/2025_4to6/0503社群.jpg', category: 'Ad' },
-      { src: 'img/digitimes/ad/ad/2025_4to6/0430社群.jpg', category: 'Ad' },
-      { src: 'img/digitimes/ad/ad/2025_4to6/0425社群.jpg', category: 'Ad' },
-      { src: 'img/digitimes/ad/ad/2025_4to6/0415社群.jpg', category: 'Ad' },
-      { src: 'img/digitimes/ad/ad/2025_4to6/0411社群.jpg', category: 'Ad' },
-      { src: 'img/digitimes/ad/ad/2025_4to6/0319社群.jpg', category: 'Ad' },
-
-      { src: 'img/digitimes/ad/print_ad/2024_4to6/1130069新竹場＿全十.jpg', category: 'Print_ad' },
-      { src: 'img/digitimes/ad/print_ad/2024_4to6/1130350_1.jpg', category: 'Print_ad' },
-      { src: 'img/digitimes/ad/print_ad/2024_4to6/1130350_2.jpg', category: 'Print_ad' },
-
-      // 2025_1to3
-      { src: 'img/digitimes/ad/edm/2024_1to3/智慧工廠edm.jpg', category: 'Edm' },
-
-      { src: 'img/digitimes/ad/print_ad/2025_7to9/1141417.jpg', category: 'Print_ad' },
+      { src: 'img/digitimes/ad/edm/2025_10to12/1206新竹國際教育展.jpg', category: 'IC之音' },
+      { src: 'img/digitimes/ad/edm/2025_4to6/夏日出走web.jpg', category: 'IC之音' },
+      { src: 'img/digitimes/ad/edm/2025_4to6/大智若魚-web.jpg', category: 'IC之音' },
+      { src: 'img/digitimes/ad/edm/2025_4to6/商周產品web.jpg', category: '企業識別與活動視覺' },
+      { src: 'img/digitimes/ad/edm/2025_4to6/digikey-web-a.jpg', category: '外部委託視覺' },
+      { src: 'img/digitimes/ad/edm/2025_4to6/digikey-web-b.jpg', category: '外部委託視覺' },
 
       // =====================
       // 2024
       // =====================
-
-      // 2024_10to12
-      { src: 'img/digitimes/ad/edm/2024_10to12/edm.jpg', category: 'Edm' },
-      { src: 'img/digitimes/ad/edm/2024_10to12/EDM 2.jpg', category: 'Edm' },
-
-      { src: 'img/digitimes/ad/ad/2024_10to12/1106社群.jpg', category: 'Ad' },
-      { src: 'img/digitimes/ad/ad/2024_10to12/SpecialReport2社群.jpg', category: 'Ad' },
-      { src: 'img/digitimes/ad/ad/2024_10to12/1200X1200.jpg', category: 'Ad' },
-      { src: 'img/digitimes/ad/ad/2024_10to12/1200x1200B.jpg', category: 'Ad' },
-
-      { src: 'img/digitimes/ad/print_ad/2024_10to12/1120全十.jpg', category: 'Print_ad' },
-      { src: 'img/digitimes/ad/print_ad/2024_10to12/1106全十.jpg', category: 'Print_ad' },
-
-      // 2024_7to9
-      { src: 'img/digitimes/ad/ad/2024_7to9/抽獎廣告.jpg', category: 'Ad' },
-      { src: 'img/digitimes/ad/ad/2024_7to9/中秋社群.jpg', category: 'Ad' },
-
-      { src: 'img/digitimes/ad/print_ad/2024_7to9/全十.jpg', category: 'Print_ad' },
-      { src: 'img/digitimes/ad/print_ad/2024_7to9/1130167全十.jpg', category: 'Print_ad' },
-
-      // 2024_4to6
-      { src: 'img/digitimes/ad/edm/2024_4to6/EDM中文.jpg', category: 'Edm' },
-
-      { src: 'img/digitimes/ad/ad/2024_4to6/0402_336X90.gif', category: 'Ad' },
-      { src: 'img/digitimes/ad/ad/2024_4to6/D_0402_336X280.gif', category: 'Ad' },
-      { src: 'img/digitimes/ad/ad/2024_4to6/336-x-280.gif', category: 'Ad' },
-      { src: 'img/digitimes/ad/ad/2024_4to6/0417_336X280.gif', category: 'Ad' },
-      { src: 'img/digitimes/ad/ad/2024_4to6/1131095R1.jpg', category: 'Ad' },
-      { src: 'img/digitimes/ad/ad/2024_4to6/0416_336 x 280.jpg', category: 'Ad' },
-      { src: 'img/digitimes/ad/ad/2024_4to6/0605_728x90.gif', category: 'Ad' },
-      { src: 'img/digitimes/ad/ad/2024_4to6/336x90.gif', category: 'Ad' },
-
-      { src: 'img/digitimes/ad/print_ad/2024_4to6/ic島嶼全十.jpg', category: 'Print_ad' },
-      { src: 'img/digitimes/ad/print_ad/2024_4to6/1130474 TI_全十.jpg', category: 'Print_ad' },
-
-      // 2024_1to3
-      { src: 'img/digitimes/ad/edm/2024_1to3/edm.jpg', category: 'Edm' },
-
-      { src: 'img/digitimes/ad/ad/2024_1to3/336x90.gif', category: 'Ad' },
-      { src: 'img/digitimes/ad/ad/2024_1to3/600X90.gif', category: 'Ad' },
-      { src: 'img/digitimes/ad/ad/2024_1to3/336X280.gif', category: 'Ad' },
-      { src: 'img/digitimes/ad/ad/2024_1to3/AI+-336x280.gif', category: 'Ad' },
-      { src: 'img/digitimes/ad/ad/2024_1to3/1130158Veeam_1920x1080.jpg', category: 'Ad' },
-      { src: 'img/digitimes/ad/ad/2024_1to3/MongoDB_1200X628.jpg', category: 'Ad' },
-      { src: 'img/digitimes/ad/ad/2024_1to3/AMPA_800x200.jpg', category: 'Ad' },
-      { src: 'img/digitimes/ad/ad/2024_1to3/Touch TAIWAN_800x200.jpg', category: 'Ad' },
-      { src: 'img/digitimes/ad/ad/2024_1to3/SEMICON_800x200.jpg', category: 'Ad' },
-      { src: 'img/digitimes/ad/ad/2024_1to3/AI EXPO_800x200.jpg', category: 'Ad' },
-      { src: 'img/digitimes/ad/ad/2024_1to3/活動+.jpg', category: 'Ad' },
-
-      { src: 'img/digitimes/ad/print_ad/2024_1to3/1130019全十.jpg', category: 'Print_ad' },
-      { src: 'img/digitimes/ad/print_ad/2024_1to3/1130183全十.jpg', category: 'Print_ad' },
-      { src: 'img/digitimes/ad/print_ad/2024_1to3/1130072台中場_全十.jpg', category: 'Print_ad' },
-      { src: 'img/digitimes/ad/print_ad/2024_1to3/1130167全十.jpg', category: 'Print_ad' },
-      { src: 'img/digitimes/ad/print_ad/2024_1to3/全十.jpg', category: 'Print_ad' },
-
-      // =====================
-      // 2023
-      // =====================
-
-      // 2023 EDM
-      { src: 'img/digitimes/ad/edm/2023_8/edm2.jpg', category: 'Edm' },
-      { src: 'img/digitimes/ad/edm/2023_9to12/edm_asia.jpg', category: 'Edm' },
-      { src: 'img/digitimes/ad/edm/2023_9to12/edm_TechStats.jpg', category: 'Edm' },
-      { src: 'img/digitimes/ad/edm/2023_8/Asia問卷調查EDM中文.jpg', category: 'Edm' },
-      { src: 'img/digitimes/ad/edm/2023_8/Asia客戶問卷調查EDM.jpg', category: 'Edm' },
-      { src: 'img/digitimes/ad/edm/2023_3to7/0315西門子EDA2.jpg', category: 'Edm' },
-      { src: 'img/digitimes/ad/edm/2023_9to12/1122607.jpg', category: 'Edm' },
-      { src: 'img/digitimes/ad/edm/2023_9to12/412625.jpg', category: 'Edm' },
-      { src: 'img/digitimes/ad/edm/2023_9to12/edm_ondemand.jpg', category: 'Edm' },
-
-      // 2023 AD
-      { src: 'img/digitimes/ad/ad/2023_9to12/1080x1920.jpg', category: 'Ad' },
-      { src: 'img/digitimes/ad/ad/2023_9to12/digikey.gif', category: 'Ad' },
-      { src: 'img/digitimes/ad/ad/2023_9to12/microsoft365.gif', category: 'Ad' },
-      { src: 'img/digitimes/ad/ad/2023_9to12/v2.jpg', category: 'Ad' },
-      { src: 'img/digitimes/ad/ad/2023_9to12/728-x-90.gif', category: 'Ad' },
-      { src: 'img/digitimes/ad/ad/2023_9to12/1121655.gif', category: 'Ad' },
-      { src: 'img/digitimes/ad/ad/2023_9to12/728X90_V1_A.gif', category: 'Ad' },
-      { src: 'img/digitimes/ad/ad/2023_9to12/veeam.jpg', category: 'Ad' },
-      { src: 'img/digitimes/ad/ad/2023_9to12/720 x 480.jpg', category: 'Ad' },
-      { src: 'img/digitimes/ad/ad/2023_9to12/1027-1920x1080.jpg', category: 'Ad' },
-      { src: 'img/digitimes/ad/ad/2023_9to12/1080x1920_Jessie.jpg', category: 'Ad' },
-      { src: 'img/digitimes/ad/ad/2023_9to12/1200X1200.jpg', category: 'Ad' },
-
-      { src: 'img/digitimes/ad/ad/2023_8/728-x-90.gif', category: 'Ad' },
-      { src: 'img/digitimes/ad/ad/2023_8/1080x1080.jpg', category: 'Ad' },
-      { src: 'img/digitimes/ad/ad/2023_8/支付在手2.jpg', category: 'Ad' },
-      { src: 'img/digitimes/ad/ad/2023_8/728-H90.gif', category: 'Ad' },
-      { src: 'img/digitimes/ad/ad/2023_8/亞灣雲平台1.jpg', category: 'Ad' },
-      { src: 'img/digitimes/ad/ad/2023_8/1121283R1_fb.jpg', category: 'Ad' },
-
-      { src: 'img/digitimes/ad/ad/2023_3to7/FB.jpg', category: 'Ad' },
-      { src: 'img/digitimes/ad/ad/2023_3to7/限動.jpg', category: 'Ad' },
-      { src: 'img/digitimes/ad/ad/2023_3to7/800X320.jpg', category: 'Ad' },
-      { src: 'img/digitimes/ad/ad/2023_3to7/1121294-1_336-280.gif', category: 'Ad' },
-      { src: 'img/digitimes/ad/ad/2023_3to7/1121294-1_336-90.gif', category: 'Ad' },
-      { src: 'img/digitimes/ad/ad/2023_3to7/1120648_1080.jpg', category: 'Ad' },
-      { src: 'img/digitimes/ad/ad/2023_3to7/1120587R2.gif', category: 'Ad' },
-      { src: 'img/digitimes/ad/ad/2023_3to7/1120584ADIR4_336-x-280.gif', category: 'Ad' },
-      { src: 'img/digitimes/ad/ad/2023_3to7/1120604_R0.jpg', category: 'Ad' },
-      { src: 'img/digitimes/ad/ad/2023_3to7/1120718.gif', category: 'Ad' },
-      { src: 'img/digitimes/ad/ad/2023_3to7/1120746_728_90.gif', category: 'Ad' },
-      { src: 'img/digitimes/ad/ad/2023_3to7/1120683_728-90.gif', category: 'Ad' },
-      { src: 'img/digitimes/ad/ad/2023_3to7/1120781.gif', category: 'Ad' },
-      { src: 'img/digitimes/ad/ad/2023_3to7/康耐視台中Banner.gif', category: 'Ad' },
-
-      // 2023 PRINT AD
-      { src: 'img/digitimes/ad/print_ad/2023_8/全十.jpg', category: 'Print_ad' },
-      { src: 'img/digitimes/ad/print_ad/2023_8/1121137R4.jpg', category: 'Print_ad' },
-      { src: 'img/digitimes/ad/print_ad/2023_9to12/1027_Dforum.jpg', category: 'Print_ad' },
-      { src: 'img/digitimes/ad/print_ad/2023_3to7/1121439_ST全十.jpg', category: 'Print_ad' },
-      { src: 'img/digitimes/ad/print_ad/2023_3to7/馭雲論壇全十.jpg', category: 'Print_ad' },
-      { src: 'img/digitimes/ad/print_ad/2023_3to7/戴爾科技論壇_ol.jpg', category: 'Print_ad' },
-      { src: 'img/digitimes/ad/print_ad/2023_3to7/智慧機械與智動化_全十.jpg', category: 'Print_ad' },
-      { src: 'img/digitimes/ad/print_ad/2023_3to7/amr全十.jpg', category: 'Print_ad' },
-      { src: 'img/digitimes/ad/print_ad/2023_3to7/1120571R2.jpg', category: 'Print_ad' },
-      { src: 'img/digitimes/ad/print_ad/2023_3to7/1120649R13_全十.jpg', category: 'Print_ad' },
-      { src: 'img/digitimes/ad/print_ad/2023_3to7/1120698R2_半十.jpg', category: 'Print_ad' },
+      { src: 'img/digitimes/ad/edm/2024_10to12/網頁layout.jpg', category: '企業識別與活動視覺' },
+      { src: 'img/digitimes/ad/edm/2024_7to9/網頁.jpg', category: 'IC之音' },
+      { src: 'img/digitimes/ad/edm/2024_4to6/ic萌寵網頁.jpg', category: 'IC之音' },
+      { src: 'img/digitimes/ad/edm/2024_1to3/網頁layout.jpg', category: '企業識別與活動視覺' },
     ];
 
-    const TALL_RATIO = 1.5;
-    const GRID_PER_PAGE = window.innerWidth <= 768 ? 4 : 20;
+    const TALL_RATIO = 1.5; // 高寬比超過此值視為長條圖
+    const GRID_PER_PAGE = window.innerWidth <= 768 ? 4 : 3;
+    const total = images.length;
 
     let current = 0;
     let isGrid = false;
     let gridPage = 0;
-    let activeCategory = null;  // null = 全部
+    let activeCategory = null;
 
     function filteredImages() {
       return activeCategory ? images.filter(img => img.category === activeCategory) : images;
     }
 
-    const mainImg       = document.getElementById('mainImg');
+    const mainImg = document.getElementById('mainImg');
     const currentPageEl = document.getElementById('currentPage');
-    const totalPagesEl  = document.getElementById('totalPages');
-    const pageCatEl     = document.getElementById('pageCategory');
-    const prevBtn       = document.getElementById('prevBtn');
-    const nextBtn       = document.getElementById('nextBtn');
-    const singleView    = document.getElementById('singleView');
-    const gridView      = document.getElementById('gridView');
-    const singleToggle  = document.getElementById('singleToggle');
-    const gridToggle    = document.getElementById('gridToggle');
-    const scrollHint    = document.getElementById('scrollHint');
+    const totalPagesEl = document.getElementById('totalPages');
+    const pageCatEl = document.getElementById('pageCategory');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const singleView = document.getElementById('singleView');
+    const gridView = document.getElementById('gridView');
+    const singleToggle = document.getElementById('singleToggle');
+    const gridToggle = document.getElementById('gridToggle');
+    const scrollHint = document.getElementById('scrollHint');
 
-    // ── Scroll hint 定位 ──
+    totalPagesEl.textContent = total;
+
     function positionScrollHint() {
       const rect = singleView.getBoundingClientRect();
       scrollHint.style.bottom = (window.innerHeight - rect.bottom + 14) + 'px';
@@ -786,7 +700,7 @@
       scrollHint.style.right  = (window.innerWidth - rect.right) + 'px';
     }
 
-    // ── 長條圖偵測 ──
+    // ── 長條圖偵測與模式切換 ──
     function applyTallMode(img) {
       const ratio = img.naturalHeight / img.naturalWidth;
       if (ratio > TALL_RATIO) {
@@ -803,13 +717,16 @@
     }
 
     function onSingleScroll() {
-      if (singleView.scrollTop > 40) scrollHint.classList.add('hidden');
+      if (singleView.scrollTop > 40) {
+        scrollHint.classList.add('hidden');
+      }
     }
 
-    // ── Render grid page (filtered) ──
+    // ── Render grid page (from filtered list) ──
     function renderGridPage(page) {
       gridView.innerHTML = '';
       const list = filteredImages();
+      const totalGridPages = Math.ceil(list.length / GRID_PER_PAGE);
       const grid = document.createElement('div');
       grid.className = 'grid-page';
 
@@ -821,7 +738,7 @@
         const realIndex = images.indexOf(img);
         const thumb = document.createElement('div');
         thumb.className = 'grid-thumb' + (realIndex === current ? ' active' : '');
-        thumb.innerHTML = `<img src="${img.src}" alt="縮圖" loading="lazy"><span class="thumb-num">${i + 1}</span>`;
+        thumb.innerHTML = `<img src="${img.src}" alt="縮圖" loading="lazy">`;
         thumb.addEventListener('click', () => { goTo(realIndex); switchToSingle(); });
         grid.appendChild(thumb);
       }
@@ -829,7 +746,7 @@
       gridView.appendChild(grid);
     }
 
-    // ── Single-view navigation (filtered) ──
+    // ── Single-view navigation (within filtered list) ──
     function goTo(realIndex) {
       current = Math.max(0, Math.min(images.length - 1, realIndex));
       const list = filteredImages();
@@ -890,6 +807,7 @@
       tag.addEventListener('click', () => {
         const cat = tag.dataset.category;
         if (activeCategory === cat) {
+          // 再按一次取消篩選
           activeCategory = null;
           tag.classList.remove('active');
         } else {
@@ -897,11 +815,18 @@
           document.querySelectorAll('#filterTags .tag').forEach(t => t.classList.remove('active'));
           tag.classList.add('active');
         }
+        // 重設到過濾後第一張
         const list = filteredImages();
-        if (list.length > 0) current = images.indexOf(list[0]);
+        if (list.length > 0) {
+          current = images.indexOf(list[0]);
+        }
         gridPage = 0;
-        if (isGrid) { renderGridPage(gridPage); updateGridCounter(); }
-        else { goTo(current); }
+        if (isGrid) {
+          renderGridPage(gridPage);
+          updateGridCounter();
+        } else {
+          goTo(current);
+        }
       });
     });
 
